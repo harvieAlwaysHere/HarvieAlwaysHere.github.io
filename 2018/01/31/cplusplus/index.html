@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>C++基础语法 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="C++" />
+    
+    <meta name="description" content="刚想刷剑指offer和leetcode上的题目，本来享用python写的，毕竟是刷算法感觉无论是什么语言总是相通的，但看到剑指offer上写到 大一学的C++基础语法都忘记的差不多了，还是先来巩固一下C++基础语法，本文以runoob和C++ Primer(第五版)为基础编写。 Part1：C++基础语法标准的 C++ 由三个重要部分组成： 核心语言，提供了所有构件块，包括变量、数据类型和常量，等">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++基础语法">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/01/31/cplusplus/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="刚想刷剑指offer和leetcode上的题目，本来享用python写的，毕竟是刷算法感觉无论是什么语言总是相通的，但看到剑指offer上写到 大一学的C++基础语法都忘记的差不多了，还是先来巩固一下C++基础语法，本文以runoob和C++ Primer(第五版)为基础编写。 Part1：C++基础语法标准的 C++ 由三个重要部分组成： 核心语言，提供了所有构件块，包括变量、数据类型和常量，等">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/cplusplus.png">
+<meta property="og:updated_time" content="2018-02-07T08:09:25.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++基础语法">
+<meta name="twitter:description" content="刚想刷剑指offer和leetcode上的题目，本来享用python写的，毕竟是刷算法感觉无论是什么语言总是相通的，但看到剑指offer上写到 大一学的C++基础语法都忘记的差不多了，还是先来巩固一下C++基础语法，本文以runoob和C++ Primer(第五版)为基础编写。 Part1：C++基础语法标准的 C++ 由三个重要部分组成： 核心语言，提供了所有构件块，包括变量、数据类型和常量，等">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/cplusplus.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-cplusplus" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        C++基础语法
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/01/31/cplusplus/" class="article-date">
+            <time datetime="2018-01-31T07:31:56.000Z" itemprop="datePublished">2018-01-31</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/C/">C++</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="刚想刷剑指offer和leetcode上的题目，本来享用python写的，毕竟是刷算法感觉无论是什么语言总是相通的，但看到剑指offer上写到"><a href="#刚想刷剑指offer和leetcode上的题目，本来享用python写的，毕竟是刷算法感觉无论是什么语言总是相通的，但看到剑指offer上写到" class="headerlink" title="刚想刷剑指offer和leetcode上的题目，本来享用python写的，毕竟是刷算法感觉无论是什么语言总是相通的，但看到剑指offer上写到"></a>刚想刷剑指offer和leetcode上的题目，本来享用python写的，毕竟是刷算法感觉无论是什么语言总是相通的，但看到剑指offer上写到</h3><p><img src="/images/cplusplus.png" alt=""></p>
+<h3 id="大一学的C-基础语法都忘记的差不多了，还是先来巩固一下C-基础语法，本文以runoob和C-Primer-第五版-为基础编写。"><a href="#大一学的C-基础语法都忘记的差不多了，还是先来巩固一下C-基础语法，本文以runoob和C-Primer-第五版-为基础编写。" class="headerlink" title="大一学的C++基础语法都忘记的差不多了，还是先来巩固一下C++基础语法，本文以runoob和C++ Primer(第五版)为基础编写。"></a>大一学的C++基础语法都忘记的差不多了，还是先来巩固一下C++基础语法，本文以runoob和C++ Primer(第五版)为基础编写。</h3><p><br></p>
+<h2 id="Part1：C-基础语法"><a href="#Part1：C-基础语法" class="headerlink" title="Part1：C++基础语法"></a>Part1：C++基础语法</h2><h4 id="标准的-C-由三个重要部分组成："><a href="#标准的-C-由三个重要部分组成：" class="headerlink" title="标准的 C++ 由三个重要部分组成："></a>标准的 C++ 由三个重要部分组成：</h4><ol>
+<li><strong>核心语言</strong>，提供了所有构件块，包括变量、数据类型和常量，等等。</li>
+<li><strong>C++ 标准库</strong>，提供了大量的函数，用于操作文件、字符串等。</li>
+<li><strong>标准模板库（STL）</strong>，提供了大量的方法，用于操作数据结构等。</li>
+</ol>
+<h4 id="C-面向对象四大特点"><a href="#C-面向对象四大特点" class="headerlink" title="C++面向对象四大特点:"></a>C++面向对象四大特点:</h4><p>封装、抽象、继承和多态。</p>
+<h4 id="C-基本程序结构："><a href="#C-基本程序结构：" class="headerlink" title="C++基本程序结构："></a>C++基本程序结构：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;         //添加头文件</span><br><span class="line">using namespace std;        //使用std命名空间</span><br><span class="line"> </span><br><span class="line">int main()                  //主函数，程序执行入口</span><br><span class="line">&#123;</span><br><span class="line">   cout &lt;&lt; &quot;Hello World&quot;;   // 输出 Hello World</span><br><span class="line">   return 0;                //终止main函数并返回0值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="C-内置数据类型："><a href="#C-内置数据类型：" class="headerlink" title="C++内置数据类型："></a>C++内置数据类型：</h4><p>类型&emsp;&emsp;&emsp;&emsp;关键字&emsp;&emsp;&emsp;&emsp;内存(字节)<br>布尔型    &emsp;&emsp;&emsp;bool&emsp;&emsp;&emsp;&emsp;&emsp;1<br>字符型    &emsp;&emsp;&emsp;char&emsp;&emsp;&emsp;&emsp;&emsp;1<br>整型        &emsp;&emsp;&emsp;&emsp;int&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;4<br>浮点型    &emsp;&emsp;&emsp;float&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;4<br>双浮点型    &emsp;&emsp;double&emsp;&emsp;&emsp;&emsp;8<br>无类型    &emsp;&emsp;&emsp;void&emsp;&emsp;&emsp;&emsp;&emsp;<br>宽字符型    &emsp;&emsp;wchar_t&emsp;&emsp;&emsp;&nbsp;&nbsp;4<br>一些类型可用<strong>修饰符</strong>修饰:<br><strong>signed,unsigned,short,long.</strong><br><img src="/images/leixing.png" alt=""><br><img src="/images/weishu.png" alt=""><br>Tip:其实知道了字节数很简单计算范围，1字节=8位，每位存储一个二进制0/1，有几位二进制则可以存储2^位数范围大小的数字。<br>Tip:存储<strong>有符号数</strong>的时候，例如int，虽然是4字节的，但是只能是1符号位+31数值为位，所以最大为2^31=2147483647。<br><br><br>可以使用<strong>typedef</strong>为一个已有的类型取一个新的名字:typedef type newname;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typedef int SSS;</span><br><span class="line">SSS a = 2;</span><br></pre></td></tr></table></figure></p>
+<h4 id="枚举类型-enumeration-："><a href="#枚举类型-enumeration-：" class="headerlink" title="枚举类型(enumeration)："></a>枚举类型(enumeration)：</h4><p>是C++中的一种派生数据类型，它是由用户定义的若干枚举常量的集合:<br>语法为:enum name {IDentifier0[=int 0],IDentifier1=[int 1]} Variable;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">enum color &#123; red, green, blue &#125; c;    //定义变量c是枚举类型color</span><br><span class="line">c = blue;                             //c赋值为blue</span><br></pre></td></tr></table></figure></p>
+<h4 id="变量声明和定义"><a href="#变量声明和定义" class="headerlink" title="变量声明和定义:"></a>变量声明和定义:</h4><p>您可以使用<strong>extern关键字</strong>在任何地方<strong>声明</strong>一个变量。虽然您可以在 C++ 程序中多次声明一个变量，但变量只能在某个文件、函数或代码块中被<strong>定义一次</strong>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 变量声明</span><br><span class="line">extern int a;      //可进行多次</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">  // 变量定义       //仅可进行一次</span><br><span class="line">  int a;</span><br><span class="line"> </span><br><span class="line">  // 实际初始化</span><br><span class="line">  a = 10;</span><br><span class="line"></span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="函数声明和定义"><a href="#函数声明和定义" class="headerlink" title="函数声明和定义:"></a>函数声明和定义:</h4><p>在函数声明时，提供一个函数名，而函数的实际定义则可以在任何地方进行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 函数声明</span><br><span class="line">int func();</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">  // 函数调用</span><br><span class="line">  int i = func();</span><br><span class="line"></span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br><span class="line">// 函数定义</span><br><span class="line">int func()</span><br><span class="line">&#123;</span><br><span class="line">   return 666;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域:"></a>变量作用域:</h4><ol>
+<li>在函数或一个代码块内部声明的变量，称为<strong>局部变量</strong>。</li>
+<li>在函数参数的定义中声明的变量，称为<strong>形式参数</strong>。</li>
+<li>在所有函数外部声明的变量，称为<strong>全局变量</strong>。</li>
+</ol>
+<p>初始化:定义全局变量时，系统会<strong>根据数据类型自动初始化</strong>；定义局部变量时，系统不会自动初始化。</p>
+<h4 id="C-常量"><a href="#C-常量" class="headerlink" title="C++常量:"></a>C++常量:</h4><p>定义后不能进行修改的固定值。<br><strong>整数常量:</strong> </p>
+<ul>
+<li>前缀指定基数：0x 或 0X 表示十六进制，0 表示八进制，不带前缀则默认表示十进制</li>
+<li>后缀指定修饰符:是 U 和 L 的组合，U 表示无符号整数（unsigned），L 表示长整数（long）。后缀可以是大写，也可以是小写，U 和 L 的顺序任意。</li>
+</ul>
+<p><strong>浮点常量：</strong>由整数部分、小数点、小数部分和指数部分组成。</p>
+<ul>
+<li>小数形式：必须包含整数部分、小数部分，或同时包含两者。</li>
+<li>指数形式：必须包含小数点、指数，或同时包含两者。带符号的指数是用 e 或 E 引入的。</li>
+</ul>
+<p><strong>布尔常量：</strong>true/false<br><strong>字符常量：</strong>括在单引号中的可以是一个普通的字符（例如 ‘x’）、一个转义序列（例如 ‘\t’），或一个通用的字符（例如 ‘\u02C0’）。</p>
+<ul>
+<li>宽字符常量：以 L（仅当大写时）开头存储在 <strong>wchar_t </strong>类型的变量中（例如 L’x’）。</li>
+<li>窄字符常量：存储在 char 类型的简单变量中（例如 ‘x’）。</li>
+</ul>
+<p><strong>字符串常量：</strong>括在双引号 “” 中的。一个字符串包含类似于字符常量的字符：普通的字符、转义序列和通用的字符。<br>C++有两种简单定义常量方式:</p>
+<ol>
+<li>使用 <strong>#define 预处理器</strong>:#define identifier value</li>
+<li>使用 <strong>const 关键字</strong>:const type variable = value;</li>
+</ol>
+<p>Tips:常量一般被定义成<strong>大写字母形式</strong></p>
+<h4 id="C-修饰符类型"><a href="#C-修饰符类型" class="headerlink" title="C++ 修饰符类型"></a>C++ 修饰符类型</h4><p>修饰符 <strong>signed、unsigned、long 、short</strong>可应用于整型，<strong>signed 和 unsigned</strong>可应用于字符型，long 可应用于双精度型。<br>修饰符 <strong>signed 和 unsigned</strong> 也可以作为 long 或 short 修饰符的<strong>前缀</strong>。例如：unsigned long int。</p>
+<h4 id="C-类型限定符"><a href="#C-类型限定符" class="headerlink" title="C++ 类型限定符"></a>C++ 类型限定符</h4><p>用于限定类型和类型成员的声明</p>
+<ul>
+<li>const：限定对象在程序执行期间不能被修改改变。</li>
+<li>volatile：限定变量的值可能以程序未明确指定的方式被改变。(多线程使用)</li>
+</ul>
+<h4 id="C-存储类"><a href="#C-存储类" class="headerlink" title="C++ 存储类"></a>C++ 存储类</h4><p>存储类定义 C++ 程序中变量/函数的范围（可见性）和生命周期，常有<strong>auto、static、extern、mutable、thread_local (C++11)</strong>。<br><strong>auto关键字</strong>用于两种情况：</p>
+<ul>
+<li>声明变量时根据初始化表达式自动推断该变量的类型。</li>
+<li>声明函数时函数返回值的占位符。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auto f=3.14;</span><br><span class="line">cout&lt;&lt;typeid(f).name()&lt;&lt;endl;         //double</span><br><span class="line">auto z = new auto(9);     </span><br><span class="line">cout&lt;&lt;typeid(z).name()&lt;&lt;endl;         // int*</span><br></pre></td></tr></table></figure>
+<strong>static关键字</strong>指示编译器在程序的生命周期内保持局部变量的存在，而不需要在每次它进入和离开作用域时进行创建和销毁。</li>
+<li>static修饰<strong>局部变量</strong>：变量在<strong>全局数据区分配内存</strong>，程序执行第一次时<strong>首次初始化</strong>，以后函数调用不再进行初始化，没有显式初始化则会被<strong>自动初始化为0</strong>。</li>
+<li>static修饰<strong>全局变量</strong>：使变量的作用域<strong>限制在声明它的文件</strong>内。</li>
+<li>static修饰<strong>类的成员变量</strong>：类外初始化，先于类存在，类所有对象共同一个静态成员变量，可通过类名直接调用<strong>公共(public)</strong>静态成员变量。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	A()&#123; count++; &#125;              //先于类存在，在类的构造方法中已经可以调用</span><br><span class="line">	static int count;</span><br><span class="line">&#125;;</span><br><span class="line">int A::count = 0;                //类外初始化</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	A c;</span><br><span class="line">	A d;</span><br><span class="line">	cout &lt;&lt; A::count &lt;&lt; endl;    //共用性和直接类名调用</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>static修饰<strong>类的成员方法</strong>:先于类存在，方法中<strong>不能使用非静态成员(无this指针)</strong>,可通过类名直接调用<strong>公共(public)</strong>静态成员方法。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	A()&#123; count++; &#125;</span><br><span class="line">	static int count;</span><br><span class="line">	static void showCount() </span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; &quot;count is &quot; &lt;&lt; count &lt;&lt; endl;  //不用this指针织带变量</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">int A::count = 0;        </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	A c;</span><br><span class="line">	A d;</span><br><span class="line">	A::showCount();                     //类名直接调用</span><br><span class="line">	system(&quot;pause&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="C-运算符"><a href="#C-运算符" class="headerlink" title="C++ 运算符"></a>C++ 运算符</h4><p>运算符是一种告诉编译器执行特定的数学或逻辑操作的符号,有<strong>算术运算符、关系运算符、逻辑运算符、位运算符、赋值运算符和其他运算符</strong>。<br><strong>算数运算符</strong>:+、-、<em>、/、%(取模,整除后的余数)、++(自增)、–(自减).<br><strong>关系运算符</strong>:==、!=、&gt;、&lt;、&gt;=、&lt;=.<br><strong>逻辑运算符</strong>:&amp;&amp;(逻辑与，均非零为真)、||(逻辑或，存在非零则为真)、!(逻辑非，逆转逻辑状态).<br>Tips:&amp;&amp;(||)具有<strong>短路</strong>功能，即若第一个条件为false(true)，则不再计算第二个表达式；&amp;(|)则无论如何<strong>均会计算两个表达式</strong>.<br>利用这点可将A&amp;&amp;B中的A作为一个条件语句(if)不满足则不执行B，如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/*不用任何循环语句，不用if，来实现1+2+3+...+10的值*/</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int add(int c)</span><br><span class="line">&#123;</span><br><span class="line">    int a=0;</span><br><span class="line">    c&amp;&amp;(a=add(c-1));//递归循环，直到传入c的值为0则结束循环不执行右式</span><br><span class="line">		//(用&amp;则会执行造成溢出错误)</span><br><span class="line">    cout&lt;&lt;c+a&lt;&lt;endl;</span><br><span class="line">    return c+a;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123; </span><br><span class="line">    add(10);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>位运算</strong>:<br>若A = 60，且 B = 13，以二进制表示如下<br>A = 0011 1100<br>B = 0000 1101<br><img src="/images/weiyunsuan.png" alt=""><br><strong>赋值运算</strong>:=、+=、-=、</em>=、/=、%=、&lt;&lt;=、&gt;&gt;=、&amp;=(按位与或且赋值)、^=(按位异或且赋值)、|=(按位或且赋值)<br><strong>杂项运算</strong>:<br><img src="/images/zaxiang.png" alt=""></p>
+<h4 id="C-循环"><a href="#C-循环" class="headerlink" title="C++ 循环"></a>C++ 循环</h4><ul>
+<li><strong>while</strong>:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while(condition)</span><br><span class="line">&#123;</span><br><span class="line">   statement(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>for</strong>:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for ( init; condition; increment )</span><br><span class="line">&#123;</span><br><span class="line">   statement(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>do…while</strong>:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">do</span><br><span class="line">&#123;</span><br><span class="line">   statement(s);</span><br><span class="line"></span><br><span class="line">&#125;while( condition );</span><br></pre></td></tr></table></figure></li>
+<li><strong>循环控制语句</strong>:</li>
+</ul>
+<ol>
+<li><strong>break</strong>：跳出循环。</li>
+<li><strong>continue</strong>:跳过循环主体的剩余部分，立即重新开始测试条件。</li>
+</ol>
+<h4 id="C-判断"><a href="#C-判断" class="headerlink" title="C++ 判断"></a>C++ 判断</h4><ul>
+<li><strong>if</strong>:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(boolean_expression)</span><br><span class="line">&#123;</span><br><span class="line">   statement(true);          // 如果布尔表达式为真将执行的语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>if…else</strong>:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if(boolean_expression)</span><br><span class="line">&#123;</span><br><span class="line">   statement(true);          // 如果布尔表达式为真将执行的语句</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">   statement(false);          // 如果布尔表达式为假将执行的语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>switch</strong>:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">switch(expression)&#123;</span><br><span class="line">    case constant-expression  :</span><br><span class="line">       statement(s);</span><br><span class="line">       break; // 可选的</span><br><span class="line">    case constant-expression  :</span><br><span class="line">       statement(s);</span><br><span class="line">       break; // 可选的</span><br><span class="line">  </span><br><span class="line">    // 您可以有任意数量的 case 语句</span><br><span class="line">    default : // 可选的 </span><br><span class="line">       statement(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>[ ? : ]运算符</strong>:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exp1 ? Exp2 : Exp3;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="C-函数"><a href="#C-函数" class="headerlink" title="C++ 函数"></a>C++ 函数</h4><p><strong>函数声明</strong>包含函数的名称、返回类型和参数<br>C++中的函数声明形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return_type function_name( parameter list );</span><br></pre></td></tr></table></figure><br><strong>函数定义</strong>提供了函数的实际主体。<br>C++中的函数定义形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">return_type function_name( parameter list )</span><br><span class="line">&#123;</span><br><span class="line">   body of the function</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>函数参数</strong>:函数内使用的局部变量称作形式参数，有三种调用方式</p>
+<ul>
+<li>传值调用(默认)：把参数的<strong>实际值</strong>复制给形式参数。在这种情况下，修改函数内的形式参数不会影响实际参数。</li>
+<li>指针调用：把参数的<strong>地址</strong>复制给形式参数。在函数内，该地址用于访问调用中要用到的实际参数。修改形式参数会影响实际参数。如<br>函数声明:void swap(<font color="red">int *x, int *y</font>)<br>函数调用:swap(<font color="red">&amp;a,&amp;b</font>)</li>
+<li>引用调用：把参数的<strong>引用</strong>赋值给形式参数。在函数内，该引用用于访问调用中要用到的实际参数。这意味着，修改形式参数会影响实际参数。如<br>函数声明:void swap(<font color="red">int &amp;x, int &amp;y</font>)<br>函数调用:swap(<font color="red">a,b</font>)</li>
+</ul>
+<p><strong>参数默认值</strong>:定义函数时可以为参数列表中每一个参数指定默认值,如<br>int sum(int a<font color="red">=10</font>,int b<font color="red">=20</font>)<br><strong>Lambda 函数与表达式</strong>:Lambda 表达式把函数看作对象。Lambda 表达式可以像对象一样使用，比如可以将它们赋给变量和作为参数传递，还可以像函数一样对其求值。</p>
+<h4 id="C-数字"><a href="#C-数字" class="headerlink" title="C++ 数字"></a>C++ 数字</h4><p><strong>数学运算</strong>:引用数学头文件 <cmath>内有许多内置数学函数<br><img src="/images/shuxue.png" alt=""><br><strong>随机数</strong>:标准库<cstdlib>（被包含于<iostream>中）提供两个帮助生成伪随机数的函数</iostream></cstdlib></cmath></p>
+<ul>
+<li>void srand(unsigned seed)：设置随机数种子，通常用<strong>time()</strong>初始化(使用time需要引入<ctime>头文件)，如<font color="red">srand( (unsigned)time( NULL ) );</font></ctime></li>
+<li>int rand(void)：从srand (seed)中指定的seed开始，返回一个[seed, RAND_MAX（0x7fff）)间的随机整数。</li>
+<li>指定生成范围的随机数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(low,up) (rand()%(up-low+1)) + low - 1</span><br><span class="line">[low,up) (rand()%(up-low)) + low</span><br><span class="line">(low,up] (rand()%(up-low))+ low + 1</span><br><span class="line">[low,up] (rand()%(up-low+1)) + low</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="C-数组"><a href="#C-数组" class="headerlink" title="C++ 数组"></a>C++ 数组</h4><p><strong>声明数组</strong>:type arrayName [ arraySize ];<br><strong>初始化数组</strong>:type arrayName [ arraySize ] =<font color="red"> { </font>data<font color="red"> } </font>;<br><strong>访问数组元素</strong>:数组名称+索引，arrayName[index];<br><strong>数组详解</strong>:</p>
+<ul>
+<li>多维数组:type arrayName[size1][size2]…[sizeN];</li>
+<li>数组指针:声明的数组名其实是指向数组第一个元素的指针，即<strong>*arrayName == &amp;arrayName[0]</strong><br>所以也可以使用指针形式访问数组<strong>*(arrayName + i ) == arrayName[i]</strong></li>
+<li>传递数组给函数:是以<font color="red">指针</font>的形式传递的，因此有三种传递方式：<strong>(type *param)(type param[size])(type param[])</strong></li>
+<li>函数返回数组:数组以<font color="red">指针</font>的形式返回的，另外C++不支持在函数外返回局部变量的地址，因此返回的数组需要均是<strong>static变量</strong></li>
+</ul>
+<h4 id="C-字符串"><a href="#C-字符串" class="headerlink" title="C++ 字符串"></a>C++ 字符串</h4><ol>
+<li><strong>C风格字符串</strong>:实质是一个<font color="red">以’\0’(null)结尾的char数组</font>，例如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//以下msg1和msg2初始化规则相同</span><br><span class="line">char msg1[6] = &#123;&apos;H&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;, &apos;\0&apos;&#125;;</span><br><span class="line">char msg2[] = &quot;Hello&quot;;</span><br></pre></td></tr></table></figure>
+C++有大量函数操作以null结尾的字符串：<br><img src="/images/char.png" alt=""></li>
+<li><strong>C++引入的 string 类类型</strong>:C++标准库提供了string类型<font color="red">(需引入#include &lt; string >库)</font>且支持上述函数操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string str1 = &quot;Hello&quot;;</span><br><span class="line">string str2 = str1;              //复制</span><br><span class="line">string str3 = str1 + str2;       //连接</span><br><span class="line">int length = str3.size();        //长度</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="C-指针"><a href="#C-指针" class="headerlink" title="C++ 指针"></a>C++ 指针</h4><ul>
+<li>内存地址:每个C++变量都有一个内存地址，可用<strong>寻址（&amp;）运算符</strong>访问变量的内存地址</li>
+<li>指针:是一个特殊的变量，其值为<strong>另一个变量的内存地址</strong>，声明形式为:type *var-name;</li>
+<li>使用指针:过程一般为声明、存储、访问（对指针使用<strong>间址(*)运算符</strong>可访问指针存储地址的变量值）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">string str = &quot;Hello&quot;;</span><br><span class="line">string *ip;</span><br><span class="line">ip = &amp;str;</span><br><span class="line">cout &lt;&lt; &quot;Address of str : &quot; &lt;&lt; &amp;str &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;Value of str : &quot; &lt;&lt; str &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;Stored Address of ip : &quot; &lt;&lt; ip &lt;&lt; endl;     //指针存储的变量的地址</span><br><span class="line">cout &lt;&lt; &quot;Address of ip : &quot; &lt;&lt; &amp;ip &lt;&lt; endl;           //指针本身的地址</span><br><span class="line">cout &lt;&lt; &quot;Value of ip : &quot; &lt;&lt; *ip &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+执行结果如下:<br><img src="/images/ip.png" alt=""></li>
+<li>Null指针:指针初始化时指定NULL值被称作<strong>空指针</strong>可以避免越界使用指针<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type *ptr = NULL;</span><br></pre></td></tr></table></figure></li>
+<li>指针的算数运算:指针是一个用数值表示的地址，可以执行四种算数运算（++，–，+，-）具体运算数值与指针的类型有关(如整形指针一次递增4个字节，字符指针一次递增1个字节等)</li>
+<li>指针与数组的异同:<br>（同）均可通过<strong>指针的算数运算和数组索引</strong>来访问数组<br>（异）声明数组的数组名的指针是一个指向数组第一个元素地址的<strong>常量指针</strong>，不可改变指向的地址</li>
+<li>指针数组:可声明一个数组来存放指针，其中每个数组元素都是一个指针，如<strong>type *ptr[size];</strong></li>
+<li>多级指针:一个指针指向另一个指针的地址<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type var;</span><br><span class="line">type *ptr1 = &amp;var;</span><br><span class="line">type *ptr2 = &amp;ptr1;     //ptr2就是一个多级指针指向一级指针ptr1</span><br></pre></td></tr></table></figure></li>
+<li>指针参数:声明函数参数为指针类型即可，这种属于<strong>指针调用</strong>函数参数，将参数地址复制给函数的形式参数，在函数内修改形式参数会影响实际参数。</li>
+<li>函数返回指针类型:声明函数返回类型为指针类型即可，但由于C++<strong>不支持在函数外返回局部变量的地址</strong>，因此可返回指针类型的变量需要声明为<strong>static变量</strong>。</li>
+</ul>
+<h4 id="C-引用"><a href="#C-引用" class="headerlink" title="C++ 引用"></a>C++ 引用</h4><p>引用变量是一个<strong>实际变量的别名</strong>。一旦把引用初始化为某个变量，就可以使用该引用名称或变量名称来指向变量。</p>
+<ul>
+<li>引用于指针的区别:<br>1.引用必须在<strong>创建时初始化</strong>，指针可以在<strong>任何时间初始化</strong>。<br>2.引出初始化为一个对象后<strong>不能更改</strong>，指针可以在任何时候指向另一个对象。<br>3.不存在空引用，引用必须连接到一个合法内存。</li>
+<li>引用创建初始化使用:type<font color="red">&amp;</font> name = variable;</li>
+<li>引用参数:声明函数参数为引用类型即可，属于<strong>引用调用</strong>的函数参数。这比传一般参数<font color="red">安全</font>。</li>
+<li>函数返回引用类型:声明函数返回类型为引用类型，但是实际上函数返回一个引用时是返回一个<strong>指向返回值的隐式指针</strong>，这样函数可以放在赋值语句的左边。返回引用最大的好处是<strong>在内存中不产生被返回值的副本，节省内存</strong>，但是<strong>不能返回局部变量的引用</strong>。</li>
+</ul>
+<h4 id="C-日期和时间"><a href="#C-日期和时间" class="headerlink" title="C++ 日期和时间"></a>C++ 日期和时间</h4><p>C++继承了C语言用于日期和时间操作的结构和函数,需要<font color="red">引入 &lt; ctime > 头文件</font></p>
+<ul>
+<li>有四个与时间有关的类型，其中<strong>clock_t、time_t、size_t </strong>将系统时间和日期表示为某种<strong>整数</strong>，<strong>tm</strong>结构类型将日期和时间以C结构形式保存。</li>
+<li>C/C++中关于日期和时间的重要函数:<br>1.<strong>time()</strong>: 返回从 1970-01-01 到 当前的日历时间的<strong>秒数</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//函数原型:time_t time(time_t *t)</span><br><span class="line">time_t nowSeconds =  time(NULL);</span><br><span class="line">cout &lt;&lt; nowSeconds &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/time.png" alt=""><br>2.<strong>ctime()</strong>:返回一个格式为[Www Mmm dd hh:mm:ss yyyy]基于参数timer的时间的<strong>字符串</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//函数原型:char *ctime(const time_t *timer)</span><br><span class="line">#pragma warning(disable:4996)    //接触安全警报限制</span><br><span class="line">time_t curtime = time(NULL);</span><br><span class="line">cout &lt;&lt; ctime(&amp;curtime) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/ctime.png" alt=""><br>3.<strong>localtime()</strong>: struct tm *localtime(const time_t *timer)，将参数timer的值分解为tm结构，并用<strong>本地时区</strong>表示<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//函数原型:struct tm *localtime(const time_t *timer)</span><br><span class="line">#pragma warning(disable:4996)    //接触安全警报限制</span><br><span class="line">time_t curtime = time(NULL);</span><br><span class="line">struct tm *info = localtime(&amp;curtime);</span><br><span class="line">cout &lt;&lt; &quot;tm_sec:&quot; &lt;&lt; info-&gt;tm_sec &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;tm_min:&quot; &lt;&lt; info-&gt;tm_min &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;tm_hour:&quot; &lt;&lt; info-&gt;tm_hour &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;tm_mday:&quot; &lt;&lt; info-&gt;tm_mday &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;tm_mon:&quot; &lt;&lt; info-&gt;tm_mon &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;tm_year:&quot; &lt;&lt; info-&gt;tm_year &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/localtime.png" alt=""><br>4.<strong>clock()</strong>: 返回程序执行起<strong>处理器时钟所使用的时间</strong>，为了获取CPU所使用秒数需要除以CLOCKS_PER_SEC常量<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//函数原型:clock_t clock(void)</span><br><span class="line">#pragma warning(disable:4996)    //接触安全警报限制</span><br><span class="line">clock_t start_t, end_t;</span><br><span class="line">start_t = clock();</span><br><span class="line">cout &lt;&lt; &quot;程序启动：&quot; &lt;&lt; start_t &lt;&lt; endl;</span><br><span class="line">for(int i=0; i&lt; 10000000; i++)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line">end_t = clock();</span><br><span class="line">cout &lt;&lt; &quot;程序结束：&quot; &lt;&lt; end_t &lt;&lt; endl;</span><br><span class="line">double total_t;</span><br><span class="line">total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;</span><br><span class="line">cout &lt;&lt; &quot;CPU占用时间:&quot; &lt;&lt; total_t &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/clock.png" alt=""><br>5.<strong>asctime()</strong>：返回一个基于timeptr的时期和时间的<strong>字符串</strong>的指针<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//函数原型:char *asctime(const struct tm *timeptr)</span><br><span class="line">#pragma warning(disable:4996)    //接触安全警报限制</span><br><span class="line">time_t curtime = time(NULL);</span><br><span class="line">struct tm *info = localtime(&amp;curtime);</span><br><span class="line">cout &lt;&lt; asctime(info) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/asctime.png" alt=""><br>6.<strong>gmtime()</strong>:使用timer来填充tm的结构，并协调<strong>世界时</strong>(UTC)也被称作格林尼治标准时间(GMT)表示<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//函数原型:struct tm *gmtime(const time_t *timer)</span><br><span class="line">#pragma warning(disable:4996)    //接触安全警报限制</span><br><span class="line">time_t curtime = time(NULL);</span><br><span class="line">struct tm *info = gmtime(&amp;curtime);</span><br><span class="line">cout &lt;&lt; asctime(info) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/gmtime.png" alt=""><br>7.<strong>mktime()</strong>:将tm结构的timer转换成一个依据<strong>本地时区</strong>的time_t值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//函数原型:time_t mktime(struct tm *timeptr)</span><br><span class="line">#pragma warning(disable:4996)    //接触安全警报限制</span><br><span class="line">time_t curtime = time(NULL);</span><br><span class="line">struct tm *info = localtime(&amp;curtime);</span><br><span class="line">time_t localtime = mktime(info);  </span><br><span class="line">cout &lt;&lt; ctime(&amp;localtime) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/mktime.png" alt=""><br>8.<strong>difftime()</strong>: 返回time1和time2之间的<strong>相差秒数</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// double difftime(time_t time1, time_t time2)</span><br><span class="line">#pragma warning(disable:4996)    //接触安全警报限制</span><br><span class="line">#include &lt;windows.h&gt;             //sleep函数</span><br><span class="line">time_t start_t, end_t;</span><br><span class="line">time(&amp;start_t);</span><br><span class="line">cout &lt;&lt; &quot;程序启动：&quot; &lt;&lt; start_t &lt;&lt; endl;</span><br><span class="line">Sleep(5632);</span><br><span class="line">time(&amp;end_t);</span><br><span class="line">cout &lt;&lt; &quot;程序结束：&quot; &lt;&lt; end_t &lt;&lt; endl;</span><br><span class="line">double diff_t = difftime(end_t, start_t); //以秒为单位精度是double我也不太清楚为什么....</span><br><span class="line">cout &lt;&lt; &quot;程序占用时间:&quot; &lt;&lt; diff_t &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/difftime.png" alt=""><br>9.<strong>strftime()</strong>: size_t strftime(char *str, size_t maxsize, const char *format, const struct tm *timeptr)，根据format中定义的格式化规则，格式化数据结构timeptr表示的时间，并把它存储在str中<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">time_t now = time(NULL);</span><br><span class="line">struct tm *info = localtime(&amp;now);</span><br><span class="line">char buffer[80];</span><br><span class="line">strftime(buffer, 80, &quot;%x - %I:%M%p&quot;, info);</span><br><span class="line">cout &lt;&lt; &quot;格式化时间：&quot; &lt;&lt; buffer &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<img src="/images/strftime.png" alt=""></li>
+</ul>
+<h4 id="C-基本输入输出"><a href="#C-基本输入输出" class="headerlink" title="C++ 基本输入输出"></a>C++ 基本输入输出</h4><ul>
+<li>C++的I/O 发生在<strong>流</strong>中，流是<strong>字节序列</strong>。<br>输入操作：字节流是从设备（如键盘、磁盘驱动器、网络连接等）流向内存。<br>输出操作：字节流是从内存流向设备（如显示屏、打印机、磁盘驱动器、网络连接等）。</li>
+<li>I/O 库头文件：<br><img src="/images/io.png" alt=""><br>1.<strong>标准输出流(cout)</strong>:是ostream类的实例，与运算符&lt;&lt;将对象连接到标准输出设备<br>2.<strong>标准输入流(cin)</strong>:是istream类的实例，与运算符&gt;&gt;将对象连接到标准输入设备<br>3.<strong>标准错误流(cerr)</strong>:是ostream类的实例，是<strong>非缓冲的</strong>，每个流插入cerr会立即输出<br>4.<strong>标准日志流(clog)</strong>:是ostream类的实例，是<strong>缓冲的</strong>，每个流插入clog会先存储到缓冲区直到其填满或者刷新时才会输出</li>
+</ul>
+<h4 id="C-结构"><a href="#C-结构" class="headerlink" title="C++ 结构"></a>C++ 结构</h4><p>用户自定义的数据类型，允许存储不同类型的数据项，格式如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct type_name &#123;</span><br><span class="line">member_type1 member_name1;</span><br><span class="line">member_type2 member_name2;</span><br><span class="line">member_type3 member_name3;</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">&#125; object_names;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>访问结构成员:使用<strong>成员访问运算符(.)</strong>，如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">object_names.member_name</span><br></pre></td></tr></table></figure></li>
+<li>访问指向结构的指针:可定以指向结构的指针，则使用<strong>指针访问运算符(-&gt;)</strong>，如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">struct type_name *struct_ptr = &amp;object_names;</span><br><span class="line">struct_pointer-&gt;title</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/01/30/musicYueYu/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">粤语歌单</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/31/cplusplus/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/cplusplus.png)" alt="C++基础语法" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/01/31/cplusplus/" class="title">C++基础语法</a></p>
+                            <p class="item-date"><time datetime="2018-01-31T07:31:56.000Z" itemprop="datePublished">2018-01-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/30/musicYueYu/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/cetian.jpg)" alt="粤语歌单" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Music/">Music</a></p>
+                            <p class="item-title"><a href="/2018/01/30/musicYueYu/" class="title">粤语歌单</a></p>
+                            <p class="item-date"><time datetime="2018-01-30T08:34:19.000Z" itemprop="datePublished">2018-01-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/27/hexoWrite/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write.jpg)" alt="使用Hexo和Markdown写作" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/01/27/hexoWrite/" class="title">使用Hexo和Markdown写作</a></p>
+                            <p class="item-date"><time datetime="2018-01-27T10:03:33.000Z" itemprop="datePublished">2018-01-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/27/planOfHoliday/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sixGuys.jpg)" alt="大三上寒假计划" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2018/01/27/planOfHoliday/" class="title">大三上寒假计划</a></p>
+                            <p class="item-date"><time datetime="2018-01-27T09:13:41.000Z" itemprop="datePublished">2018-01-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/14/gitPagesAndHexo/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.loli.net/2018/01/25/5a69ac586ce86.jpg)" alt="使用github pages和hexo搭建个人博客" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/01/14/gitPagesAndHexo/" class="title">使用github pages和hexo搭建个人博客</a></p>
+                            <p class="item-date"><time datetime="2018-01-14T12:51:14.000Z" itemprop="datePublished">2018-01-14</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 20px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/01/31/cplusplus/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
