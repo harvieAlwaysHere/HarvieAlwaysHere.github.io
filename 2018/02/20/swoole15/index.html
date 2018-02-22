@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Swoole(十五)异步文件写入 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="php项目,swoole" />
+    
+    <meta name="description" content="Swoole增加了异步文件读写，异步DNS，异步Http/WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file_get_contents、stream、sockets、mysql、redis。  1.(小文件)异步写文件：swoole_async_writefile提供了两种风格函数风格：swoole_async_writefile($">
+<meta name="keywords" content="php项目,swoole">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swoole(十五)异步文件写入">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/02/20/swoole15/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="Swoole增加了异步文件读写，异步DNS，异步Http/WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file_get_contents、stream、sockets、mysql、redis。  1.(小文件)异步写文件：swoole_async_writefile提供了两种风格函数风格：swoole_async_writefile($">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/swoole.jpg">
+<meta property="og:updated_time" content="2018-02-21T09:01:56.087Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swoole(十五)异步文件写入">
+<meta name="twitter:description" content="Swoole增加了异步文件读写，异步DNS，异步Http/WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file_get_contents、stream、sockets、mysql、redis。  1.(小文件)异步写文件：swoole_async_writefile提供了两种风格函数风格：swoole_async_writefile($">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/swoole.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-swoole15" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Swoole(十五)异步文件写入
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/02/20/swoole15/" class="article-date">
+            <time datetime="2018-02-20T10:17:56.000Z" itemprop="datePublished">2018-02-20</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/php项目/">php项目</a>, <a class="tag-link" href="/tags/swoole/">swoole</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="Swoole增加了异步文件读写，异步DNS，异步Http-WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file-get-contents、stream、sockets、mysql、redis。"><a href="#Swoole增加了异步文件读写，异步DNS，异步Http-WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file-get-contents、stream、sockets、mysql、redis。" class="headerlink" title="Swoole增加了异步文件读写，异步DNS，异步Http/WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file_get_contents、stream、sockets、mysql、redis。"></a>Swoole增加了异步文件读写，异步DNS，异步Http/WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file_get_contents、stream、sockets、mysql、redis。</h3><p><img src="/images/swoole.jpg" alt=""></p>
+<hr>
+<h3 id="1-小文件-异步写文件：swoole-async-writefile"><a href="#1-小文件-异步写文件：swoole-async-writefile" class="headerlink" title="1.(小文件)异步写文件：swoole_async_writefile"></a>1.(小文件)异步写文件：swoole_async_writefile</h3><p>提供了两种风格<br>函数风格：swoole_async_writefile($filename, $fileContent, function($filename){}, $flags = 0);<br>面向对象风格：Swoole\Async::writeFile(string $filename, string $fileContent, callable $callback = null, int $flags = 0)<br><strong>$filename</strong>：文件名称，须有<strong>可写权限</strong>，文件不存在会自动创建，打开文件失败会返回false<br><strong>$fileContent</strong>：写入文件的内容，<strong>最大可写入4M</strong><br><strong>$callback</strong>：写入成功的回调函数，<strong>可选</strong><br><strong>flags</strong>：写入选项，可以使用<strong>FILE_APPEND</strong>表示追加到文件末尾<br>Tips：Linux<strong>原生异步IO</strong>不支持FILE_APPEND，并且写入的内容长度必须为4096的整数倍，否则底层会自动在末尾填充0</p>
+<hr>
+<h3 id="2-大文件-异步写文件：swoole-async-write"><a href="#2-大文件-异步写文件：swoole-async-write" class="headerlink" title="2.(大文件)异步写文件：swoole_async_write"></a>2.(大文件)异步写文件：swoole_async_write</h3><p>函数原型：bool swoole_async_write(string $filename, string $content, int $offset = -1, mixed $callback = NULL);<br><strong>$filename</strong>：文件名称<br><strong>$content</strong>：写入文件的内容，因为是<strong>分段写入</strong>，所以无限制<br><strong>$offset</strong>：写入方式，-1为追加写入到文件末尾<br><strong>$callback</strong>：写入成功的回调函数，可选<br>swoole_async_write是<strong>分段写的</strong>。不需要一次性将要写的内容放到内存里，所以<strong>只占用少量内存</strong>。swoole_async_write通过<strong>传入的offset参数来确定写入的位置</strong>。</p>
+<h3 id="3-两种写入方式测试"><a href="#3-两种写入方式测试" class="headerlink" title="3.两种写入方式测试"></a>3.两种写入方式测试</h3><p>将脚本上传到服务器运行可以看到<br><img src="/images/swoole150.png" alt=""><br>我们用vim打开写入的文件看看内容<br><img src="/images/swoole151.png" alt=""><br>可以看到由于是<strong>异步写入</strong>，write比writeFile2的写入还要早执行，但是三个写入函数都执行成功了，一个是直接写入，一个是追加写入，还有一个是大文件的写入</p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/02/21/swoole16/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Swoole(十六)实现一个长连接的网络聊天室
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/02/20/swoole14/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Swoole(十四)异步文件读取</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/21/swoole16/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十六)实现一个长连接的网络聊天室" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/21/swoole16/" class="title">Swoole(十六)实现一个长连接的网络聊天室</a></p>
+                            <p class="item-date"><time datetime="2018-02-21T11:09:56.000Z" itemprop="datePublished">2018-02-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/20/swoole15/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十五)异步文件写入" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole15/" class="title">Swoole(十五)异步文件写入</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:56.000Z" itemprop="datePublished">2018-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/20/swoole14/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十四)异步文件读取" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole14/" class="title">Swoole(十四)异步文件读取</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:51.000Z" itemprop="datePublished">2018-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/20/swoole13/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十三)DNS查询" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole13/" class="title">Swoole(十三)DNS查询</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:48.000Z" itemprop="datePublished">2018-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/20/swoole12/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十二)锁机制" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole12/" class="title">Swoole(十二)锁机制</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:41.000Z" itemprop="datePublished">2018-02-20</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 15px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 20px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/02/20/swoole15/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -177,17 +177,17 @@ var _hmt = _hmt || [];
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/02/15/swoole2/" class="thumbnail">
+        <a href="/2018/02/21/swoole16/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(二)了解基本函数" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十六)实现一个长连接的网络聊天室" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/15/swoole2/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/21/swoole16/">0</span>
     
 </span>
 
@@ -200,19 +200,18 @@ var _hmt = _hmt || [];
             <div class="category">
             <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
             </div>
-            <div class="date"><time datetime="2018-02-14T17:55:02.000Z" itemprop="datePublished">2018-02-15</time></div>
+            <div class="date"><time datetime="2018-02-21T11:09:56.000Z" itemprop="datePublished">2018-02-21</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/02/15/swoole2/">Swoole(二)了解基本函数</a>
+        <a href="/2018/02/21/swoole16/">Swoole(十六)实现一个长连接的网络聊天室</a>
         </h1>
     
 
         <p class="article-excerpt">
-            接来下我们来学习Swoole的基本函数，以此来配置一个服务器1.基本函数1.1 swoole_server：创建一个异步Server对象。函数原型：$serv = new swoole_server(string $host, int $port = 0, int $mode = SWOOLE_PROCESS, int $sock_type = SWOOLE_SOCK_TCP);
-
-$host:指
+            这次我们首先一个类似IM的网络聊天室，服务器端使用websocket，客户端使用JS连接。
+1.Websocket服务器首先将服务器端代码写好1234567891011121314151617181920212223242526272829303132333435363738&lt;?php//创建Websocket服务器$ws = new swoole_websocket_server(&quo
         </p>
     </div>
 </article>
@@ -225,17 +224,17 @@ $host:指
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/02/14/offer2/" class="thumbnail">
+        <a href="/2018/02/20/swoole15/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/offer.png)" alt="剑指Offer算法记录(二)算法" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十五)异步文件写入" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/14/offer2/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/20/swoole15/">0</span>
     
 </span>
 
@@ -248,20 +247,19 @@ $host:指
             <div class="category">
             <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
             </div>
-            <div class="date"><time datetime="2018-02-14T10:24:24.000Z" itemprop="datePublished">2018-02-14</time></div>
+            <div class="date"><time datetime="2018-02-20T10:17:56.000Z" itemprop="datePublished">2018-02-20</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/02/14/offer2/">剑指Offer算法记录(二)算法</a>
+        <a href="/2018/02/20/swoole15/">Swoole(十五)异步文件写入</a>
         </h1>
     
 
         <p class="article-excerpt">
-            
-本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展
-第二章2.4 算法和数据操作排序和查找是面试时考查算法的重点，如二分查找、归并排序、快速排序等。递归和循环是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。
-位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算2.4.1 查找和排序查找不外乎：
+            Swoole增加了异步文件读写，异步DNS，异步Http/WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file_get_contents、stream、sockets、mysql、redis。
+
+1.(小文件)异步写文件：swoole_async_writefile提供了两种风格函数风格：swoole_async_writefile($
         </p>
     </div>
 </article>
@@ -278,17 +276,17 @@ $host:指
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/02/10/swoole1/" class="thumbnail">
+        <a href="/2018/02/20/swoole14/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(一)安装" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十四)异步文件读取" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/10/swoole1/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/20/swoole14/">0</span>
     
 </span>
 
@@ -301,22 +299,19 @@ $host:指
             <div class="category">
             <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
             </div>
-            <div class="date"><time datetime="2018-02-09T16:29:04.000Z" itemprop="datePublished">2018-02-10</time></div>
+            <div class="date"><time datetime="2018-02-20T10:17:51.000Z" itemprop="datePublished">2018-02-20</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/02/10/swoole1/">Swoole(一)安装</a>
+        <a href="/2018/02/20/swoole14/">Swoole(十四)异步文件读取</a>
         </h1>
     
 
         <p class="article-excerpt">
-            说到PHP异步网络通信框架，相信PHPer脑海里第一个浮现的便是Swoole。
+            Swoole增加了异步文件读写，异步DNS，异步Http/WebSocket客户端等特性。开发纯异步非阻塞IO的程序时，不能使用PHP自带的网络客户端，如curl、file_get_contents、stream、sockets、mysql、redis。
 
-商业应用：IM聊天、战旗TV、虎牙直播、YY语音等。
-应用领域：互联网、网络通信、企业软件、云计算、网络游戏、物理网等。
-特点：1.异步、并行、高性能2.纯C编写，接近应用底层3.php扩展
-应用：1.异步多线程服务器及客户端2.异步MySQL、Redis、数据库连接池、任务队列3.http/websocket服务器
+1.(小文件)异步读取文件内容：swoole_async_readfile提供了两种风格函数风格：swoole_async_readfile(
         </p>
     </div>
 </article>
@@ -329,17 +324,17 @@ $host:指
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/02/07/offer/" class="thumbnail">
+        <a href="/2018/02/20/swoole13/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/offer.png)" alt="剑指Offer算法记录(一)数据结构" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十三)DNS查询" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/07/offer/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/20/swoole13/">0</span>
     
 </span>
 
@@ -352,21 +347,325 @@ $host:指
             <div class="category">
             <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
             </div>
-            <div class="date"><time datetime="2018-02-07T08:20:05.000Z" itemprop="datePublished">2018-02-07</time></div>
+            <div class="date"><time datetime="2018-02-20T10:17:48.000Z" itemprop="datePublished">2018-02-20</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/02/07/offer/">剑指Offer算法记录(一)数据结构</a>
+        <a href="/2018/02/20/swoole13/">Swoole(十三)DNS查询</a>
         </h1>
     
 
         <p class="article-excerpt">
-            
-本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展
-第二章2.2.1 关于sizeof的小知识
-sizeof 对于空类型(无成员变量和成员函数)的实例 = 1字节：由于声明空类型的实例必须在内存中占用一定空间否则无法使用，占用多少内存由编译器决定，在VS中每个空类型实例占用1字节。
-sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数只需知道函数地址即可，函
+            Swoole有(异步)DNS查询功能(我也不知道为什么集成了)
+
+1.（异步）将域名解析为IP地址：swoole_async_dns_lookup函数原型：swoole_async_dns_lookup($domainName,callback function($host,$ip){});$domainName：传入的域名DNS查询完成：自动回调指定的callback函数。DNS查询失败：比如域
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/02/20/swoole12/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十二)锁机制" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/20/swoole12/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
+            </div>
+            <div class="date"><time datetime="2018-02-20T10:17:41.000Z" itemprop="datePublished">2018-02-20</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/02/20/swoole12/">Swoole(十二)锁机制</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            Swoole针对内存的其他提供了一系列的锁机制swoole_lock类支持5种锁的类型：
+
+文件锁 SWOOLE_FILELOCK
+读写锁 SWOOLE_RWLOCK
+信号量 SWOOLE_SEM
+互斥锁 SWOOLE_MUTEX
+自旋锁 SWOOLE_SPINLOCKTips：之前学习单例模式算法的时候，为了防止两个进程创建两个单例，就需要使用锁机制，C++/C#有private static 
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/02/20/swoole11/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十一)进程信号触发器" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/20/swoole11/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
+            </div>
+            <div class="date"><time datetime="2018-02-20T09:29:28.000Z" itemprop="datePublished">2018-02-20</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/02/20/swoole11/">Swoole(十一)进程信号触发器</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            Swoole具备进程管理模块，用来代替PHP的pcntl拓展。1.设置异步信号监听：swoole_process::signal函数原型：bool swoole_process::signal(int $signo, callable $callback);此方法基于signalfd和eventloop是异步IO，不能用于同步程序中同步阻塞的程序可以使用pcntl扩展提供的pcntl_signal
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/02/20/swoole10/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十)进程队列通信" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/20/swoole10/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
+            </div>
+            <div class="date"><time datetime="2018-02-20T09:25:28.000Z" itemprop="datePublished">2018-02-20</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/02/20/swoole10/">Swoole(十)进程队列通信</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            Swoole具备进程管理模块，用来代替PHP的pcntl拓展。
+
+1.投递数据到消息队列：swoole_process-&gt;push函数原型：bool swoole_process-&gt;push(string $data);$data：投递的数据，长度受限与操作系统内核参数的限制。默认为8192，最大不超过65536默认模式下（阻塞模式）：队列已满，push方法会阻塞等待非阻塞模式下：队列
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/02/19/swoole9/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(九)同步/异步进程" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/19/swoole9/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
+            </div>
+            <div class="date"><time datetime="2018-02-19T09:40:20.000Z" itemprop="datePublished">2018-02-19</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/02/19/swoole9/">Swoole(九)同步/异步进程</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            Swoole具备进程管理模块，用来代替PHP的pcntl拓展。Process进程是系统中十分昂贵的资源，创建进程消耗很大，可以使用vmstat指令查看系统每秒进程切换次数
+
+1.PHP自带pcntl拓展存在很多不足
+pcntl没有提供进程间通信的功能
+pcntl不支持重定向标准输入和输出
+pcntl只提供了fork这样原始的接口，容易使用错误
+swoole_process提供了比pcntl更强大的
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/02/18/swoole8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(八)同步TCP客户端" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/18/swoole8/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
+            </div>
+            <div class="date"><time datetime="2018-02-18T12:06:51.000Z" itemprop="datePublished">2018-02-18</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/02/18/swoole8/">Swoole(八)同步TCP客户端</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            创建一个TCP的同步客户端，可用于连接我们之前的实例TCP服务器
+
+1.函数讲解1.建立TCP客户端对象：$client = new swoole_client(SWOOLE_SOCK_TCP);2.连接到服务器使用客户端对象的connect方法，参数分别为服务器$ip、服务器端口号$port和连接超时时间$time1$client-&gt;connect(&apos;127.0.0.1&apos
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/02/18/swoole7/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(七)异步TCP服务器" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/02/18/swoole7/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
+            </div>
+            <div class="date"><time datetime="2018-02-18T11:14:06.000Z" itemprop="datePublished">2018-02-18</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/02/18/swoole7/">Swoole(七)异步TCP服务器</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            Swoole提供了异步任务处理的功能，可以投递一个异步任务到TaskWorker进程池中执行，不影响当前请求的处理速度。在Server程序中如果需要执行很耗时的操作，比如一个聊天服务器发送广播，Web服务器中发送邮件。如果直接去执行这些函数就会阻塞当前进程，导致服务器响应变慢。
+
+1.代码讲解1.创建TCP服务器：$serv = new swoole_server(“0.0.0.0”, 9501)
         </p>
     </div>
 </article>
@@ -377,6 +676,11 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
 
     </div></section>
 
+
+    <nav id="page-nav">
+        <span class="pages">第 1 页，共 2 页</span>
+        <span class="page-number current">1</span><a class="page-number" href="/archives/2018/02/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/02/page/2/">&raquo;</a>
+    </nav>
 
 
                         </div>
@@ -418,10 +722,10 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/15/swoole2/" class="thumbnail">
+                            <a href="/2018/02/21/swoole16/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(二)了解基本函数" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十六)实现一个长连接的网络聊天室" class="thumbnail-image"></span>
     
     
 </a>
@@ -430,18 +734,18 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/15/swoole2/" class="title">Swoole(二)了解基本函数</a></p>
-                            <p class="item-date"><time datetime="2018-02-14T17:55:02.000Z" itemprop="datePublished">2018-02-15</time></p>
+                            <p class="item-title"><a href="/2018/02/21/swoole16/" class="title">Swoole(十六)实现一个长连接的网络聊天室</a></p>
+                            <p class="item-date"><time datetime="2018-02-21T11:09:56.000Z" itemprop="datePublished">2018-02-21</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/14/offer2/" class="thumbnail">
+                            <a href="/2018/02/20/swoole15/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/offer.png)" alt="剑指Offer算法记录(二)算法" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十五)异步文件写入" class="thumbnail-image"></span>
     
     
 </a>
@@ -450,18 +754,18 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/14/offer2/" class="title">剑指Offer算法记录(二)算法</a></p>
-                            <p class="item-date"><time datetime="2018-02-14T10:24:24.000Z" itemprop="datePublished">2018-02-14</time></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole15/" class="title">Swoole(十五)异步文件写入</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:56.000Z" itemprop="datePublished">2018-02-20</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/10/swoole1/" class="thumbnail">
+                            <a href="/2018/02/20/swoole14/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(一)安装" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十四)异步文件读取" class="thumbnail-image"></span>
     
     
 </a>
@@ -470,18 +774,18 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/10/swoole1/" class="title">Swoole(一)安装</a></p>
-                            <p class="item-date"><time datetime="2018-02-09T16:29:04.000Z" itemprop="datePublished">2018-02-10</time></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole14/" class="title">Swoole(十四)异步文件读取</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:51.000Z" itemprop="datePublished">2018-02-20</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/07/offer/" class="thumbnail">
+                            <a href="/2018/02/20/swoole13/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/offer.png)" alt="剑指Offer算法记录(一)数据结构" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十三)DNS查询" class="thumbnail-image"></span>
     
     
 </a>
@@ -490,18 +794,18 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/07/offer/" class="title">剑指Offer算法记录(一)数据结构</a></p>
-                            <p class="item-date"><time datetime="2018-02-07T08:20:05.000Z" itemprop="datePublished">2018-02-07</time></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole13/" class="title">Swoole(十三)DNS查询</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:48.000Z" itemprop="datePublished">2018-02-20</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/01/31/cplusplus/" class="thumbnail">
+                            <a href="/2018/02/20/swoole12/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/cplusplus.png)" alt="C++基础语法" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十二)锁机制" class="thumbnail-image"></span>
     
     
 </a>
@@ -510,8 +814,8 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/01/31/cplusplus/" class="title">C++基础语法</a></p>
-                            <p class="item-date"><time datetime="2018-01-31T07:31:56.000Z" itemprop="datePublished">2018-01-31</time></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole12/" class="title">Swoole(十二)锁机制</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:41.000Z" itemprop="datePublished">2018-02-20</time></p>
                         </div>
                     </li>
                 
@@ -524,7 +828,7 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -534,7 +838,7 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -544,7 +848,7 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -554,7 +858,7 @@ sizeof 对于空类型+构造和析构函数的实例 = 1字节 ：调用函数�
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 20px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 20px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 15px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 20px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
         </div>
     </div>
 

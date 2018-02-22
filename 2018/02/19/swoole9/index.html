@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Swoole(九)同步/异步进程 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="php项目,swoole" />
+    
+    <meta name="description" content="Swoole具备进程管理模块，用来代替PHP的pcntl拓展。Process进程是系统中十分昂贵的资源，创建进程消耗很大，可以使用vmstat指令查看系统每秒进程切换次数  1.PHP自带pcntl拓展存在很多不足 pcntl没有提供进程间通信的功能 pcntl不支持重定向标准输入和输出 pcntl只提供了fork这样原始的接口，容易使用错误 swoole_process提供了比pcntl更强大的">
+<meta name="keywords" content="php项目,swoole">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swoole(九)同步&#x2F;异步进程">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/02/19/swoole9/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="Swoole具备进程管理模块，用来代替PHP的pcntl拓展。Process进程是系统中十分昂贵的资源，创建进程消耗很大，可以使用vmstat指令查看系统每秒进程切换次数  1.PHP自带pcntl拓展存在很多不足 pcntl没有提供进程间通信的功能 pcntl不支持重定向标准输入和输出 pcntl只提供了fork这样原始的接口，容易使用错误 swoole_process提供了比pcntl更强大的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/swoole.jpg">
+<meta property="og:updated_time" content="2018-02-20T09:36:35.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swoole(九)同步&#x2F;异步进程">
+<meta name="twitter:description" content="Swoole具备进程管理模块，用来代替PHP的pcntl拓展。Process进程是系统中十分昂贵的资源，创建进程消耗很大，可以使用vmstat指令查看系统每秒进程切换次数  1.PHP自带pcntl拓展存在很多不足 pcntl没有提供进程间通信的功能 pcntl不支持重定向标准输入和输出 pcntl只提供了fork这样原始的接口，容易使用错误 swoole_process提供了比pcntl更强大的">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/swoole.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-swoole9" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Swoole(九)同步/异步进程
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/02/19/swoole9/" class="article-date">
+            <time datetime="2018-02-19T09:40:20.000Z" itemprop="datePublished">2018-02-19</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/php项目/">php项目</a>, <a class="tag-link" href="/tags/swoole/">swoole</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="Swoole具备进程管理模块，用来代替PHP的pcntl拓展。"><a href="#Swoole具备进程管理模块，用来代替PHP的pcntl拓展。" class="headerlink" title="Swoole具备进程管理模块，用来代替PHP的pcntl拓展。"></a>Swoole具备进程管理模块，用来代替PHP的pcntl拓展。</h3><p>Process进程是系统中十分昂贵的资源，创建进程消耗很大，可以使用<strong>vmstat</strong>指令查看系统每秒进程切换次数<br><img src="/images/swoole.jpg" alt=""></p>
+<hr>
+<h3 id="1-PHP自带pcntl拓展存在很多不足"><a href="#1-PHP自带pcntl拓展存在很多不足" class="headerlink" title="1.PHP自带pcntl拓展存在很多不足"></a>1.PHP自带pcntl拓展存在很多不足</h3><ul>
+<li>pcntl没有提供<strong>进程间通信</strong>的功能</li>
+<li>pcntl<strong>不支持重定向标准输入和输出</strong></li>
+<li>pcntl只提供了<strong>fork这样原始的接口</strong>，容易使用错误</li>
+<li>swoole_process提供了比pcntl更强大的功能，更易用的<strong>API</strong>，使PHP在多进程编程方面更加轻松。</li>
+</ul>
+<hr>
+<h3 id="2-swoole-process提供了如下特性"><a href="#2-swoole-process提供了如下特性" class="headerlink" title="2.swoole_process提供了如下特性"></a>2.swoole_process提供了如下特性</h3><ul>
+<li>swoole_process提供了<strong>基于unixsock的进程间通信</strong>，使用很<strong>简单</strong>只需<strong>调用write/read或者push/pop</strong>即可</li>
+<li>swoole_process<strong>支持重定向标准输入和输出</strong>，在子进程内echo不会打印屏幕，而是<strong>写入管道</strong>，读键盘<em> 输入可以重定向为<em>*管道读取数据</em></em></li>
+<li>配合swoole_event模块，创建的PHP子进程可以<strong>异步的事件驱动模式</strong><br>swoole_process提供了<strong>exec接口</strong>，创建的进程可以执行其他程序，与原<strong>PHP父进程之间可以方便的通信</strong></li>
+</ul>
+<hr>
+<h3 id="3-创建进程：new-swoole-process"><a href="#3-创建进程：new-swoole-process" class="headerlink" title="3.创建进程：new swoole_process()"></a>3.创建进程：new swoole_process()</h3><p>函数原型：swoole_process::__construct(callable $function, $redirect_stdin_stdout = false, $create_pipe = true);<br>参数：</p>
+<ul>
+<li><strong>callable $function</strong>：<strong>子进程创建成功后要执行的函数</strong>，底层会自动将函数保存在<strong>对象的callback属性</strong>上，若要更改执行函数则可赋值新的函数在对象的callback属性。</li>
+<li><strong>$redirect_stdin_stdout</strong>：<strong>重定向子进程的标准输入输出</strong>，<strong>启动</strong>此选项后，子进程输出内容不是打印到屏幕而是<strong>写入主进程管道</strong>，读取键盘输入变成<strong>从管道中读取数据</strong>，默认为<strong>阻塞读取</strong>。</li>
+<li><strong>$create_pipe</strong>：<strong>是否创建管道</strong>，启动重定向后此项强制为1/true，如果子进程内没有进程间通信科设置为false。</li>
+<li>管道类型：0/false =&gt; 不创建管道，1/true =&gt; 管道类型将设置为SOCK_STREAM(流式)，2 =&gt; 管道类型将设置为SOCK_DGRAM(数据包)</li>
+</ul>
+<hr>
+<h3 id="4-启动进程：swoole-process-gt-start"><a href="#4-启动进程：swoole-process-gt-start" class="headerlink" title="4.启动进程：swoole_process-&gt;start"></a>4.启动进程：swoole_process-&gt;start</h3><p>执行<strong>fork系统调用</strong>，启动进程<br>函数原型：int swoole_process-&gt;start();<br>返回参数：创建成功返回<strong>子进程的PID</strong>，创建失败返回false<br>启动后可用属性：</p>
+<ul>
+<li><strong>$process-&gt;pid</strong>属性为子进程的PID</li>
+<li><strong>$process-&gt;pipe</strong>属性为管道的文件描述符</li>
+</ul>
+<hr>
+<h3 id="5-向管道写入数据：swoole-process-gt-write"><a href="#5-向管道写入数据：swoole-process-gt-write" class="headerlink" title="5.向管道写入数据：swoole_process-&gt;write"></a>5.向管道写入数据：swoole_process-&gt;write</h3><p>函数原型：int swoole_process-&gt;write(string $data);<br>参数：<strong>$data</strong>的长度在Linux系统下最大不超过8K，MacOS/FreeBSD下最大不超过2K<br>父/子进程调用write，子/父进程可调用read接收数据<br>同步模式：进程内未使用任何异步IO，则管道为<strong>同步阻塞</strong>模式，如果缓冲区满了，将阻塞直到write操作完成。如<strong>Task</strong>进程就是同步阻塞模式。<br>异步模式：进程内使用了异步IO，如<strong>swoole_event_add(进程事件)</strong>,进程内wirte操作变成异步模式，swoole底层会监听可写事件，自动完成管道写入。</p>
+<hr>
+<h3 id="6-从管道中读取数据：swoole-process-gt-read"><a href="#6-从管道中读取数据：swoole-process-gt-read" class="headerlink" title="6.从管道中读取数据：swoole_process-&gt;read"></a>6.从管道中读取数据：swoole_process-&gt;read</h3><p>函数原型：function swoole_process-&gt;read(int $buffer_size=8192) : string | bool;</p>
+<ul>
+<li><strong>$buffer_size</strong>是缓冲区的大小，默认为8192，最大不超过64K</li>
+<li><strong>管道类型为DGRAM数据报(2)</strong>时，read可以读取完整的一个数据包</li>
+<li><strong>管道类型为STREAM(1/true)</strong>时，read是流式的，需要自行处理包完整性问题</li>
+<li>读取<strong>成功</strong>返回<strong>二进制数据字符串</strong>，读取<strong>失败</strong>返回<strong>false</strong></li>
+</ul>
+<hr>
+<h3 id="7-添加进程事件：异步IO，swoole-event-add"><a href="#7-添加进程事件：异步IO，swoole-event-add" class="headerlink" title="7.添加进程事件：异步IO，swoole_event_add"></a>7.添加进程事件：异步IO，swoole_event_add</h3><p>swoole_event_add函数用于将一个socket加入到底层的reactor事件监听中。此函数可以用在Server或Client模式下。<br>函数原型：bool swoole_event_add(int $sock, mixed $read_callback, mixed $write_callback = null, int $flags = null);</p>
+<ul>
+<li><strong>int $sock</strong>：可以为一下三种类型<br><strong>1.int</strong>，就是<strong>文件描述符</strong>,包括swoole_client的socket,以及第三方扩展的socket（比如mysql）<br><strong>2.stream资源</strong>，就是<strong>stream_socket_client/fsockopen创建的资源</strong><br><strong>3.sockets资源</strong>，就是sockets扩展中<strong>socket_create创建的资源</strong>，需要在编译时加入 ./configure –enable-sockets</li>
+<li><strong>mixed $read_callback</strong>：可读回调函数</li>
+<li><strong>mixed $write_callback</strong>:可写事件回调，可以是字符串函数名、对象+方法、类静态方法或匿名函数，当此socket可读时回调指定的函数。</li>
+<li><strong>int $flags</strong>：事件类型的掩码，可选择关闭/开启可读可写事件，如SWOOLE_EVENT_READ，SWOOLE_EVENT_WRITE，或者SWOOLE_EVENT_READ | SWOOLE_EVENT_WRITE</li>
+</ul>
+<hr>
+<h3 id="8-创建同步进程"><a href="#8-创建同步进程" class="headerlink" title="8.创建同步进程"></a>8.创建同步进程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">//创建进程对应的执行函数</span><br><span class="line">function doProcess(swoole_process $worker)&#123;</span><br><span class="line">	var_dump($worker);</span><br><span class="line">	echo &quot;\n&quot;;</span><br><span class="line">	echo &quot;PID : &quot;.$worker-&gt;pid.&quot;\n&quot;;</span><br><span class="line">	sleep(5);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//创建进程 没有启动重定向</span><br><span class="line">$process = new swoole_process(&quot;doProcess&quot;);</span><br><span class="line">$pid = $process-&gt;start();</span><br><span class="line"></span><br><span class="line">//匿名函数创建进程(启动重定向)</span><br><span class="line">$process = new swoole_process(function (swoole_process $process) &#123;</span><br><span class="line">    $process-&gt;write(&apos;Hello&apos;);</span><br><span class="line">&#125;, true);</span><br><span class="line">$process-&gt;start();</span><br><span class="line">sleep(10);</span><br><span class="line">echo $process-&gt;read();  //从管道输出</span><br><span class="line"></span><br><span class="line">//等待结束，关闭子进程(若不等待结束，容易出现僵尸进程)</span><br><span class="line">swoole_process::wait();</span><br></pre></td></tr></table></figure>
+<p>将脚本上传至服务器并启动，可以看到，<strong>无重定向</strong>打印了$worker的内容和PID，<strong>重定向</strong>输出了Hello<br><img src="/images/swoole9.png" alt=""></p>
+<hr>
+<h3 id="9-创建异步进程"><a href="#9-创建异步进程" class="headerlink" title="9.创建异步进程"></a>9.创建异步进程</h3><p>因为子进程会继承父进程的内存和IO句柄，所以如果父进程要创建多个子进程，<strong>务必要等待创建完毕后</strong>再使用swoole_event_add/异步swoole_client/定时器/信号等异步IO函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">//进程池 存储进程</span><br><span class="line">$workers = [];  </span><br><span class="line">//进程数量</span><br><span class="line">$worker_num = 3;</span><br><span class="line"></span><br><span class="line">//创建并启动进程</span><br><span class="line">for($i=0;$i&lt;$worker_num;$i++)&#123;</span><br><span class="line">	$process = new swoole_process(&apos;doProcess&apos;);  //创建单独新进程</span><br><span class="line">	$pid = $process-&gt;start();  //启动进程并获取进程ID</span><br><span class="line">	$workers[$pid] = $process;  //将进程存入进程池</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//编写进程执行函数</span><br><span class="line">function doProcess(swoole_process $process)&#123;</span><br><span class="line">	$process-&gt;write(&quot;PID : (&quot;.$process-&gt;pid.&quot;)\t CallbackFunction(&quot;.$process-&gt;callback .&quot;)&quot;.PHP_EOL);</span><br><span class="line">    echo &quot;Write Msg : PID(&quot;.$process-&gt;pid.&quot;)\t CallbackFunction(&quot;.$process-&gt;callback .&quot;)&quot;.PHP_EOL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//添加进程事件 向每个子进程添加需要执行的事件</span><br><span class="line">foreach ($workers as $process) &#123;</span><br><span class="line">	//子进程也会包含此事件</span><br><span class="line">	swoole_event_add($process-&gt;pipe,function($pipe) use($process)&#123;</span><br><span class="line">		$data = $process-&gt;read();</span><br><span class="line">		echo &quot;Receive Msg : &quot;.$data.PHP_EOL;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>将脚本上传至服务器并启动，可以看到成功将PID和Callback函数写入管道并且读出来了<br><img src="/images/swoole91.png" alt=""></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/02/20/swoole10/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Swoole(十)进程队列通信
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/02/18/swoole8/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Swoole(八)同步TCP客户端</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/21/swoole16/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十六)实现一个长连接的网络聊天室" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/21/swoole16/" class="title">Swoole(十六)实现一个长连接的网络聊天室</a></p>
+                            <p class="item-date"><time datetime="2018-02-21T11:09:56.000Z" itemprop="datePublished">2018-02-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/20/swoole15/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十五)异步文件写入" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole15/" class="title">Swoole(十五)异步文件写入</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:56.000Z" itemprop="datePublished">2018-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/20/swoole14/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十四)异步文件读取" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole14/" class="title">Swoole(十四)异步文件读取</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:51.000Z" itemprop="datePublished">2018-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/20/swoole13/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十三)DNS查询" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole13/" class="title">Swoole(十三)DNS查询</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:48.000Z" itemprop="datePublished">2018-02-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/20/swoole12/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十二)锁机制" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/02/20/swoole12/" class="title">Swoole(十二)锁机制</a></p>
+                            <p class="item-date"><time datetime="2018-02-20T10:17:41.000Z" itemprop="datePublished">2018-02-20</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 15px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 20px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/02/19/swoole9/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
