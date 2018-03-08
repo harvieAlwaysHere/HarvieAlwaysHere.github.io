@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JS（三）HTML DOM对象 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaScript,Web前端" />
+    
+    <meta name="description" content="JS中若要动态改变页面信息和与用户交互，几乎都要使用HTML DOM对象 HTML DOM对象通过DOM，JS可以创建动态的HTML，如  改变页面中所有HTML元素(改变内容属性等) 改变页面中所有CSS样式 对页面中所有HTML DOM事件作出响应 对页面中所有HTML元素添加删除  JS HTML DOM-查找HTML元素1.使用元素Id(最常用)：document.getElementBy">
+<meta name="keywords" content="JavaScript,Web前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS（三）HTML DOM对象">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/02/26/js3/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="JS中若要动态改变页面信息和与用户交互，几乎都要使用HTML DOM对象 HTML DOM对象通过DOM，JS可以创建动态的HTML，如  改变页面中所有HTML元素(改变内容属性等) 改变页面中所有CSS样式 对页面中所有HTML DOM事件作出响应 对页面中所有HTML元素添加删除  JS HTML DOM-查找HTML元素1.使用元素Id(最常用)：document.getElementBy">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/js.jpg">
+<meta property="og:updated_time" content="2018-02-27T07:57:58.195Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS（三）HTML DOM对象">
+<meta name="twitter:description" content="JS中若要动态改变页面信息和与用户交互，几乎都要使用HTML DOM对象 HTML DOM对象通过DOM，JS可以创建动态的HTML，如  改变页面中所有HTML元素(改变内容属性等) 改变页面中所有CSS样式 对页面中所有HTML DOM事件作出响应 对页面中所有HTML元素添加删除  JS HTML DOM-查找HTML元素1.使用元素Id(最常用)：document.getElementBy">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/js.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-js3" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JS（三）HTML DOM对象
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/02/26/js3/" class="article-date">
+            <time datetime="2018-02-26T07:49:29.000Z" itemprop="datePublished">2018-02-26</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Web前端/">Web前端</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="JS中若要动态改变页面信息和与用户交互，几乎都要使用HTML-DOM对象"><a href="#JS中若要动态改变页面信息和与用户交互，几乎都要使用HTML-DOM对象" class="headerlink" title="JS中若要动态改变页面信息和与用户交互，几乎都要使用HTML DOM对象"></a>JS中若要动态改变页面信息和与用户交互，几乎都要使用HTML DOM对象</h3><p><img src="/images/js.jpg" alt=""></p>
+<h3 id="HTML-DOM对象"><a href="#HTML-DOM对象" class="headerlink" title="HTML DOM对象"></a>HTML DOM对象</h3><p><img src="/images/js14.png" alt=""><br>通过DOM，JS可以创建动态的HTML，如</p>
+<ul>
+<li>改变页面中所有<strong>HTML元素(改变内容属性等)</strong></li>
+<li>改变页面中所有<strong>CSS样式</strong></li>
+<li>对页面中所有<strong>HTML DOM事件作出响应</strong></li>
+<li>对页面中所有<strong>HTML元素添加删除</strong></li>
+</ul>
+<h3 id="JS-HTML-DOM-查找HTML元素"><a href="#JS-HTML-DOM-查找HTML元素" class="headerlink" title="JS HTML DOM-查找HTML元素"></a>JS HTML DOM-查找HTML元素</h3><p>1.使用元素Id<font color="red">(最常用)</font>：document.getElementById(id)<br>2.使用标签名TagName：document.getElementsByTagName(tagName)<br>3.使用类名CalssName：document.getElementsByClassName(className)</p>
+<h3 id="JS-HTML-DOM-改变HTML"><a href="#JS-HTML-DOM-改变HTML" class="headerlink" title="JS HTML DOM-改变HTML"></a>JS HTML DOM-改变HTML</h3><p>改变HTML输出流：<strong>document.write()</strong>用于直接向HTML输出流写内容<br>改变HTML内容：通过改变HTML元素的<strong>innerHTML属性</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(id).innerHTML=newHTML;</span><br></pre></td></tr></table></figure><br>改变HTML属性：通过改变HTML元素的<strong>attribute属性</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(id).attribute=newValue;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JS-HTML-DOM-改变CSS"><a href="#JS-HTML-DOM-改变CSS" class="headerlink" title="JS HTML DOM-改变CSS"></a>JS HTML DOM-改变CSS</h3><p>改变HTML样式：通过改变HTML元素的<strong>style子属性</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//document.getElementById(id).style.property=newValue;</span><br><span class="line">document.getElementById(&quot;p1&quot;).style.color=&quot;blue&quot;;</span><br><span class="line">document.getElementById(&quot;p1&quot;).style.visibility=&quot;hidden&quot;; //元素隐藏</span><br><span class="line">document.getElementById(&quot;p1&quot;).style.visibility=&quot;visible&quot;; //元素显示</span><br><span class="line">改变</span><br></pre></td></tr></table></figure></p>
+<h3 id="JS-HTML-DOM-事件响应"><a href="#JS-HTML-DOM-事件响应" class="headerlink" title="JS HTML DOM-事件响应"></a>JS HTML DOM-事件响应</h3><p>我们可以在事件发生时执行JavaScript，如用户点击、移动鼠标、提交HTML表单等。<br>为<strong>HTML事件属性</strong>添加JS代码：<strong>onEvent=JSCode</strong><br><strong>onEvent(HTML事件属性)</strong>：</p>
+<ul>
+<li><strong>onload/onunload</strong>事件：在用户进入或离开页面时被触发，可用于检测访问者浏览器类型和版本用于加载网页的正确版本，可用于处理cookie</li>
+<li><strong>onchange</strong>事件：在用户改变输入字段（文本框的文本，选择框的选项等）被触发，可用于对输入字段的验证检测</li>
+<li><strong>onmouseover/onmouseout</strong>事件：用户鼠标进入或离开HTML元素时触发</li>
+<li><strong>onmousedown/onmouseup/onclick</strong>事件：用户点击鼠标/释放鼠标/完成点击HTML元素时被触发</li>
+<li><strong>onfocus</strong>事件：输入字段获得焦点时被触发<br>更多DOM对象事件可查看<a href="http://www.runoob.com/jsref/dom-obj-event.html" target="_blank" rel="noopener">这里</a></li>
+</ul>
+<p><strong>JSCode</strong>：可以直接JS代码，也可以是JS函数，参数可传递(this)</p>
+<h3 id="JS-HTML-DOM-EventListener监听事件"><a href="#JS-HTML-DOM-EventListener监听事件" class="headerlink" title="JS HTML DOM-EventListener监听事件"></a>JS HTML DOM-EventListener监听事件</h3><p><strong>addEventListener()</strong>用于向指定HTML元素添加事件句柄，新添加的事件句柄不会覆盖已存在的事件句柄，可向一个元素添加多个无论是否是同类型的时间句柄<br>语法：<strong>element.addEventListener(event, function, useCapture);</strong><br>event：事件类型，如”click”/“mousedown”，不使用on前缀<br>function：事件触发的回调函数<br>useCapture：布尔值，描述事件是<strong>冒泡还是捕获</strong>，可选参数<br><img src="/images/js15.png" alt=""></p>
+<p><strong>removeEventListener()</strong>：用于移除事件的监听<br>语法：element.removeEventListener(event, function);<br>event：移除的事件类型<br>function：移除的回调函数</p>
+<h3 id="JS-HTML-DOM-添加删除HTML元素"><a href="#JS-HTML-DOM-添加删除HTML元素" class="headerlink" title="JS HTML DOM-添加删除HTML元素"></a>JS HTML DOM-添加删除HTML元素</h3><p><strong>创建HTML元素</strong>：创建该元素（元素节点），然后向一个已存在的元素追加该元素，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var element=document.getElementById(&quot;div1&quot;);  //找到已存在的元素</span><br><span class="line">var para=document.createElement(&quot;p&quot;);         //创建新元素</span><br><span class="line">var node=document.createTextNode(&quot;这是一个新段落。&quot;); //创建文本节点</span><br><span class="line">para.appendChild(node);   //为新元素添加文本节点</span><br><span class="line">element.appendChild(para);  //向已存在的元素添加新元素节点</span><br></pre></td></tr></table></figure><br><strong>删除HTML元素</strong>：找到需要删除的元素和它的父元素才能删除该元素，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var child=document.getElementById(&quot;p1&quot;);  //找到需要删除的元素</span><br><span class="line">var parent=document.getElementById(&quot;div1&quot;);    //找到需要删除的元素的父元素</span><br><span class="line">parent.removeChild(child);     //删除元素</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/02/27/js4/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            JS（四）JS常用对象
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/02/26/js2/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">JS（二）HTML 浏览器BOM对象</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/06/redis4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(四)Redis-PHP实战" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/06/redis4/" class="title">Redis(四)Redis-PHP实战</a></p>
+                            <p class="item-date"><time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity3/" class="title">webSecurity3</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:41.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity2/" class="title">webSecurity2</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:36.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/web.jpg)" alt="WEB信息系统安全（一）概念与内涵" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity1/" class="title">WEB信息系统安全（一）概念与内涵</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:31.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/redis3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(三)PHP操作Redis" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/redis3/" class="title">Redis(三)PHP操作Redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T07:49:05.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 12.5px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 17.5px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/02/26/js3/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

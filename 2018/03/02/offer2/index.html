@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>剑指Offer算法记录(二)算法 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="算法" />
+    
+    <meta name="description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展 第二章2.4 算法和数据操作排序和查找是面试时考查算法的重点，如二分查找、归并排序、快速排序等。递归和循环是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。 位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算2.4.1 查找和排序查找不外乎：">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指Offer算法记录(二)算法">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/03/02/offer2/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展 第二章2.4 算法和数据操作排序和查找是面试时考查算法的重点，如二分查找、归并排序、快速排序等。递归和循环是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。 位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算2.4.1 查找和排序查找不外乎：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/offer.png">
+<meta property="og:updated_time" content="2018-03-02T09:29:23.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="剑指Offer算法记录(二)算法">
+<meta name="twitter:description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展 第二章2.4 算法和数据操作排序和查找是面试时考查算法的重点，如二分查找、归并排序、快速排序等。递归和循环是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。 位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算2.4.1 查找和排序查找不外乎：">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/offer.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-offer2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        剑指Offer算法记录(二)算法
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/02/offer2/" class="article-date">
+            <time datetime="2018-03-02T09:06:07.000Z" itemprop="datePublished">2018-03-02</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/images/offer.png" alt=""></p>
+<h3 id="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展"><a href="#本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展" class="headerlink" title="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展"></a>本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展</h3><hr>
+<h3 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h3><h4 id="2-4-算法和数据操作"><a href="#2-4-算法和数据操作" class="headerlink" title="2.4 算法和数据操作"></a>2.4 算法和数据操作</h4><p><strong>排序和查找</strong>是面试时考查算法的重点，如二分查找、归并排序、快速排序等。<br><strong>递归和循环</strong>是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。</p>
+<h2 id="位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算"><a href="#位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算" class="headerlink" title="位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算"></a><strong>位运算</strong>可以看做一类特殊的算法，共有<strong>与、或、异或、左移和右移</strong>五种位运算</h2><h4 id="2-4-1-查找和排序"><a href="#2-4-1-查找和排序" class="headerlink" title="2.4.1 查找和排序"></a>2.4.1 查找和排序</h4><p>查找不外乎：顺序查找、二分查找、哈希表查找和二叉排序树查找，无论用递归还是循环都需要掌握这些查找方法的实现。<br>排序则复杂一些：插入排序、冒泡排序、归并排序、快速排序等不同算法的优劣，能够从<strong>额外空间消耗、平均时间复杂度和最差时间复杂度等</strong>方面去比较它们的优缺点。<br>值得一提的是，<strong>快速排序</strong>的实现代码是面试官钟爱的。<br>快速排序思路:选择一个数字(有多种选择法)，接下来把数组中的数字分成两部分，比选择的数字小的数字移到数组的左边，比选择数字大的数字移到数组右边<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">int Partition(int data[], int length, int start, int end)//分区</span><br><span class="line">&#123;</span><br><span class="line">  if(data==NULL || length&lt;=0 || start&lt;0 || end&gt;=length)  //输入参数有效行检验</span><br><span class="line">    throw new std::exception(&quot;Invalid Parameters&quot;);</span><br><span class="line"> </span><br><span class="line">  int index = RandomInRange(start,end);  //函数RandomInRange生成[start,end]的随机数index为基准数</span><br><span class="line">  Swap(&amp;data[index], &amp;data[end]);        //将基准数放在最后</span><br><span class="line"></span><br><span class="line">  int small = start-1;     //small位置表示小于基准数的值要填入的位置</span><br><span class="line">  for(index=start; index&lt;end; index++)  //从start开始寻找小于基准数的值</span><br><span class="line">  &#123;</span><br><span class="line">    if(data[index]&lt;data[end])     //如果找到一个小于基准数的值</span><br><span class="line">    &#123;</span><br><span class="line">      small++;      //先small++锁定数组的前部分位置</span><br><span class="line">      if(small!=index) Swap(&amp;data[index], &amp;data[small]);   </span><br><span class="line">      //若small位置等于index位置，证明index位置的值是处于正确位置上不需要交换</span><br><span class="line">      //否则证明index位置上的值小于基准数还不处于small位置上，需要交换到small位置上</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  small++;  </span><br><span class="line">  Swap(&amp;data[small], &amp;data[end]);  //最后将基准数与small++位置上的值交换，分区完成</span><br><span class="line"></span><br><span class="line">  return small; //返回基准数的位置，此时small左边为小于基准数的值，small右边为大于基准数的值</span><br><span class="line">&#125;</span><br><span class="line">//递归调用分区函数即为快速排序</span><br><span class="line">void QuickSort(int data[],int length,int,start,int end)</span><br><span class="line">&#123;</span><br><span class="line">  if(start==end) return;   //直到分区为一个数即为排好序了</span><br><span class="line">  </span><br><span class="line">  int index=Partition(data,length,start,end);</span><br><span class="line">  if(index&gt;start) QuickSort(data,length,start,index-1);</span><br><span class="line">  if(index&lt;end) QuickSort(data,length,index+1,end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/02/suanfa1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            数据结构与算法总结（一） 排序
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/02/27/js4/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">JS（四）JS常用对象</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/06/redis4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(四)Redis-PHP实战" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/06/redis4/" class="title">Redis(四)Redis-PHP实战</a></p>
+                            <p class="item-date"><time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity3/" class="title">webSecurity3</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:41.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity2/" class="title">webSecurity2</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:36.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/web.jpg)" alt="WEB信息系统安全（一）概念与内涵" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity1/" class="title">WEB信息系统安全（一）概念与内涵</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:31.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/redis3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(三)PHP操作Redis" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/redis3/" class="title">Redis(三)PHP操作Redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T07:49:05.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 12.5px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 17.5px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/03/02/offer2/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

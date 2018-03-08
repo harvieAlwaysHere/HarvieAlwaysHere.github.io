@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JS（一）基本语法 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaScript,Web前端" />
+    
+    <meta name="description" content="JavaScript 是一种轻量级的脚本编程语言，是可插入 HTML 页面的编程代码，几乎可由所有的现代浏览器执行。 JavaScript能做什么？12345678910111213141516171819202122232425262728293031323334353637383940414243//1.直接写入 HTML输出流document.write(&amp;quot;&amp;lt;h1&amp;gt;这是">
+<meta name="keywords" content="JavaScript,Web前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS（一）基本语法">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/02/25/js1/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="JavaScript 是一种轻量级的脚本编程语言，是可插入 HTML 页面的编程代码，几乎可由所有的现代浏览器执行。 JavaScript能做什么？12345678910111213141516171819202122232425262728293031323334353637383940414243//1.直接写入 HTML输出流document.write(&amp;quot;&amp;lt;h1&amp;gt;这是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/js.jpg">
+<meta property="og:updated_time" content="2018-02-27T07:57:38.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS（一）基本语法">
+<meta name="twitter:description" content="JavaScript 是一种轻量级的脚本编程语言，是可插入 HTML 页面的编程代码，几乎可由所有的现代浏览器执行。 JavaScript能做什么？12345678910111213141516171819202122232425262728293031323334353637383940414243//1.直接写入 HTML输出流document.write(&amp;quot;&amp;lt;h1&amp;gt;这是">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/js.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-js1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JS（一）基本语法
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/02/25/js1/" class="article-date">
+            <time datetime="2018-02-25T03:28:57.000Z" itemprop="datePublished">2018-02-25</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Web前端/">Web前端</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="JavaScript-是一种轻量级的脚本编程语言，是可插入-HTML-页面的编程代码，几乎可由所有的现代浏览器执行。"><a href="#JavaScript-是一种轻量级的脚本编程语言，是可插入-HTML-页面的编程代码，几乎可由所有的现代浏览器执行。" class="headerlink" title="JavaScript 是一种轻量级的脚本编程语言，是可插入 HTML 页面的编程代码，几乎可由所有的现代浏览器执行。"></a>JavaScript 是一种轻量级的脚本编程语言，是可插入 HTML 页面的编程代码，几乎可由所有的现代浏览器执行。</h3><p><img src="/images/js.jpg" alt=""></p>
+<p>JavaScript能做什么？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">//1.直接写入 HTML输出流</span><br><span class="line">document.write(&quot;&lt;h1&gt;这是一个标题&lt;/h1&gt;&quot;);</span><br><span class="line"></span><br><span class="line">//2.对事件的反应函数</span><br><span class="line">&lt;button type=&quot;button&quot; onclick=&quot;alert(&apos;欢迎!&apos;)&quot;&gt;点我!&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">//3.改变HTML内容样式（DOM (Document Object Model)（文档对象模型））</span><br><span class="line">&lt;script&gt;</span><br><span class="line">function myFunction()</span><br><span class="line">&#123;</span><br><span class="line">	x=document.getElementById(&quot;demo&quot;);  // 找到元素</span><br><span class="line">	x.innerHTML=&quot;Hello JavaScript!&quot;;    // 改变内容</span><br><span class="line">	x.style.color=&quot;#ff0000&quot;;          // 改变样式</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">//4.改变HTML图像</span><br><span class="line">&lt;script&gt;</span><br><span class="line">function changeImage()</span><br><span class="line">&#123;</span><br><span class="line">	element=document.getElementById(&apos;myimage&apos;)</span><br><span class="line">	if (element.src.match(&quot;bulbon&quot;))</span><br><span class="line"> 	&#123;</span><br><span class="line">  		element.src=&quot;/images/pic_bulboff.gif&quot;;</span><br><span class="line">  	&#125;</span><br><span class="line">	else</span><br><span class="line">   &#123;</span><br><span class="line">  		element.src=&quot;/images/pic_bulbon.gif&quot;;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">//5.验证输入</span><br><span class="line">&lt;script&gt;</span><br><span class="line">function myFunction()</span><br><span class="line">&#123;</span><br><span class="line">	var x=document.getElementById(&quot;demo&quot;).value;</span><br><span class="line">	if(x==&quot;&quot;||isNaN(x))</span><br><span class="line">	&#123;</span><br><span class="line">		alert(&quot;不是数字&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JS用法"><a href="#JS用法" class="headerlink" title="JS用法"></a>JS用法</h3><p>JS需要被放置在<strong>&lt; script&gt;标签</strong>内<br>&lt; script&gt;标签可位于<strong><head>或者</head><body>标签</body></strong>内<br>我们可以<strong>直接在&lt; script&gt;标签内编写JS代码</strong>或者<strong>使用&lt; script src=”xxx.js”&gt;引用外部JS代码</strong><br>Tips：有些老旧的实例可能会在&lt; script&gt;便签中使用<strong>type=”text/javascript”</strong>，现在已经不必了，因为JS已经是所有现代浏览器和HTML5中默认的脚本语言了</p>
+<h3 id="JS输出"><a href="#JS输出" class="headerlink" title="JS输出"></a>JS输出</h3><p>有不同方式输出，大致有四种<br>1.使用<strong>window.alert()</strong>弹出警告栏<br>2.使用<strong>document.write()</strong>将内容写入HTML文档中(页面加载前)<br>3.使用<strong>x.innerHTML</strong>写入x元素的HTML内容<br>4.使用<strong>console.log()</strong>写入浏览器的控制台<br>Tips：console.log()用于调试JS是十分方便的，因为它可以<strong>显示结构化的数据</strong>，如Array、Object可以看到数组和对象的内容，而且<strong>不会打断页面操作</strong>，页面可以继续执行接下来的操作</p>
+<h3 id="JS语法"><a href="#JS语法" class="headerlink" title="JS语法"></a>JS语法</h3><p><strong>JS字面量</strong>：固定值，如</p>
+<ul>
+<li><strong>数字(Number)</strong>：整数小数科学计数，314,3.14,123e5**</li>
+<li><strong>字符串(String)</strong>：单引号双引号字符，’Harvie’,”Harvie”</li>
+<li><strong>表达式字面量</strong>：带运算符，5+6，5*6</li>
+<li><strong>数组(Array)</strong>：[40,50,60]</li>
+<li><strong>对象(Object)</strong>：{firstName:”Harvie”,lastName:”Ryan”,age:50}</li>
+<li><strong>函数(function)</strong>：function myfunction(a,b){return a*b}</li>
+</ul>
+<p><strong>JS变量</strong>：存储数据值，使用关键字<strong>var</strong>声明变量，使用<strong>=</strong>为变量赋值</p>
+<p><strong>JS操作符</strong>：分为<strong>赋值/算数/位运算符(=,+,-,*,/)</strong>和<strong>条件/比较/逻辑运算符(==,!=,&lt;,&gt;)</strong></p>
+<p><strong>JS语句</strong>：向浏览器发出命令，用<strong>;(分号)</strong>分隔</p>
+<p><strong>JS注释</strong>：不是命令的语句，用<strong>//(双斜杠)</strong>分隔</p>
+<p><strong>JS数据类型</strong>：数字、字符串、数组、对象等，使用相应的字面量赋值，是<strong>弱类型的</strong>，都是通过var声明</p>
+<p><strong>JS大小写和字符集</strong>：JS对于<strong>大小写敏感</strong>，使用<strong>Unicode字符集</strong></p>
+<h3 id="JS语句"><a href="#JS语句" class="headerlink" title="JS语句"></a>JS语句</h3><p>JavaScript语句通常以一个<strong>语句标识符</strong>为开始，并执行该语句，如下。<br><img src="/images/js11.png" alt=""></p>
+<h3 id="JS注释"><a href="#JS注释" class="headerlink" title="JS注释"></a>JS注释</h3><p>//…单行注释，/<em>…</em>/多行注释，…//行末注释</p>
+<h3 id="JS变量"><a href="#JS变量" class="headerlink" title="JS变量"></a>JS变量</h3><p>变量是用于存储信息的”容器”，可以使用短名称(x,y)，也可以使用描述性名称(age,num),但是要符合一下规则<br><img src="/images/js12.png" alt=""><br>Tips：如果重新声明 JavaScript 变量，该变量的值不会丢失，如var x=1;var x;，x的值仍为1<br>Tips：<strong>let变量</strong>，<strong>作用域被限制在块级</strong>中的变量、语句或者表达式，在Function中局部变量使用let变量可避免变量名冲突，<strong>var变量作用域是整个封闭函数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function varTest() &#123;</span><br><span class="line">  var x = 1;</span><br><span class="line">  if (true) &#123;</span><br><span class="line">    var x = 2;  // 同样的变量  </span><br><span class="line">    console.log(x); //2 </span><br><span class="line">  &#125;</span><br><span class="line">  console.log(x);   // 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function letTest() &#123;</span><br><span class="line">  let x = 1;</span><br><span class="line">  if (true) &#123;</span><br><span class="line">    let x = 2;  // 不同的变量    </span><br><span class="line">    console.log(x);  // 2  </span><br><span class="line">  &#125;</span><br><span class="line">  console.log(x);    // 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JS数据类型"><a href="#JS数据类型" class="headerlink" title="JS数据类型"></a>JS数据类型</h3><p><img src="/images/js13.png" alt=""><br>JS拥有<strong>动态类型</strong>，声明的变量类型均为<strong>弱类型</strong>，可随意切换，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var x; x=1; x=&quot;HARVIE&quot;; x=[1,2,3];</span><br></pre></td></tr></table></figure><br>JS<strong>字符串</strong>中使用单引号和双引号需要使用<strong>+引号</strong>，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var x=&quot;His name is \&quot;Harvie\&quot;&quot;;</span><br></pre></td></tr></table></figure><br>JS只有一种<strong>数字</strong>类型，可以带小数点，可以使用科学计数(e)，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var x=314; x=3.14; x=314e-2;</span><br></pre></td></tr></table></figure><br>JS<strong>布尔</strong>类型只有两个值，true或者false<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var x=true; var y=false;</span><br></pre></td></tr></table></figure></p>
+<p>JS<strong>对象和数组</strong>：详情见<a href="harviealwayshere.github.io/2018/02/26/js2/">博文JS（二）</a><br>JS<strong>空类型</strong><br><strong>Undefined</strong>表示变量<strong>不含有值</strong>，如变量刚声明时为Undefined<br><strong>Null</strong>表示变量为空，可通过<strong>将变量的值设为null</strong>来<strong>清空变量</strong></p>
+<h3 id="JS函数"><a href="#JS函数" class="headerlink" title="JS函数"></a>JS函数</h3><p>由事件驱动的或者当它被调用时执行的可重复使用的，使用关键词<strong>function</strong>，包裹在<strong>{ }</strong>中的代码块</p>
+<h3 id="JS作用域"><a href="#JS作用域" class="headerlink" title="JS作用域"></a>JS作用域</h3><p><strong>局部作用域</strong>：变量在函数内声明，变量为局部作用域，只能在函数内部访问<br><strong>全局作用域</strong>：变量在函数外声明即为全局变量，若<strong>变量在函数内没有声明(没有使用var关键字)</strong>，该变量自动升级为<strong>全局变量</strong><br><strong>HTML中的全局变量</strong>：在HTML中，<font color="red">所有全局变量都属于window对象</font><br>，都可以使用<strong>window.变量名</strong>访问<br><strong>let关键字</strong>变量：可将变量作用域限制在当前代码块中<br><strong>const关键字</strong>变量：所声明的是常量，其值不可以更改</p>
+<h3 id="JS字符串"><a href="#JS字符串" class="headerlink" title="JS字符串"></a>JS字符串</h3><p>用于存储一系列字符，用<strong>单引号或双引号</strong>包裹<br>可以在字符串中<strong>添加转义字符</strong>来使用引号等符号，如var x = ‘It\’s alright’;<br><img src="/images/js16.png" alt=""><br>可以使用内置属性<strong>length</strong>来计算字符串长度，如x.length;更多字符串方法可以看<a href="http://www.runoob.com/jsref/jsref-obj-string.html" target="_blank" rel="noopener">这里</a></p>
+<h3 id="JS条件语句"><a href="#JS条件语句" class="headerlink" title="JS条件语句"></a>JS条件语句</h3><p><img src="/images/js17.png" alt=""></p>
+<h3 id="JS循环语句"><a href="#JS循环语句" class="headerlink" title="JS循环语句"></a>JS循环语句</h3><p><img src="/images/js18.png" alt=""><br>介绍一下<strong>For/In循环</strong>，主要用来遍历对象的属性(name+value)，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var Person=&#123;firstName:&quot;John&quot;, lastName:&quot;Doe&quot;, id:5566&#125;;</span><br><span class="line">var txt=&quot;&quot;;</span><br><span class="line">for (x in Person)&#123;</span><br><span class="line">  txt=txt+x+&quot;=&gt;&quot;+Person[x]+&quot;\n&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JS-typeof操作符"><a href="#JS-typeof操作符" class="headerlink" title="JS typeof操作符"></a>JS typeof操作符</h3><p><strong>typeof</strong>操作符：用于检测变量的数据类型，如typeof x，返回x的数据类型<br><strong>null</strong>：JS中一个只有一个值的数据类型，表示一个<strong>空对象的引用</strong>，typeof null为object，可以将<strong>对象</strong>设为null来<strong>清空对象</strong><br><strong>undefined</strong>：JS中一个没有设置值的变量，typeof undefined为undefined，可以将<strong>任何变量</strong>设置为undefined来<strong>清空变量</strong><br>Tips：<strong>instanceof</strong>用于<strong>判断对象具体类型</strong>，如var result = objectName instanceof objectType，若objectName属于ObjectType类型则返回true，否则返回false</p>
+<h3 id="JS类型转换"><a href="#JS类型转换" class="headerlink" title="JS类型转换"></a>JS类型转换</h3><p>JS有5种数据类型：string/number/boolean/object/function<br>3种对象类型：Object/Date/Array<br>2个不包含任何值的类型：null/undefined<br>Tips:NaN指示该值不是数字值，某些<strong>算数运算</strong>(如求负数平方根)结果或者<strong>类型转换</strong>结果(parseInt()/parseFloat())，可用<strong>isNaN()</strong>判断一个值是否是NaN值<br>Tips:数组Array/日期Date/null的数据类型均是object</p>
+<p><strong>变量的constructor属性</strong>：<strong>返回所有JS变量的构造函数</strong>，可用来判断对象是否为数组、日期，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function isArray(myArray) &#123;</span><br><span class="line">    return myArray.constructor.toString().indexOf(&quot;Array&quot;) &gt; -1;</span><br><span class="line">&#125;</span><br><span class="line">function isDate(myDate) &#123;</span><br><span class="line">    return myDate.constructor.toString().indexOf(&quot;Date&quot;) &gt; -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>JS变量的类型转换</strong>：有2种方法，1.通过使用<strong>JS函数</strong>，2.通过JS的自身<strong>自动转换</strong><br><strong>JS函数：</strong><br>全局方法<strong>String()</strong>可将变量转为字符串，如Srting(123)/String(false)/String(new Date())<br>全局方法<strong>Number()</strong>可将变量转为数字，如Number(“3.14”)/Number(“99 88”)=&gt;返回NaN/Number(new Date())<br>全局方法<strong>parseFloat()/parseInt()</strong>将字符串转为一个浮点数/整数<br><strong>自动转换:</strong><br><strong>一元运算符+</strong>：自动统一表达式两边变量类型转换成同一数据类型<br><strong>.innerHTML</strong>：输出一个对象或者变量时，JS会自动调用该变量的toString()方法，将改变量转换成String</p>
+<h3 id="JS正则表达式"><a href="#JS正则表达式" class="headerlink" title="JS正则表达式"></a>JS正则表达式</h3><p>正则表达式是使用字符串来描述、匹配一系列符合某个句法规则的字符串搜索模式，可用于文本搜索和文本替换<br>JS正则语法格式：<strong>/正则表达式主体/修饰符(可选)</strong><br>修饰符：i=&gt;对大小不敏感，g=&gt;全局匹配，m=&gt;多行匹配<br><strong>字符串方法</strong>使用正则：<br>1.<strong>serach()</strong>：检索字符串中指定的子字符串，若匹配则返回子串的起始位置<br>2.<strong>replace()</strong>：用于在字符串中用一些字符替换另一些字符<br><strong>RegExp对象</strong>使用正则：<br>1.<strong>test()</strong>方法用于检测一个字符串是否匹配某个模式，若字符串中含有匹配的文本，则返回true，否则返回false，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/*是否带有小数*/</span><br><span class="line">function    isDecimal(strValue )  &#123;  </span><br><span class="line">   var  objRegExp= /^\d+\.\d+$/;</span><br><span class="line">   return  objRegExp.test(strValue);  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">/*校验是否中文名称组成 */</span><br><span class="line">function ischina(str) &#123;</span><br><span class="line">    var reg=/^[\u4E00-\u9FA5]&#123;2,4&#125;$/;   /*定义验证表达式*/</span><br><span class="line">    return reg.test(str);     /*进行验证*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*校验是否全由8位数字组成 */</span><br><span class="line">function isStudentNo(str) &#123;</span><br><span class="line">    var reg=/^[0-9]&#123;8&#125;$/;   /*定义验证表达式*/</span><br><span class="line">    return reg.test(str);     /*进行验证*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*校验电话码格式 */</span><br><span class="line">function isTelCode(str) &#123;</span><br><span class="line">    var reg= /^((0\d&#123;2,3&#125;-\d&#123;7,8&#125;)|(1[3584]\d&#123;9&#125;))$/;</span><br><span class="line">    return reg.test(str);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*校验邮件地址是否合法 */</span><br><span class="line">function IsEmail(str) &#123;</span><br><span class="line">    var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;</span><br><span class="line">    return reg.test(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>2.<strong>exec()</strong>方法用于检索字符串中正则表达式的匹配，若找到匹配的结果则返回一个数组存放，若未找到则返回null</p>
+<h3 id="JS错误"><a href="#JS错误" class="headerlink" title="JS错误"></a>JS错误</h3><p><strong>try</strong>语句测试代码块的错误<br><strong>catch</strong>语句处理错误（系统发现的错误）<br><strong>throw</strong>语句创建或抛出异常(自己发现的错误)<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  //在这里运行代码</span><br><span class="line">  if(x==y) throw &quot;error!&quot;;</span><br><span class="line">&#125; catch(err) &#123;</span><br><span class="line">  //在这里处理错误，如</span><br><span class="line">  alert(err.message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JS调试"><a href="#JS调试" class="headerlink" title="JS调试"></a>JS调试</h3><p>1.<strong>console.log()方法</strong>：在浏览器控制台打印关键信息<br>2.<strong>debugger关键字</strong>：设置<strong>断点</strong>调试，如var x=1;debugger;var y=1;</p>
+<h3 id="JS变量提升-Hoisting"><a href="#JS变量提升-Hoisting" class="headerlink" title="JS变量提升(Hoisting)"></a>JS变量提升(Hoisting)</h3><p>JS中，<strong>函数及变量的声明</strong>都将被提升到函数的最顶部，因此变量可以在<strong>使用后声明</strong>。但是只有声明的变量会提升，<strong>初始化的变量不会提升</strong></p>
+<h3 id="JS严格模式-Strict-Mode"><a href="#JS严格模式-Strict-Mode" class="headerlink" title="JS严格模式(Strict Mode)"></a>JS严格模式(Strict Mode)</h3><p>使用命令<strong>“use strict”;</strong>进入严格模式，可以<strong>消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为</strong>，1.增加代码安全性，2.提高编译器效率，3.为未来新版本的JS做好铺垫</p>
+<h3 id="JS表单验证"><a href="#JS表单验证" class="headerlink" title="JS表单验证"></a>JS表单验证</h3><p>1.表单事件验证：<br>可以利用表单的<strong>onsubmit事件</strong>，在表单提交时被触发，执行验证函数，验证表单数据，若为<strong>return false</strong>则可阻止表单提交<br>获取表单的数据可用<strong>document.forms[“formName”][“valueName”].value;</strong>获取表单数据<br>如<strong>非空验证</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;form name=&quot;myForm&quot; action=&quot;demo_form.php&quot;</span><br><span class="line">onsubmit=&quot;return validateForm()&quot; method=&quot;post&quot;&gt;</span><br><span class="line">名字: &lt;input type=&quot;text&quot; name=&quot;fname&quot;&gt;</span><br><span class="line">&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">function validateForm() &#123;</span><br><span class="line">    var x = document.forms[&quot;myForm&quot;][&quot;fname&quot;].value;</span><br><span class="line">    if (x == null || x == &quot;&quot;) &#123;</span><br><span class="line">        alert(&quot;需要输入名字。&quot;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><br>如<strong>E-mail验证</strong>(必须包含@符号和点号(.)/@不可以是邮件地址的首字符/@后至少一个点号)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">function validateForm()&#123;</span><br><span class="line">  var x=document.forms[&quot;myForm&quot;][&quot;email&quot;].value;</span><br><span class="line">  var atpos=x.indexOf(&quot;@&quot;);</span><br><span class="line">  var dotpos=x.lastIndexOf(&quot;.&quot;);</span><br><span class="line">  if (atpos&lt;1 || dotpos&lt;atpos+2 || dotpos+2&gt;=x.length)&#123;</span><br><span class="line">    alert(&quot;不是一个有效的 e-mail 地址&quot;);</span><br><span class="line">    return false;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>2.HTML约束验证：<br>可在HTML元素中直接增加约束，如required=”required”/disabled/pattern/max/min/type等详情可见<a href="http://www.runoob.com/html/html5-form-attributes.html" target="_blank" rel="noopener">这里</a></p>
+<p>3.服务器端数据验证：数据提交到服务器后再验证</p>
+<h3 id="JS-JSON"><a href="#JS-JSON" class="headerlink" title="JS JSON"></a>JS JSON</h3><p>JSON全称<strong>JavaScript Object Notation</strong>，轻量级<strong>存储和传输数据的格式</strong>，通常用于<strong>服务端向网页传递数据</strong>。<br>JSON格式：<br>1.数据为<strong>键值对(“key”:”value”)</strong>，由<strong>逗号</strong>分隔，如”name”:”Runoob”<br>2.<strong>大括号{}</strong>保存<strong>对象</strong>，{“name”:”Runoob”, “url”:”www.runoob.com”}<br>3.<strong>方括号[]</strong>保存<strong>数组</strong>，数组中可保存对象，如</p>
+<p><strong>JSON字符串转换为JS对象</strong>：我们从服务器中接收JSON数据并利用<strong>JSON.parse(text[, reviver])</strong>将JSON字符串转换为JS对象，<strong>reviver</strong>为转换结果函数将会调用对象的每个成员，如<strong>function(k,v)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var text = &apos;&#123; &quot;sites&quot; : [&apos; +</span><br><span class="line">	&apos;&#123; &quot;name&quot;:&quot;Runoob&quot; , &quot;url&quot;:&quot;www.runoob.com&quot; &#125;,&apos; +</span><br><span class="line">	&apos;&#123; &quot;name&quot;:&quot;Google&quot; , &quot;url&quot;:&quot;www.google.com&quot; &#125;,&apos; +</span><br><span class="line">	&apos;&#123; &quot;name&quot;:&quot;Taobao&quot; , &quot;url&quot;:&quot;www.taobao.com&quot; &#125; ]&#125;&apos;;</span><br><span class="line">JSObj = JSON.parse(text);</span><br><span class="line">// JSObj.sites[1].name =&gt; Google</span><br><span class="line">// JSObj.sites[1].url =&gt; www.google.com</span><br></pre></td></tr></table></figure></p>
+<p><strong>JS对象转换为JSON字符串</strong>：我们可以使用<strong>JSON.stringify(value[, replacer[, space]])</strong>方法将JS对象转换为JSON字符串传递给服务器，<strong>space</strong>可为文本添加缩进、空格、换行符，如int i则添加i个空格缩进，若为\t则添加制表符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var str = &#123;&quot;name&quot;:&quot;菜鸟教程&quot;, &quot;site&quot;:&quot;http://www.runoob.com&quot;&#125;;</span><br><span class="line">str_pretty1 = JSON.stringify(str); //&#123;&quot;name&quot;:&quot;菜鸟教程&quot;,&quot;site&quot;:&quot;http://www.runoob.com&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JS死链接"><a href="#JS死链接" class="headerlink" title="JS死链接"></a>JS死链接</h3><p>我们经常看到<strong>href=”javascript:void(0)”</strong>，表示点击这个链接是不会发生任何跳转的链接<br>void()方法表示<strong>不返回任何值</strong>，void()中的语句<strong>会执行但是返回的结果不会被void传递到函数外部</strong></p>
+<p><strong>href=”#”</strong>表示定位到<strong>#位置</strong>，#包含了一个<strong>位置信息</strong>，默认的锚<strong>#top</strong>也就是网页的上端，可用<strong>#+id</strong>定位到页面的具体位置</p>
+<h3 id="JS函数-1"><a href="#JS函数-1" class="headerlink" title="JS函数"></a>JS函数</h3><p><strong>自调用函数</strong>：<strong>(function(){})();</strong>表示这是一个自调用函数，运行至脚本处会自动触发调用<br><strong>全局对象</strong>：若函数没有被自身的对象调用时，<strong>this的值会变成全局对象</strong>，web浏览器中全局对象是浏览器窗口(<strong>window对象</strong>)<br><strong>对象方法调用函数</strong>：函数可作为对象的方法被调用，如var x = {y:function(){ return 0;}}，可通过x.y()调用函数<br><strong>构造函数调用函数</strong>：函数调用使用<strong>new关键字</strong>则调用了构造函数，创建了新的<strong>对象</strong>，如function y(){this.z=1;};var x= new y();，则x为一个对象{“z” : 1}</p>
+<h3 id="JS闭包"><a href="#JS闭包" class="headerlink" title="JS闭包"></a>JS闭包</h3><p>计数器困境：<strong>若计数器为全局变量</strong>，则除了add()计数函数外其他所有函数也可以访问计数器变量，不安全；<strong>若计数器变量在add()计数函数内声明并初始化为0</strong>，则每次调用add()函数就都会初始化变量失去了计数功能<br>闭包：<strong>父函数内嵌函数会持有父方法的局部变量并且不会随父方法销毁而销毁</strong>，就是说即便父函数已经执行完了但是里面的变量被赋给了别的变量，这个变量并不会随着父函数的调用结束而消失<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">var add = (function () &#123;</span><br><span class="line">    var counter = 0;</span><br><span class="line">    return function () &#123;return counter += 1;&#125;</span><br><span class="line">&#125;)();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">//利用自调用函数，执行一次申明并初始化变量counter的过程</span><br><span class="line">之后返回一个匿名函数给add，这样add就变成了一个函数add()&#123;return counter +=1;&#125;</span><br><span class="line">这个函数持有父函数的变量counter但是即便父函数执行结束后counter并没有被销毁</span><br><span class="line">因此每次执行add()，都会使counter++，也仅有执行add()才能调用到counter变量，保证了变量的私有性</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/02/26/js2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            JS（二）HTML 浏览器BOM对象
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/02/21/swoole16/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Swoole(十六)实现一个长连接的网络聊天室</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/06/redis4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(四)Redis-PHP实战" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/06/redis4/" class="title">Redis(四)Redis-PHP实战</a></p>
+                            <p class="item-date"><time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity3/" class="title">webSecurity3</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:41.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity2/" class="title">webSecurity2</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:36.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/web.jpg)" alt="WEB信息系统安全（一）概念与内涵" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity1/" class="title">WEB信息系统安全（一）概念与内涵</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:31.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/redis3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(三)PHP操作Redis" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/redis3/" class="title">Redis(三)PHP操作Redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T07:49:05.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 12.5px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 17.5px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/02/25/js1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

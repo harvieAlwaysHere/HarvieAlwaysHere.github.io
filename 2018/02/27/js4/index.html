@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JS（四）JS常用对象 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaScript,Web前端" />
+    
+    <meta name="description" content="JavaScript 中的所有事物都是对象：字符串、数值、数组、函数… JS对象基本概念JS对象由花括号分隔，对象属性以名称和值对的形式(name:value)来定义，对象属性由逗号分隔JS提供多个内建对象，如String、Date、Array等，对象是一种特殊的数据类型拥有属性和方法对象属性：是与对象有关的值，可用object.att或者object[“att”]访问，如var message=">
+<meta name="keywords" content="JavaScript,Web前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS（四）JS常用对象">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/02/27/js4/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="JavaScript 中的所有事物都是对象：字符串、数值、数组、函数… JS对象基本概念JS对象由花括号分隔，对象属性以名称和值对的形式(name:value)来定义，对象属性由逗号分隔JS提供多个内建对象，如String、Date、Array等，对象是一种特殊的数据类型拥有属性和方法对象属性：是与对象有关的值，可用object.att或者object[“att”]访问，如var message=">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/js.jpg">
+<meta property="og:updated_time" content="2018-03-01T14:30:28.224Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS（四）JS常用对象">
+<meta name="twitter:description" content="JavaScript 中的所有事物都是对象：字符串、数值、数组、函数… JS对象基本概念JS对象由花括号分隔，对象属性以名称和值对的形式(name:value)来定义，对象属性由逗号分隔JS提供多个内建对象，如String、Date、Array等，对象是一种特殊的数据类型拥有属性和方法对象属性：是与对象有关的值，可用object.att或者object[“att”]访问，如var message=">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/js.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-js4" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JS（四）JS常用对象
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/02/27/js4/" class="article-date">
+            <time datetime="2018-02-27T07:21:19.000Z" itemprop="datePublished">2018-02-27</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Web前端/">Web前端</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="JavaScript-中的所有事物都是对象：字符串、数值、数组、函数…"><a href="#JavaScript-中的所有事物都是对象：字符串、数值、数组、函数…" class="headerlink" title="JavaScript 中的所有事物都是对象：字符串、数值、数组、函数…"></a>JavaScript 中的所有事物都是对象：字符串、数值、数组、函数…</h3><p><img src="/images/js.jpg" alt=""></p>
+<h3 id="JS对象基本概念"><a href="#JS对象基本概念" class="headerlink" title="JS对象基本概念"></a>JS对象基本概念</h3><p>JS对象由<strong>花括号分隔</strong>，<strong>对象属性</strong>以<strong>名称和值对的形式(name:value)</strong>来定义，<strong>对象属性</strong>由<strong>逗号分隔</strong><br>JS提供多个内建对象，如String、Date、Array等，对象是一种特殊的数据类型拥有<strong>属性和方法</strong><br><strong>对象属性</strong>：是与对象有关的<strong>值</strong>，可用<strong>object.att或者object[“att”]</strong>访问，如var message=”hello world”;var length=message.length;<br><strong>对象方法</strong>：是能够在对象上执行的<strong>动作</strong>，可用<strong>objectName.methodName()</strong>访问，如var message=”hello world”;var upperMsg=message.toUpperCase();</p>
+<h3 id="JS对象创建"><a href="#JS对象创建" class="headerlink" title="JS对象创建"></a>JS对象创建</h3><p>JS创建对象有种方式</p>
+<ol>
+<li><strong>字面量创建</strong>使用<strong>{ }</strong>包围<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var Person=&#123;firstName:&quot;John&quot;, lastName:&quot;Doe&quot;, id:5566&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><strong>Object创建</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var Person=new Object();</span><br><span class="line">Person.firstName:&quot;John&quot;;</span><br><span class="line">Person.lastName:&quot;Doe&quot;;</span><br><span class="line">Person.id:5566;</span><br></pre></td></tr></table></figure></li>
+<li><strong>工厂模式创建</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function createPerson(firstName,lastName,id)</span><br><span class="line">&#123;</span><br><span class="line">  var obj=new Object();</span><br><span class="line">  obj.firstName=firstName;</span><br><span class="line">  obj.lastName=lastName;</span><br><span class="line">  obj.id=id;</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line">var Person1=createPerson(&quot;John&quot;,&quot;Doe&quot;,5566);</span><br><span class="line">var Person2=createPerson(&quot;Arvin&quot;,&quot;Harvie&quot;,7788);</span><br></pre></td></tr></table></figure></li>
+<li><strong>构造函数创建</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Person(firstName,lastName,id)</span><br><span class="line">&#123;</span><br><span class="line">  this.firstName=firstName;</span><br><span class="line">  this.lastName=lastName;</span><br><span class="line">  this.id=id;</span><br><span class="line">&#125;</span><br><span class="line">var Person1=new Person(&quot;John&quot;,&quot;Doe&quot;,5566);</span><br><span class="line">var Person2=new Person(&quot;Arvin&quot;,&quot;Harvie&quot;,7788);</span><br></pre></td></tr></table></figure></li>
+<li><strong>原型创建对象</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function Person()&#123;&#125;</span><br><span class="line">Person.prototype.firstName=&quot;John&quot;;</span><br><span class="line">Person.prototype.lastName=&quot;Doe&quot;;</span><br><span class="line">Person.prototype.id=5566;</span><br><span class="line">var person1=new Person();</span><br><span class="line">var person2=new Person();</span><br><span class="line">person2.firstName=&quot;Arvin&quot;;</span><br><span class="line">person2.lastName=&quot;Harvie&quot;;</span><br><span class="line">person2.id=7788;</span><br></pre></td></tr></table></figure></li>
+<li><strong>组合构造函数和原型创建对象</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Person(firstName,lastName,id)&#123;</span><br><span class="line"> this.firstName =firstName;</span><br><span class="line"> this.lastName = lastName;</span><br><span class="line"> this.id = id;</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype = &#123;</span><br><span class="line"> constructor:Person,</span><br><span class="line"> showId: function()&#123;</span><br><span class="line"> alert(this.id);</span><br><span class="line"> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3>第1/2种字面量和Object构建对象，对于<strong>简单属性</strong>的对象而言十分<strong>简单明了</strong>，但是<font color="red">它们都是用了同一个接口创建很多对象，会产生大量的重复代码，就是如果你有100个对象，那你要输入100次很多相同的代码</font><br>第3种<strong>工厂模式</strong>创建对象，将<strong>创建对象过程封装在函数体内</strong>，通过函数调用生成对象，但是<font color="red">无论哪个对象的生成函数返回的都是一个对象，我们无法判断返回的对象是哪个类型</font><br>第4种<strong>构造函数</strong>创建对象，没有显式创造对象，没有return语句，而且<strong>可以识别对象类型</strong>，使用<strong>instanceof</strong>操作符进行检测(person insanceof Person);但是<font color="red">若对象中含有方法，则每个方法都要在实例中创建一遍，然而每个对象的方法应该是相同的才对，若是方法的数量很多，就会占用很多不必要的内存</font><br>第5中<strong>原型</strong>创建对象，可以让<strong>所有对象实例共享它所包含的属性和方法</strong>，若为对象实例添加一个属性，这个属性会<strong>覆盖</strong>原型对象中的属性，<font color="red">但是这样子每个对象实例的属性一般都是不同的，创建起来就很复杂</font><br>第6中<strong>原型和构造函数结合</strong>创建对象，是最好的，<strong>构造函数用于定义实例属性</strong>使每个对象实例有自己的属性，<strong>原型模式用于定义方法和共享的属性</strong>使每个对象相同的方法和属性共用同一片内存，节省空间</li>
+</ol>
+<h3 id="JS遍历对象"><a href="#JS遍历对象" class="headerlink" title="JS遍历对象"></a>JS遍历对象</h3><p>可以使用<strong>for…in…循环</strong>遍历对象属性，语法：<br>for (name in object)<br>{<br>  text=text+name+”=&gt;”+object[name]+”\n”;<br>}</p>
+<h3 id="JS-Number对象"><a href="#JS-Number对象" class="headerlink" title="JS Number对象"></a>JS Number对象</h3><p>JS中的数字可以使用小数点，也可以不使用小数点，如var x=314;var y=3.14;<br>JS中数字均为<strong>浮点型</strong>，采用IEEE754标准定义的<strong>64位</strong>浮点格式表示<br>JS中<strong>八进制</strong>前缀为<strong>0</strong>，<strong>十六进制</strong>前缀为<strong>0x</strong>，可以使用<strong>Number.toString(8/16/2)转换进制</strong><br>JS中的数字运算<strong>超出了数字上限</strong>，则以<strong>Infinity</strong>表示<br>JS中的数字运算<strong>发生错误产生了非数字值</strong>，则以<strong>NaN</strong>表示，可以用<strong>isNaN()<br>Number</strong>对象属性**：</p>
+<ol>
+<li>object.constructor：返回创建此对象的函数引用</li>
+<li>Number.MAX_VALUE：返回Number可表示的最大的数</li>
+<li>Number.MIN_VALUE：返回Number可表示的最小的数</li>
+<li>Number.NaN：返回NaN</li>
+</ol>
+<p>Number<strong>对象方法</strong>：</p>
+<ol>
+<li>NumberObject.toString(radix=10)：将Number对象转换为<strong>radix进制的字符串</strong></li>
+<li>NumberObject.toLocaleString()：将Number对象转换为<strong>本地格式</strong>的字符串</li>
+<li>NumberObject.toFixed(num=0)：将Number四舍五入为<strong>num(0-20)小数位数的数字</strong></li>
+<li>NumberObject.toExponential(num)：将Number转换成<strong>num(0-20)小数位的指数计数</strong></li>
+<li>NumberObject.valueOf()：返回Number对象的值的<strong>字符串</strong></li>
+</ol>
+<h3 id="JS-String对象"><a href="#JS-String对象" class="headerlink" title="JS String对象"></a>JS String对象</h3><p>String<strong>对象属性</strong>：</p>
+<ol>
+<li>object.constructor：返回创建此对象的函数引用</li>
+<li>stringObject.length：返回字符串中字符数目</li>
+</ol>
+<p>String<strong>对象方法</strong>：</p>
+<ol>
+<li>stringObject.indexOf(searchvalue,fromindex)：返回searchvalue在stringObject中首次出现的位置，fromindex为开始检索的位置(可选)，方法<strong>大小写敏感</strong>且<strong>无检索结果返回-1</strong></li>
+<li>stringObject.match(searchvalue/regexp)：返回stringObject中<strong>匹配searchvalue的字符串</strong>或者<strong>匹配regexp正则表达式的字符串</strong>，若regexp具有<strong>标志g</strong>则为<strong>多次匹配</strong>返回所有匹配字符串的<strong>数组</strong></li>
+<li>stringObject.replace(regexp/substr,replacement)：返回用replacement替换了regexp/substr匹配的字符串的新字符串</li>
+<li>stringObject.toLocaleUpperCase()/toLocaleLowerCase()：返回大写/小写字符串</li>
+<li>stringObject.split(separator,howmany)：返回以separator字符串或正则表达式分割的howmany个数的字符串数组，若用””分割则每个字符都会分割</li>
+<li>更多对象方法可查看<a href="http://www.w3school.com.cn/jsref/jsref_obj_string.asp" target="_blank" rel="noopener">这里</a></li>
+</ol>
+<h3 id="JS-Date对象"><a href="#JS-Date对象" class="headerlink" title="JS Date对象"></a>JS Date对象</h3><p><strong>new Date();</strong>会自动把<strong>当前日期和时间</strong>保存为其初始值，可调用对象方法更改Date对象属性<br>Date<strong>对象方法</strong>：</p>
+<ol>
+<li>dateObject.getFullYear()/getMonth()/getDate()/getDay()：返回年份/月份(0-11)/日期/星期(0-6)</li>
+<li>dateObject.getHours()/getMinutes()/getSeconds()：返回小时(0-23)/分钟(0-59)/秒数(0-59)</li>
+<li>dateObject.getTime()：返回距 1970 年 1 月 1 日之间的毫秒数</li>
+<li>dateObject.setFullYear(year,month,day)/setMonth(month,day)/setDate(day)：设置年份/月份/日期</li>
+<li>dateObject.toUTCString()/toString()/toDateString()/toTimeString()：将日期转换为UTC世界时/本地时间/日期部分本地时间/时间部分本地时间的字符串</li>
+</ol>
+<p>在页面上显示时钟(Date+onload事件)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">function startTime()&#123;</span><br><span class="line">	var today=new Date();</span><br><span class="line">	var h=today.getHours();</span><br><span class="line">	var m=today.getMinutes();</span><br><span class="line">	var s=today.getSeconds();// 在小于10的数字前加一个‘0’</span><br><span class="line">	m=checkTime(m);</span><br><span class="line">	s=checkTime(s);</span><br><span class="line">	document.getElementById(&apos;block&apos;).innerHTML=h+&quot;:&quot;+m+&quot;:&quot;+s;</span><br><span class="line">	t=setTimeout(function()&#123;startTime()&#125;,500);</span><br><span class="line">&#125;</span><br><span class="line">function checkTime(i)&#123;</span><br><span class="line">	if (i&lt;10)&#123;</span><br><span class="line">		i=&quot;0&quot; + i;</span><br><span class="line">	&#125;</span><br><span class="line">	return i;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;body onload=&quot;startTime()&quot;&gt;</span><br><span class="line">	</span><br><span class="line">&lt;div id=&quot;block&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JS-Array对象"><a href="#JS-Array对象" class="headerlink" title="JS Array对象"></a>JS Array对象</h3><p>JS<strong>数组</strong>可以有三种声明赋值方式</p>
+<ol>
+<li>创建数组再一一赋值:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var cars=new Array();</span><br><span class="line">cars[0]=&quot;Saab&quot;;</span><br><span class="line">cars[1]=&quot;Volvo&quot;;</span><br><span class="line">cars[2]=&quot;BMW&quot;;</span><br></pre></td></tr></table></figure></li>
+<li>创建时就赋值(Condensed Array):使用<strong>( )</strong>包围<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var cars=new Array(&quot;Saab&quot;,&quot;Volvo&quot;,&quot;BMW&quot;);</span><br></pre></td></tr></table></figure></li>
+<li>不创建直接赋值(Literal Array):使用<strong>[ ]</strong>包围<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var cars=[&quot;Saab&quot;,&quot;Volvo&quot;,&quot;BMW&quot;];</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="总结：-1"><a href="#总结：-1" class="headerlink" title="总结："></a>总结：</h5><p>1/2方式在于先创建一个空的多维数组，之后可使用<strong>for循环根据需求赋值</strong>，3对于<strong>枚举数据</strong>比较简单易用<br>由于JS的<strong>弱检查特性</strong>，因此在<strong>JS数组中可以同时存储不同类型的变量</strong>，比如你可以把数字、字符串、字符、对象等内容放在同一个数组中。</p>
+<p>Array<strong>对象属性</strong>：</p>
+<ol>
+<li>arrayObject.length：返回数组中元素数目</li>
+</ol>
+<p>Array<strong>对象方法</strong>：</p>
+<ol>
+<li>arrayObject.concat(arrayX,arrayX,……,arrayX)：连接两个或多个数组，不会改变现有数组而是产生一个新的连接结果数组</li>
+<li>arrayObject.join(separator)：把arrayObject中所有元素放入一个字符串以separator分割，默认以，分割</li>
+<li>arrayObject.pop()：删除数组最后一个元素并返回元素的值，若数组为空则返回undefined</li>
+<li>arrayObject.push(newelement1,newelement2,….,newelementX)：向数组末尾增加一个或多个元素并返回新的数组长度</li>
+<li>arrayObject.reverse()：将arrayObject数组元素颠倒顺序，会改变原数组</li>
+<li>arrayObject.shift()：删除并返回第一个数组元素并返回元素的值，若为空则返回undefined</li>
+<li>arrayObject.slice(start,end)：返回arrayObject数组中下标从start到end的子数组，不改变原数组，可用负值表示从尾部选取元素</li>
+<li>arrayObject.sort(sortby)：以sortby函数对数组排序，若无排序函数则以字符编码的顺序进行排序，排序函数有两个参数ab，若a在b前则返回小于0，a在b后则返回大于0</li>
+<li>arrayObject.splice(index,howmany,item1,…..,itemX)：若howmany=0，则向数组中从index开始添加item1,…..,itemX个元素，若howmany&gt;0，则会删除从index开始后howmany个元素并以item1,…..,itemX代替，返回删除的元素数组，会改变原数组</li>
+<li>arrayObject.toString()：返回，分割数组元素的字符串</li>
+<li>arrayObject.unshift(newelement1,newelement2,….,newelementX)：向数组开头添加一个或多个元素并返回新的长度</li>
+</ol>
+<h3 id="JS-Math对象"><a href="#JS-Math对象" class="headerlink" title="JS Math对象"></a>JS Math对象</h3><p>Math对象<strong>无需创建可静态使用</strong><br>Math<strong>对象属性</strong>：<br>Math.E(自然底数)/.LN2/.LN10(2/10的自然对数)/.LOG2E/.LOG10E(以2/10为底的e的对数)/.PI(圆周率)/.SQRT1_2/.SQRT2(返回2的平方根的倒数/返回2的平方根)<br>Math<strong>对象方法</strong>：<br>几乎所有的算数运算都有，详情见<a href="http://www.w3school.com.cn/jsref/jsref_obj_math.asp" target="_blank" rel="noopener">这里</a><br>Math.round(x)：返回x最接近的整数<br>Math.random()：返回0.0-1.0之间的伪随机数</p>
+<h3 id="JS-RegExp对象"><a href="#JS-RegExp对象" class="headerlink" title="JS RegExp对象"></a>JS RegExp对象</h3><p>RegExp 对象表示正则表达式，<strong>直接量语法</strong>：<strong>/pattern/attributes</strong>，<strong>创建RegExp对象</strong>的语法：<strong>new RegExp(pattern, attributes);</strong></p>
+<ul>
+<li><strong>参数pattern</strong>是一个<strong>字符串</strong>，指定了<strong>正则表达式的模式</strong>或其他正则表达式。</li>
+<li><strong>参数attributes</strong>是一个<strong>可选的字符串</strong>，包含属性 <strong>“g”、”i” 和 “m”</strong>，分别用于指定<strong>全局匹配、区分大小写的匹配和多行匹配</strong>。<br>Tips：<strong>pattern是正则表达式</strong>，而不是字符串，则<strong>必须省略该参数attributes</strong>。<br>具体使用可查阅<a href="http://www.w3school.com.cn/jsref/jsref_obj_regexp.asp" target="_blank" rel="noopener">这里</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/02/offer2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            剑指Offer算法记录(二)算法
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/02/26/js3/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">JS（三）HTML DOM对象</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/06/redis4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(四)Redis-PHP实战" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/06/redis4/" class="title">Redis(四)Redis-PHP实战</a></p>
+                            <p class="item-date"><time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity3/" class="title">webSecurity3</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:41.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity2/" class="title">webSecurity2</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:36.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/web.jpg)" alt="WEB信息系统安全（一）概念与内涵" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity1/" class="title">WEB信息系统安全（一）概念与内涵</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:31.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/redis3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(三)PHP操作Redis" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/redis3/" class="title">Redis(三)PHP操作Redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T07:49:05.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 12.5px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 17.5px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/02/27/js4/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JS（二）HTML 浏览器BOM对象 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaScript,Web前端" />
+    
+    <meta name="description" content="浏览器对象模型（Browser Object Model (BOM)使 JavaScript 有能力与浏览器”对话”。所有浏览器都支持window 对象，它表示浏览器窗口。window对象的成员：所有JavaScript全局对象、函数以及变量window对象的属性：全局变量window对象的方法：全局函数Tips：所有Window对象方法都可以不使用window前缀，直接调用全局方法 Window">
+<meta name="keywords" content="JavaScript,Web前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS（二）HTML 浏览器BOM对象">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/02/26/js2/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="浏览器对象模型（Browser Object Model (BOM)使 JavaScript 有能力与浏览器”对话”。所有浏览器都支持window 对象，它表示浏览器窗口。window对象的成员：所有JavaScript全局对象、函数以及变量window对象的属性：全局变量window对象的方法：全局函数Tips：所有Window对象方法都可以不使用window前缀，直接调用全局方法 Window">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/js.jpg">
+<meta property="og:updated_time" content="2018-03-02T08:06:08.793Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS（二）HTML 浏览器BOM对象">
+<meta name="twitter:description" content="浏览器对象模型（Browser Object Model (BOM)使 JavaScript 有能力与浏览器”对话”。所有浏览器都支持window 对象，它表示浏览器窗口。window对象的成员：所有JavaScript全局对象、函数以及变量window对象的属性：全局变量window对象的方法：全局函数Tips：所有Window对象方法都可以不使用window前缀，直接调用全局方法 Window">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/js.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-js2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JS（二）HTML 浏览器BOM对象
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/02/26/js2/" class="article-date">
+            <time datetime="2018-02-26T07:49:15.000Z" itemprop="datePublished">2018-02-26</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Web前端/">Web前端</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="浏览器对象模型（Browser-Object-Model-BOM-使-JavaScript-有能力与浏览器”对话”。"><a href="#浏览器对象模型（Browser-Object-Model-BOM-使-JavaScript-有能力与浏览器”对话”。" class="headerlink" title="浏览器对象模型（Browser Object Model (BOM)使 JavaScript 有能力与浏览器”对话”。"></a>浏览器对象模型（Browser Object Model (BOM)使 JavaScript 有能力与浏览器”对话”。</h3><p><img src="/images/js.jpg" alt=""><br>所有浏览器都支持<strong>window 对象</strong>，它表示<strong>浏览器窗口</strong>。<br><strong>window对象的成员</strong>：所有JavaScript<strong>全局对象、函数以及变量</strong><br><strong>window对象的属性</strong>：全局变量<br><strong>window对象的方法</strong>：全局函数<br>Tips：所有Window对象方法都可以<strong>不使用window前缀</strong>，直接调用全局方法</p>
+<h3 id="Window-Screen：包含有关用户屏幕的信息"><a href="#Window-Screen：包含有关用户屏幕的信息" class="headerlink" title="Window Screen：包含有关用户屏幕的信息"></a>Window Screen：包含有关用户屏幕的信息</h3><p>window.screen对象在编写时<strong>可以不使用window这个前缀</strong><br><strong>screen对象属性</strong>：</p>
+<ol>
+<li>screen.availWidth：可用的屏幕宽度，以<strong>像素</strong>计，减去界面特性，比如窗口任务栏</li>
+<li>screen.availHeight：可用的屏幕高度，以像素计，减去界面特性，比如窗口任务栏</li>
+</ol>
+<h3 id="Window-Location：包含URL信息"><a href="#Window-Location：包含URL信息" class="headerlink" title="Window Location：包含URL信息"></a>Window Location：包含URL信息</h3><p>window.location对象用于<strong>获得当前页面的地址(URL)</strong>，并把浏览器<strong>重定向到新的页面</strong><br><strong>location对象属性</strong>：</p>
+<ol>
+<li>location.href：返回<strong>当前界面的完整URL</strong>，如<a href="http://www.w3school.com.cn/js/js_window_location.asp" target="_blank" rel="noopener">http://www.w3school.com.cn/js/js_window_location.asp</a></li>
+<li>location.hostname：返回<strong>web主机的域名</strong>，</li>
+<li>location.pathname：返回<strong>URL的路径名</strong>，如/js/js_window_location.asp</li>
+<li>location.port：返回<strong>web主机的端口</strong>(80或443)</li>
+<li>location.protocol:返回所使用的<strong>web协议</strong>（http:// 或 https://）</li>
+</ol>
+<p><strong>location对象方法</strong>：</p>
+<ol>
+<li>location.assign(URL)：加载新的文档，打开URL地址新界面</li>
+<li>location.reload(boolean)：重新加载当前文档，false则会根据文档是否改变决定是否使用缓存加载，true则无论文档是否改变均会会绕过缓存重新加载文档</li>
+</ol>
+<h3 id="Window-History：包含浏览器历史"><a href="#Window-History：包含浏览器历史" class="headerlink" title="Window History：包含浏览器历史"></a>Window History：包含浏览器历史</h3><p><strong>history对象方法</strong>：</p>
+<ol>
+<li>history.back()：加载历史列表中的前一个URL界面</li>
+<li>history.forward()：加载历史列表中的下一个URL界面</li>
+</ol>
+<h3 id="Window-Navigator：包含有关访问者浏览器的信息"><a href="#Window-Navigator：包含有关访问者浏览器的信息" class="headerlink" title="Window Navigator：包含有关访问者浏览器的信息"></a>Window Navigator：包含有关访问者浏览器的信息</h3><p>由于Navigator信息<strong>可被浏览器使用者更改</strong>或者<strong>浏览器对于测试站点识别错误</strong>，所以信息具有<strong>误导性</strong>，不应该用于检测浏览器版本<br><strong>navigator对象方法</strong>：</p>
+<ul>
+<li>navigator.appCodeName：浏览器代号，如Mozilla</li>
+<li>navigator.appName：浏览器名称，如Netscape</li>
+<li>navigator.appVersion：浏览器版本，如Chrome/61.0.3163.100</li>
+<li>navigator.cookieEnabled：是否启动启用Cookies，true</li>
+<li>navigator.platform：硬件平台，如Win32</li>
+<li>navigator.userAgent：用户代理，如Mozilla/5.0</li>
+<li>navigator.systemLanguage：用户代理语言，如undefined</li>
+</ul>
+<h3 id="Window-PopupAlert-弹窗"><a href="#Window-PopupAlert-弹窗" class="headerlink" title="Window PopupAlert:弹窗"></a>Window PopupAlert:弹窗</h3><p>1.<strong>window.alert()</strong>：警告框，<strong>确保用户得到某些消息</strong>，用户需<strong>点击确定</strong>才能继续操作<br><img src="/images/js20.png" alt=""><br>2.<strong>window.confirm(“sometext”);</strong>：确认框，<strong>验证用户是否接受操作</strong>，用户可以点击<strong>确认或者取消</strong>，相应<strong>返回true/false</strong><br><img src="/images/js21.png" alt=""><br>3.<strong>window.prompt(“sometext”,”defaultvalue”);</strong>：提示框，提示用户<strong>需要输入某些值</strong>，然后点击<strong>确认或者取消</strong>，相应<strong>返回输入的值/null</strong><br><img src="/images/js22.png" alt=""><br>4.<strong>window.open(URL,name,features,replace)</strong>：打开一个URL新窗口并可以通过features控制其外观或者利用name查找一个已命名窗口<br><img src="/images/js24.png" alt=""></p>
+<h3 id="Window-Timing：计时"><a href="#Window-Timing：计时" class="headerlink" title="Window Timing：计时"></a>Window Timing：计时</h3><p>JS中设定一个时间间隔之后来执行代码，我们称之为<strong>计时事件</strong>，主要使用两个关键方法<br>1.<strong>window.setInterval(callback function,milliseconds);</strong>：在指定milliseconds毫秒数<strong>不断执行</strong>callback function回调函数，返回计时器id，可用<strong>clearInterval(id)</strong>停止计时器<br>2.<strong>window.setTimeout(callback function,milliseconds);</strong>：在milliseconds毫秒后<strong>执行一次</strong>callback function回调函数，返回计时器id，可用<strong>clearTimeout(id)</strong>在函数执行前停止计时器<br>Tips：可使用setTimeout回调自身函数来实现无穷循环<br>Tips：利用setInterval创建一个时钟(每秒钟更新一次时间)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;p id=&quot;demo&quot;&gt;&lt;/p&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var myVar=setInterval(function()&#123;myTimer()&#125;,1000);</span><br><span class="line">function myTimer()&#123;</span><br><span class="line">	var d=new Date();</span><br><span class="line">	var t=d.toLocaleTimeString();</span><br><span class="line">	document.getElementById(&quot;demo&quot;).innerHTML=t;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Window-Cookie：存储Web页面用户信息"><a href="#Window-Cookie：存储Web页面用户信息" class="headerlink" title="Window Cookie：存储Web页面用户信息"></a>Window Cookie：存储Web页面用户信息</h3><p>cookie是存储于访问者的计算机中的变量，当web服务器向浏览器发送web页面时，在连接关闭后，服务端不会记录用户的信息，可以利用Cookie记录客户端的用户信息<br>用户信息在Cookie中以<strong>键值对的形式存储</strong>，如name=key，多个信息可用<strong>;分割</strong><br>1.创建Cookie：<strong>document.cookie=”username=harvie;expires=”+Date();</strong><br>2.读取Cookie：<strong>var x = document.cookie;</strong>，以<strong>字符串形式返回所有cookie</strong><br>3.删除Cookie：即使Cookie过期，即设置expires属性为以前的时间，如<strong>expires=Thu, 01 Jan 1970 00:00:00 GMT</strong><br>Tips：我们使用函数设置、获取、检测Cookie<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">//设置Cookie（name+exdays）</span><br><span class="line">function setCookie(cname,cvalue,exdays)&#123;</span><br><span class="line">    var d = new Date();</span><br><span class="line">    d.setTime(d.getTime()+(exdays*24*60*60*1000));</span><br><span class="line">    var expires = &quot;expires=&quot;+d.toGMTString();</span><br><span class="line">    document.cookie = cname+&quot;=&quot;+cvalue+&quot;; &quot;+expires;</span><br><span class="line">&#125;</span><br><span class="line">//获取Cookie</span><br><span class="line">function getCookie(cname)&#123;</span><br><span class="line">    var name = cname + &quot;=&quot;;</span><br><span class="line">    var ca = document.cookie.split(&apos;;&apos;);</span><br><span class="line">    for(var i=0; i&lt;ca.length; i++) &#123;</span><br><span class="line">        var c = ca[i].trim();</span><br><span class="line">        if (c.indexOf(name)==0) &#123; return c.substring(name.length,c.length); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return &quot;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">//检测Cookie(可在页面载入onload时执行checkCookie函数)</span><br><span class="line">function checkCookie()&#123;</span><br><span class="line">    var user=getCookie(&quot;username&quot;);</span><br><span class="line">    if (user!=&quot;&quot;)&#123;</span><br><span class="line">        alert(&quot;欢迎 &quot; + user + &quot; 再次访问&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        user = prompt(&quot;请输入你的名字:&quot;,&quot;&quot;);</span><br><span class="line">          if (user!=&quot;&quot; &amp;&amp; user!=null)&#123;</span><br><span class="line">            setCookie(&quot;username&quot;,user,30);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/02/26/js3/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            JS（三）HTML DOM对象
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/02/25/js1/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">JS（一）基本语法</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/06/redis4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(四)Redis-PHP实战" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/06/redis4/" class="title">Redis(四)Redis-PHP实战</a></p>
+                            <p class="item-date"><time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity3/" class="title">webSecurity3</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:41.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity2/" class="title">webSecurity2</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:36.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/web.jpg)" alt="WEB信息系统安全（一）概念与内涵" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity1/" class="title">WEB信息系统安全（一）概念与内涵</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:31.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/redis3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(三)PHP操作Redis" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/redis3/" class="title">Redis(三)PHP操作Redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T07:49:05.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 12.5px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 17.5px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/02/26/js2/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

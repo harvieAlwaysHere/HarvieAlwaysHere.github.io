@@ -3,26 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>剑指Offer算法记录(二)算法 | Harvie Blog</title>
+    <title>Redis(二)客户端操作(cli) | Harvie Blog</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="算法" />
+        <meta name="keywords" content="php项目,Redis" />
     
-    <meta name="description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展 第二章2.4 算法和数据操作排序和查找是面试时考查算法的重点，如二分查找、归并排序、快速排序等。递归和循环是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。 位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算2.4.1 查找和排序查找不外乎：">
-<meta name="keywords" content="算法">
+    <meta name="description" content="在命令行通过客户端操作Redis 客户端常用命令ping: 查看服务器是否允许quit: 关闭当前连接auth: 验证密码select: 选择数据库，0-15，共16个，默认使用0flushdb: 删除当前数据库flushall: 删除所有数据库del: 删除键exists: 检查键是否存在 ping/auth测试set/get/select/flushdb/flushall测试del/exist">
+<meta name="keywords" content="php项目,Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="剑指Offer算法记录(二)算法">
-<meta property="og:url" content="https://harviealwayshere.github.io/2018/02/14/offer2/index.html">
+<meta property="og:title" content="Redis(二)客户端操作(cli)">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/03/04/redis2/index.html">
 <meta property="og:site_name" content="Harvie Blog">
-<meta property="og:description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展 第二章2.4 算法和数据操作排序和查找是面试时考查算法的重点，如二分查找、归并排序、快速排序等。递归和循环是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。 位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算2.4.1 查找和排序查找不外乎：">
+<meta property="og:description" content="在命令行通过客户端操作Redis 客户端常用命令ping: 查看服务器是否允许quit: 关闭当前连接auth: 验证密码select: 选择数据库，0-15，共16个，默认使用0flushdb: 删除当前数据库flushall: 删除所有数据库del: 删除键exists: 检查键是否存在 ping/auth测试set/get/select/flushdb/flushall测试del/exist">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://harviealwayshere.github.io/images/offer.png">
-<meta property="og:updated_time" content="2018-02-14T12:07:04.290Z">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/redis.jpg">
+<meta property="og:updated_time" content="2018-03-05T09:34:13.965Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="剑指Offer算法记录(二)算法">
-<meta name="twitter:description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展 第二章2.4 算法和数据操作排序和查找是面试时考查算法的重点，如二分查找、归并排序、快速排序等。递归和循环是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。 位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算2.4.1 查找和排序查找不外乎：">
-<meta name="twitter:image" content="https://harviealwayshere.github.io/images/offer.png">
+<meta name="twitter:title" content="Redis(二)客户端操作(cli)">
+<meta name="twitter:description" content="在命令行通过客户端操作Redis 客户端常用命令ping: 查看服务器是否允许quit: 关闭当前连接auth: 验证密码select: 选择数据库，0-15，共16个，默认使用0flushdb: 删除当前数据库flushall: 删除所有数据库del: 删除键exists: 检查键是否存在 ping/auth测试set/get/select/flushdb/flushall测试del/exist">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/redis.jpg">
     
 
     
@@ -164,14 +164,14 @@ var _hmt = _hmt || [];
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-offer2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-redis2" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        剑指Offer算法记录(二)算法
+        Redis(二)客户端操作(cli)
         </h1>
     
 
@@ -181,25 +181,61 @@ var _hmt = _hmt || [];
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2018/02/14/offer2/" class="article-date">
-            <time datetime="2018-02-14T10:24:24.000Z" itemprop="datePublished">2018-02-14</time>
+        <a href="/2018/03/04/redis2/" class="article-date">
+            <time datetime="2018-03-04T07:48:40.000Z" itemprop="datePublished">2018-03-04</time>
         </a>
     </div>
 
                 
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/算法/">算法</a>
+        <a class="tag-link" href="/tags/Redis/">Redis</a>, <a class="tag-link" href="/tags/php项目/">php项目</a>
     </div>
 
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p><img src="/images/offer.png" alt=""></p>
-<h3 id="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展"><a href="#本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展" class="headerlink" title="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展"></a>本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展</h3><hr>
-<h3 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h3><h4 id="2-4-算法和数据操作"><a href="#2-4-算法和数据操作" class="headerlink" title="2.4 算法和数据操作"></a>2.4 算法和数据操作</h4><p><strong>排序和查找</strong>是面试时考查算法的重点，如二分查找、归并排序、快速排序等。<br><strong>递归和循环</strong>是两种算法实现的方式，基于递归的实现较整洁但性能不如基于循环实现的方法，我们应该根据题目特点来选择使用哪种实现方式。</p>
-<h2 id="位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算"><a href="#位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算" class="headerlink" title="位运算可以看做一类特殊的算法，共有与、或、异或、左移和右移五种位运算"></a><strong>位运算</strong>可以看做一类特殊的算法，共有<strong>与、或、异或、左移和右移</strong>五种位运算</h2><h4 id="2-4-1-查找和排序"><a href="#2-4-1-查找和排序" class="headerlink" title="2.4.1 查找和排序"></a>2.4.1 查找和排序</h4><p>查找不外乎：顺序查找、二分查找、哈希表查找和二叉排序树查找，无论用递归还是循环都需要掌握这些查找方法的实现。<br>排序则复杂一些：插入排序、冒泡排序、归并排序、快速排序等不同算法的优劣，能够从<strong>额外空间消耗、平均时间复杂度和最差时间复杂度等</strong>方面去比较它们的优缺点。<br>值得一提的是，<strong>快速排序</strong>的实现代码是面试官钟爱的。<br>快速排序思路:选择一个数字(有多种选择法)，接下来把数组中的数字分成两部分，比选择的数字小的数字移到数组的左边，比选择数字大的数字移到数组右边<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">int Partition(int data[], int length, int start, int end)</span><br><span class="line">&#123;</span><br><span class="line">  if(data==NULL || length&lt;=0 || start&lt;0 || end&gt;=length)  //输入参数有效行检验</span><br><span class="line">    throw new std::exception(&quot;Invalid Parameters&quot;);</span><br><span class="line"> </span><br><span class="line">  int index = RandomInRange(start,end);  //函数RandomInRange生成[start,end]的随机数</span><br><span class="line">  Swap(&amp;data[index], &amp;data[end]);</span><br><span class="line"></span><br><span class="line">  int small = start-1;</span><br><span class="line">  for(index=start; index&lt;end; index++)</span><br><span class="line">  &#123;</span><br><span class="line">    if(data[index]&lt;data[end])</span><br><span class="line">    &#123;</span><br><span class="line">      small++;</span><br><span class="line">      if(small!=index) Swap(&amp;data[index], &amp;data[small]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  small++;</span><br><span class="line">  Swap(&amp;data[small], &amp;data[end]);</span><br><span class="line"></span><br><span class="line">  return small;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <h3 id="在命令行通过客户端操作Redis"><a href="#在命令行通过客户端操作Redis" class="headerlink" title="在命令行通过客户端操作Redis"></a>在命令行通过客户端操作Redis</h3><p><img src="/images/redis.jpg" alt=""></p>
+<h3 id="客户端常用命令"><a href="#客户端常用命令" class="headerlink" title="客户端常用命令"></a>客户端常用命令</h3><p>ping: 查看服务器是否允许<br>quit: 关闭当前连接<br>auth: 验证密码<br>select: 选择数据库，0-15，共16个，默认使用0<br>flushdb: 删除当前数据库<br>flushall: 删除所有数据库<br>del: 删除键<br>exists: 检查键是否存在</p>
+<p>ping/auth测试<br><img src="/images/redis20.png" alt=""><br>set/get/select/flushdb/flushall测试<br><img src="/images/redis21.png" alt=""><br>del/exists测试<br><img src="/images/redis22.png" alt=""></p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>Redis不仅仅支持简单的<strong>key-value类型的数据</strong>，同时还提供<strong>list，set，zset，hash</strong>等数据结构的存储</p>
+<p><font color="##00008b"><strong>1.字符串(String)</strong></font>：最基本的数据类型，<strong>Key-Value结构</strong></p>
+<ul>
+<li>设置：set key value</li>
+<li>获取：get key</li>
+</ul>
+<p><font color="##00008b"><strong>2.哈希(Hash)</strong></font>：<strong>键值对的集合</strong>，适合<strong>存储对象</strong></p>
+<ul>
+<li>设置：hmset objectName key1 value2 key2 value 2…</li>
+<li>获取单个对象所有信息：hgetall objectName</li>
+<li>获取单个对象单个信息：hget objectName key<br><img src="/images/redis23.png" alt=""></li>
+</ul>
+<p><font color="##00008b"><strong>3.列表(List)</strong></font>：按照插入顺序排序，可以添加元素到列表头部（左边）或尾部（右边）</p>
+<ul>
+<li>左侧压入数据：lpush key value1 value2…</li>
+<li>左侧弹出数据：lpop</li>
+<li>右侧压入数据：rpush key value1 value2…</li>
+<li>右侧弹出数据：rpop</li>
+<li>范围显示：lrange key start stop</li>
+<li>显示个数：llen key<br><img src="/images/redis24.png" alt=""></li>
+</ul>
+<p><font color="##00008b"><strong>4.集合(Set)</strong></font>：string类型的无序集合，集合中<strong>元素时唯一的</strong></p>
+<ul>
+<li>添加数据：sadd key value1 value2…</li>
+<li>显示数据：smembers key</li>
+<li>显示总数：scard key</li>
+<li>随机移除：spop key [count]<br><img src="/images/redis25.png" alt=""></li>
+</ul>
+<p><font color="##00008b"><strong>5.有序集合(Zset:SortSet)</strong></font>：每个元素都需要<strong>关联一个double类型的分数</strong>，redis根据分数为集合中的成员进行<strong>排序</strong></p>
+<ul>
+<li>添加数据：zadd key score value</li>
+<li>显示数据：zrange key start stop</li>
+<li>显示总数：zcard key</li>
+<li>显示范围：zcount key start stop</li>
+<li>显示序号：zrank key member</li>
+<li>显示分数：zscore key member<br><img src="/images/redis26.png" alt=""></li>
+</ul>
 
         </div>
         <footer class="article-footer">
@@ -303,20 +339,20 @@ var _hmt = _hmt || [];
         
 <nav id="article-nav">
     
-        <a href="/2018/02/15/swoole2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/03/04/redis3/" id="article-nav-newer" class="article-nav-link-wrap">
         <strong class="article-nav-caption">下一篇</strong>
         <p class="article-nav-title">
         
-            Swoole(二)配置TCP服务器
+            Redis(三)PHP操作Redis
         
         </p>
         <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
     </a>
     
     
-        <a href="/2018/02/10/swoole1/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/03/04/redis1/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">Swoole(一)安装</p>
+        <p class="article-nav-title">Redis(一)安装</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -335,10 +371,10 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/21/swoole16/" class="thumbnail">
+                            <a href="/2018/03/06/redis4/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十六)实现一个长连接的网络聊天室" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(四)Redis-PHP实战" class="thumbnail-image"></span>
     
     
 </a>
@@ -347,18 +383,18 @@ var _hmt = _hmt || [];
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/21/swoole16/" class="title">Swoole(十六)实现一个长连接的网络聊天室</a></p>
-                            <p class="item-date"><time datetime="2018-02-21T11:09:56.000Z" itemprop="datePublished">2018-02-21</time></p>
+                            <p class="item-title"><a href="/2018/03/06/redis4/" class="title">Redis(四)Redis-PHP实战</a></p>
+                            <p class="item-date"><time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/20/swoole15/" class="thumbnail">
+                            <a href="/2018/03/04/webSecurity3/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十五)异步文件写入" class="thumbnail-image"></span>
+        <span class="thumbnail-image thumbnail-none"></span>
     
     
 </a>
@@ -366,19 +402,19 @@ var _hmt = _hmt || [];
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/20/swoole15/" class="title">Swoole(十五)异步文件写入</a></p>
-                            <p class="item-date"><time datetime="2018-02-20T10:17:56.000Z" itemprop="datePublished">2018-02-20</time></p>
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity3/" class="title">webSecurity3</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:41.000Z" itemprop="datePublished">2018-03-04</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/20/swoole14/" class="thumbnail">
+                            <a href="/2018/03/04/webSecurity2/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十四)异步文件读取" class="thumbnail-image"></span>
+        <span class="thumbnail-image thumbnail-none"></span>
     
     
 </a>
@@ -386,19 +422,19 @@ var _hmt = _hmt || [];
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/20/swoole14/" class="title">Swoole(十四)异步文件读取</a></p>
-                            <p class="item-date"><time datetime="2018-02-20T10:17:51.000Z" itemprop="datePublished">2018-02-20</time></p>
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity2/" class="title">webSecurity2</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:36.000Z" itemprop="datePublished">2018-03-04</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/20/swoole13/" class="thumbnail">
+                            <a href="/2018/03/04/webSecurity1/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十三)DNS查询" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/web.jpg)" alt="WEB信息系统安全（一）概念与内涵" class="thumbnail-image"></span>
     
     
 </a>
@@ -407,18 +443,18 @@ var _hmt = _hmt || [];
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/20/swoole13/" class="title">Swoole(十三)DNS查询</a></p>
-                            <p class="item-date"><time datetime="2018-02-20T10:17:48.000Z" itemprop="datePublished">2018-02-20</time></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity1/" class="title">WEB信息系统安全（一）概念与内涵</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:31.000Z" itemprop="datePublished">2018-03-04</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/02/20/swoole12/" class="thumbnail">
+                            <a href="/2018/03/04/redis3/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swoole.jpg)" alt="Swoole(十二)锁机制" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(三)PHP操作Redis" class="thumbnail-image"></span>
     
     
 </a>
@@ -427,8 +463,8 @@ var _hmt = _hmt || [];
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/02/20/swoole12/" class="title">Swoole(十二)锁机制</a></p>
-                            <p class="item-date"><time datetime="2018-02-20T10:17:41.000Z" itemprop="datePublished">2018-02-20</time></p>
+                            <p class="item-title"><a href="/2018/03/04/redis3/" class="title">Redis(三)PHP操作Redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T07:49:05.000Z" itemprop="datePublished">2018-03-04</time></p>
                         </div>
                     </li>
                 
@@ -441,7 +477,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -451,7 +487,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -461,7 +497,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -471,7 +507,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 15px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 20px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 12.5px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 17.5px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
         </div>
     </div>
 
@@ -519,7 +555,7 @@ var _hmt = _hmt || [];
     var disqus_shortname = 'hexo-theme-hueman';
     
     
-    var disqus_url = 'https://harviealwayshere.github.io/2018/02/14/offer2/';
+    var disqus_url = 'https://harviealwayshere.github.io/2018/03/04/redis2/';
     
     (function() {
     var dsq = document.createElement('script');

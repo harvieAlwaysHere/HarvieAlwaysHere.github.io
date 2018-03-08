@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Redis(四)Redis-PHP实战 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="php项目,Redis" />
+    
+    <meta name="description" content="使用PHP操作Redis进行简单的项目开发 简单的字符串缓存分别使用set/hSet方法将对象用json_encode解析成json字符串以String/Hash的数据类型存储在Redis缓存中，并用get/hGet取出数据，用json_decode解码后var_dump输出对象123456789101112131415161718192021222324252627282930313233343">
+<meta name="keywords" content="php项目,Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis(四)Redis-PHP实战">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/03/06/redis4/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="使用PHP操作Redis进行简单的项目开发 简单的字符串缓存分别使用set/hSet方法将对象用json_encode解析成json字符串以String/Hash的数据类型存储在Redis缓存中，并用get/hGet取出数据，用json_decode解码后var_dump输出对象123456789101112131415161718192021222324252627282930313233343">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/redis.jpg">
+<meta property="og:updated_time" content="2018-03-07T09:49:11.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis(四)Redis-PHP实战">
+<meta name="twitter:description" content="使用PHP操作Redis进行简单的项目开发 简单的字符串缓存分别使用set/hSet方法将对象用json_encode解析成json字符串以String/Hash的数据类型存储在Redis缓存中，并用get/hGet取出数据，用json_decode解码后var_dump输出对象123456789101112131415161718192021222324252627282930313233343">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/redis.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-redis4" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Redis(四)Redis-PHP实战
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/06/redis4/" class="article-date">
+            <time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Redis/">Redis</a>, <a class="tag-link" href="/tags/php项目/">php项目</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="使用PHP操作Redis进行简单的项目开发"><a href="#使用PHP操作Redis进行简单的项目开发" class="headerlink" title="使用PHP操作Redis进行简单的项目开发"></a>使用PHP操作Redis进行简单的项目开发</h3><p><img src="/images/redis.jpg" alt=""></p>
+<h3 id="简单的字符串缓存"><a href="#简单的字符串缓存" class="headerlink" title="简单的字符串缓存"></a>简单的字符串缓存</h3><p>分别使用<strong>set/hSet</strong>方法将对象用<strong>json_encode解析成json字符串</strong>以String/Hash的数据类型存储在Redis缓存中，并用<strong>get/hGet取出数据</strong>，用<strong>json_decode解码</strong>后var_dump输出对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line">$strCacheKey = &apos;stringCacheTest&apos;;</span><br><span class="line"></span><br><span class="line">//SET应用 存储String类型数据</span><br><span class="line">//所缓存的对象</span><br><span class="line">$arrCacheData = [</span><br><span class="line">    &apos;name&apos; =&gt; &apos;harvie&apos;,</span><br><span class="line">    &apos;sex&apos;  =&gt; &apos;male&apos;,</span><br><span class="line">    &apos;age&apos;  =&gt; &apos;22&apos;</span><br><span class="line">];</span><br><span class="line">//将对象解析成json字符串存储</span><br><span class="line">$redis-&gt;set($strCacheKey, json_encode($arrCacheData)); </span><br><span class="line">//设置缓存有效期 30S过期失效</span><br><span class="line">$redis-&gt;expire($strCacheKey, 30); </span><br><span class="line">//从缓存中取出数据 </span><br><span class="line">$json_data = $redis-&gt;get($strCacheKey);</span><br><span class="line">//将取出的json字符串解码成对象形式</span><br><span class="line">$data = json_decode($json_data);</span><br><span class="line">var_dump($data);</span><br><span class="line"></span><br><span class="line">//HSET应用 存储Hash类型数据</span><br><span class="line">$hashCacheKey = &apos;hashCacheTest&apos;;</span><br><span class="line">//所缓存的由数组组成的对象</span><br><span class="line">$arrWebSite = [</span><br><span class="line">    &apos;google&apos; =&gt; [</span><br><span class="line">        &apos;google.com&apos;,</span><br><span class="line">        &apos;google.com.hk&apos;</span><br><span class="line">    ],</span><br><span class="line">];</span><br><span class="line">//添加一个Value到Hash中</span><br><span class="line">$redis-&gt;hSet($hashCacheKey, &apos;google&apos;, json_encode($arrWebSite));</span><br><span class="line">$json_data = $redis-&gt;hGet($hashCacheKey, &apos;google&apos;);</span><br><span class="line">$data = json_decode($json_data);</span><br><span class="line">var_dump($data);</span><br></pre></td></tr></table></figure><br>在cli运行后输出为<br><img src="/images/redis40.png" alt=""></p>
+<h3 id="简单队列"><a href="#简单队列" class="headerlink" title="简单队列"></a>简单队列</h3><p><strong>使用lpush入队，使用lrange查看队列数据，使用rpop出队</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line">$strQueueName  = &apos;queueName&apos;;</span><br><span class="line"></span><br><span class="line">//进队列</span><br><span class="line">$redis-&gt;lpush($strQueueName, json_encode([&apos;uid&apos; =&gt; 1,&apos;name&apos; =&gt; &apos;harvie&apos;]));</span><br><span class="line">$redis-&gt;lpush($strQueueName, json_encode([&apos;uid&apos; =&gt; 2,&apos;name&apos; =&gt; &apos;ryan&apos;]));</span><br><span class="line">$redis-&gt;lpush($strQueueName, json_encode([&apos;uid&apos; =&gt; 3,&apos;name&apos; =&gt; &apos;henry&apos;]));</span><br><span class="line">echo &quot;---- 进队列成功 ---- &lt;br /&gt;&lt;br /&gt;&quot;;</span><br><span class="line"></span><br><span class="line">//查看队列</span><br><span class="line">$strCount = $redis-&gt;lrange($strQueueName, 0, -1);</span><br><span class="line">echo &quot;当前队列数据为： &lt;br /&gt;&quot;;</span><br><span class="line">print_r($strCount);</span><br><span class="line"></span><br><span class="line">//出队列</span><br><span class="line">$redis-&gt;rpop($strQueueName);</span><br><span class="line">echo &quot;&lt;br /&gt;&lt;br /&gt; ---- 出队列成功 ---- &lt;br /&gt;&lt;br /&gt;&quot;;</span><br><span class="line"></span><br><span class="line">//查看队列</span><br><span class="line">$strCount = $redis-&gt;lrange($strQueueName, 0, -1);</span><br><span class="line">echo &quot;当前队列数据为： &lt;br /&gt;&quot;;</span><br><span class="line">print_r($strCount);</span><br></pre></td></tr></table></figure><br>由于linux对中文适配不好，我采用web远程访问，输入如下<br><img src="/images/redis41.png" alt=""></p>
+<h3 id="订阅发布系统"><a href="#订阅发布系统" class="headerlink" title="订阅发布系统"></a>订阅发布系统</h3><p>pub.php中使用<strong>publish推送给订阅的客户端消息</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">ini_set(&apos;default_socket_timeout&apos;, -1);  //不超时</span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line">$strChannel = &apos;HarvieChannel&apos;;</span><br><span class="line">//发布 推送给订阅的客户端</span><br><span class="line">$redis-&gt;publish($strChannel,&quot;From &quot;.$strChannel.&quot; Channel Msg!&quot;);</span><br><span class="line">echo &quot;---- &#123;$strChannel&#125; ---- Channel Msg Push Success ! &lt;br/&gt;&quot;;</span><br><span class="line">$redis-&gt;close();</span><br></pre></td></tr></table></figure><br>sub.php中使用<strong>subscribe方法等待订阅频道的推送</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">ini_set(&apos;default_socket_timeout&apos;, -1); //不超时</span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$strChannel = &apos;HarvieChannel&apos;;</span><br><span class="line"></span><br><span class="line">echo &quot;Wait &#123;$strChannel&#125; Msg Push......&quot;;</span><br><span class="line">//订阅 使用subscribe方法接受订阅频道的消息</span><br><span class="line">$redis-&gt;subscribe([$strChannel], &apos;callBackFun&apos;);</span><br><span class="line">function callBackFun($redis, $channel, $msg)</span><br><span class="line">&#123;</span><br><span class="line">    print_r([</span><br><span class="line">        &apos;redis&apos;   =&gt; $redis,</span><br><span class="line">        &apos;channel&apos; =&gt; $channel,</span><br><span class="line">        &apos;msg&apos;     =&gt; $msg</span><br><span class="line">    ]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>运行sub.php客户端，等待消息推送<br><img src="/images/redis42.png" alt=""><br>另外再打开一个终端，运行pub.php服务端推送消息<br><img src="/images/redis43.png" alt=""><br>此时可以看到sub.php终端中可以接收到服务器推送的消息<br><img src="/images/redis44.png" alt=""></p>
+<h3 id="计数器"><a href="#计数器" class="headerlink" title="计数器"></a>计数器</h3><p>使用<strong>INCR方法对指定的Key的Value+1</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line">$strKey = &apos;commentsCount&apos;;</span><br><span class="line"></span><br><span class="line">//设置初始值</span><br><span class="line">$redis-&gt;set($strKey, 0);</span><br><span class="line">//使用INCR方法指定Key增加Value</span><br><span class="line">$redis-&gt;INCR($strKey);  //+1</span><br><span class="line">$redis-&gt;INCR($strKey);  //+1</span><br><span class="line">$redis-&gt;INCR($strKey);  //+1</span><br><span class="line"></span><br><span class="line">$strNowCount = $redis-&gt;get($strKey);</span><br><span class="line"></span><br><span class="line">echo &quot;Now the num is &#123;$strNowCount&#125;&quot;;</span><br></pre></td></tr></table></figure><br><img src="/images/redis45.png" alt=""></p>
+<h3 id="排行榜"><a href="#排行榜" class="headerlink" title="排行榜"></a>排行榜</h3><p>使用<strong>zSet有序集合数据类型</strong>实现排行榜的自动排序，<strong>ZREVRANGE/ZRANGE方法</strong>取特定范围内<strong>从大到小/从小到大</strong>排序，可指定是否带分数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line">$strKey = &apos;rankTest&apos;;</span><br><span class="line"></span><br><span class="line">//zadd向zSet集合添加数据</span><br><span class="line">$redis-&gt;zadd($strKey, &apos;50&apos;, json_encode([&apos;name&apos; =&gt; &apos;Tom&apos;]));</span><br><span class="line">$redis-&gt;zadd($strKey, &apos;70&apos;, json_encode([&apos;name&apos; =&gt; &apos;John&apos;]));</span><br><span class="line">$redis-&gt;zadd($strKey, &apos;90&apos;, json_encode([&apos;name&apos; =&gt; &apos;Jerry&apos;]));</span><br><span class="line">$redis-&gt;zadd($strKey, &apos;30&apos;, json_encode([&apos;name&apos; =&gt; &apos;Job&apos;]));</span><br><span class="line">$redis-&gt;zadd($strKey, &apos;100&apos;, json_encode([&apos;name&apos; =&gt; &apos;LiMing&apos;]));</span><br><span class="line"></span><br><span class="line">//ZREVRANGE取特定范围内从大到小排序的数组，最后一个参数为是否带分数显示</span><br><span class="line">$dataOne = $redis-&gt;ZREVRANGE($strKey, 0, -1, true);</span><br><span class="line">echo &quot;---- &#123;$strKey&#125;由大到小的排序 ---- &lt;br /&gt;&lt;br /&gt;&quot;;</span><br><span class="line">print_r($dataOne);</span><br><span class="line"></span><br><span class="line">//ZRANGE取特定范围内从小到大排序的数组，最后一个参数为是否带分数显示</span><br><span class="line">$dataTwo = $redis-&gt;ZRANGE($strKey, 0, -1, true);</span><br><span class="line">echo &quot;&lt;br /&gt;&lt;br /&gt;---- &#123;$strKey&#125;由小到大的排序 ---- &lt;br /&gt;&lt;br /&gt;&quot;;</span><br><span class="line">print_r($dataTwo);</span><br></pre></td></tr></table></figure><br><img src="/images/redis46.png" alt=""></p>
+<h3 id="字符串悲观锁"><a href="#字符串悲观锁" class="headerlink" title="字符串悲观锁"></a>字符串悲观锁</h3><p>确保在<strong>多个事务</strong>同时存取数据库中<strong>同一数据</strong>时不破坏事务的隔离性和统一性，以及数据库的统一性，<strong>乐观锁和悲观锁是并发控制主要采用的技术手段</strong></p>
+<p>悲观锁：假定<strong>会发生并发冲突</strong>，屏蔽一切可能违反数据完整性的操作</p>
+<ul>
+<li>实现机制：查询完数据的时候就把<strong>事务锁起来</strong>，直到<strong>提交事务</strong></li>
+<li>实现方式：数据库中的锁机制</li>
+<li>实现特点：适合<strong>强一致</strong>场景，<strong>效率较低</strong>，特别是并发读的效率低</li>
+</ul>
+<p><strong>PHP+Redis实现悲观锁</strong>：利用redis中的<strong>setnx方法的原子性操作</strong>，设置一个LockKey，加锁的实质就是<strong>向redis中添加一个这个LockKey和过期时间</strong>，每次多个并发事务需要访问数据时，均先<strong>获取锁(就是用setnx方法设置LockKey字段)</strong>，只有首先设置了字段的事务才会<strong>得到锁(就是返回Ture)</strong>，进行接下来的数据处理操作，没有设置字段的事务就会<strong>阻塞直到锁过期或者获取锁的事务释放锁(就是删除LockKey字段)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 获取锁</span><br><span class="line"> * @param  String  $key    锁标识</span><br><span class="line"> * @param  Int     $expire 锁过期时间</span><br><span class="line"> * @return Boolean</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">function lock($key = &apos;&apos;, $expire = 5) &#123;</span><br><span class="line">	//php函数无法调用外部变量</span><br><span class="line">	global $redis;</span><br><span class="line">	//获取锁</span><br><span class="line">    $isLock = $redis-&gt;setnx($key, time()+$expire);</span><br><span class="line">    //不能获取锁</span><br><span class="line">    if(!$isLock)&#123;</span><br><span class="line">        //判断锁是否过期</span><br><span class="line">        $lockTime =$redis-&gt;get($key);</span><br><span class="line">        //锁已过期，删除锁，重新获取</span><br><span class="line">        if (time() &gt; $lockTime) &#123;</span><br><span class="line">            unlock($key);</span><br><span class="line">            $isLock = $redis-&gt;setnx($key, time() + $expire);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $isLock? true : false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 释放锁</span><br><span class="line"> * @param  String  $key 锁标识</span><br><span class="line"> * @return Boolean</span><br><span class="line"> */</span><br><span class="line">function unlock($key = &apos;&apos;)&#123;</span><br><span class="line">	//php函数无法调用外部变量</span><br><span class="line">	global $redis;</span><br><span class="line">    return $redis-&gt;del($key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 定义锁标识</span><br><span class="line">$key = &apos;PessimisticLock&apos;;</span><br><span class="line"></span><br><span class="line">// 获取锁</span><br><span class="line">$isLock = lock($key, 10);</span><br><span class="line">while(!$isLock)&#123;</span><br><span class="line">	//获取锁失败 等待锁释放或者超时再获取</span><br><span class="line">	echo &apos;wait..&apos;;</span><br><span class="line">	sleep(1);</span><br><span class="line">    $isLock = lock($key, 10);</span><br><span class="line">&#125;</span><br><span class="line">//获取锁成功开始执行事务</span><br><span class="line">echo &apos;get lock success&lt;br&gt;&apos;;</span><br><span class="line">echo &apos;do sth..&lt;br&gt;&apos;;</span><br><span class="line">sleep(5);</span><br><span class="line">echo &apos;success&lt;br&gt;&apos;;</span><br><span class="line">unlock($key);</span><br></pre></td></tr></table></figure></p>
+<p><strong>模拟测试</strong>：我们打开两个终端模拟并发过程，一个终端先获取锁执行事务，另一个终端获取锁失败之后每隔1s再次获取，直到第一个终端执行完事务(5s)释放锁或者锁超时(10s),这个实例里面是执行完事务就释放锁，另一个终端才开始获取到锁执行事务<br>第一个终端获取锁开始执行事务<br><img src="/images/redis49.png" alt=""><br>第二个终端获取锁失败开始等待<br><img src="/images/redis47.png" alt=""><br>第一个终端执行完成事务释放锁<br><img src="/images/redis48.png" alt=""><br>第二个终端获取锁开始执行事务最后完成<br><img src="/images/redis410.png" alt=""></p>
+<h3 id="字符串乐观锁"><a href="#字符串乐观锁" class="headerlink" title="字符串乐观锁"></a>字符串乐观锁</h3><p>乐观锁：假定<strong>不会发生并发冲突</strong>，只在<strong>提交操作</strong>时检查是否违反数据完整性</p>
+<ul>
+<li>实现机制：在<strong>修改数据</strong>时将事务锁起来，通过<strong>version方式进行锁定</strong></li>
+<li>实现方式：使用<strong>version版本或者时间戳</strong></li>
+<li>实现特点：适合<strong>多读写少</strong>，<strong>并发冲突少</strong>的场景</li>
+</ul>
+<p><strong>PHP+Redis实现乐观锁</strong>：利用redis中的<strong>watch($Key)方法(watch可以监视一个KEY在事务提交exec()时是否改变，若改变则exec()会失败)</strong>，事务使用<strong>multi()开启和exec()批量提交</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//optimisticLock.php </span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line">$strKey = &apos;optimisticLcok&apos;; //类似Mysql中的version</span><br><span class="line"></span><br><span class="line">//设置其version</span><br><span class="line">$redis-&gt;set($strKey,10);</span><br><span class="line">//watch监视Key</span><br><span class="line">$redis-&gt;watch($strKey);</span><br><span class="line"></span><br><span class="line">$versionNum = $redis-&gt;get($strKey);</span><br><span class="line">echo &quot;---- First Version:&#123;$versionNum&#125; ---- &lt;br/&gt;&lt;br/&gt;&quot;;</span><br><span class="line"></span><br><span class="line">//multi()开启事务</span><br><span class="line">$redis-&gt;multi(); </span><br><span class="line"></span><br><span class="line">$redis-&gt;set(&apos;ID&apos;,5);</span><br><span class="line">sleep(5);</span><br><span class="line">//第一个事务执行完准备提交时会发现版本号变了 提交失败</span><br><span class="line">$redis-&gt;exec();</span><br><span class="line"></span><br><span class="line">//查看此时版本号 </span><br><span class="line">$versionNum = $redis-&gt;get($strKey);</span><br><span class="line">echo &quot;---- Current Version:&#123;$versionNum&#125; ---- &lt;br/&gt;&lt;br/&gt;&quot;; </span><br><span class="line">//查看执行的事务设置ID是否回滚</span><br><span class="line">$id = $redis-&gt;get(&apos;ID&apos;);</span><br><span class="line">echo &quot;Set ID is :&quot;.$id.&quot;&lt;br&gt;&quot;;</span><br><span class="line">//当exec时候如果监视的key从调用watch后发生过变化，则整个事务会失败</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">//changeVersion.php 模拟并发程序</span><br><span class="line">$redis = new Redis();</span><br><span class="line">$redis-&gt;connect(&apos;39.108.210.229&apos;,6379);</span><br><span class="line"></span><br><span class="line">$strKey = &apos;optimisticLcok&apos;; </span><br><span class="line"></span><br><span class="line">//设置其version</span><br><span class="line">$redis-&gt;set($strKey,11);</span><br></pre></td></tr></table></figure>
+<p>先试试<strong>无并发情况</strong>直接执行<br><img src="/images/redis411.png" alt=""><br>可以看到版本号没改变而且事务执行设置ID成功，我们先删除所有键<br><img src="/images/redis412.png" alt=""><br>可以看到ID键已经清空了，然后试试<strong>有并发情况</strong>，执行事务时另一个并发程序改变了乐观锁(Version)的值<br><img src="/images/redis413.png" alt=""><br>可以看到若有并发程序改变了版本号，则事务并不能执行成功，ID键值设置失败了</p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/03/04/webSecurity3/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">webSecurity3</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/06/redis4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(四)Redis-PHP实战" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/06/redis4/" class="title">Redis(四)Redis-PHP实战</a></p>
+                            <p class="item-date"><time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity3/" class="title">webSecurity3</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:41.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity2/" class="title">webSecurity2</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:36.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/web.jpg)" alt="WEB信息系统安全（一）概念与内涵" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity1/" class="title">WEB信息系统安全（一）概念与内涵</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:31.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/redis3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(三)PHP操作Redis" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/redis3/" class="title">Redis(三)PHP操作Redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T07:49:05.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 12.5px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 17.5px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/03/06/redis4/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

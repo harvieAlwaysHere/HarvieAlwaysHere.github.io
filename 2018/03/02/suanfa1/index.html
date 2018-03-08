@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>数据结构与算法总结（一） 排序 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="数据结构,算法" />
+    
+    <meta name="description" content="本文主要用来系统归纳并总结所遇到的算法及其实现方法 大纲 1.冒泡排序 2.插入排序 3.选择排序 4.希尔排序 5.归并排序 6.快速排序 7.堆排序   1.冒泡排序原始版本：冒泡排序思想(从小到大)：  1.比较相邻的前后两个数据，若前面的数据大于后面的数据，就交换两个数据位置 2.对数组第0个数据到N-1个数据进行一次遍历后，第N-1位置上的就为最大的数据 3.N=N-1，若N!=0则对剩">
+<meta name="keywords" content="数据结构,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法总结（一） 排序">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/03/02/suanfa1/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文主要用来系统归纳并总结所遇到的算法及其实现方法 大纲 1.冒泡排序 2.插入排序 3.选择排序 4.希尔排序 5.归并排序 6.快速排序 7.堆排序   1.冒泡排序原始版本：冒泡排序思想(从小到大)：  1.比较相邻的前后两个数据，若前面的数据大于后面的数据，就交换两个数据位置 2.对数组第0个数据到N-1个数据进行一次遍历后，第N-1位置上的就为最大的数据 3.N=N-1，若N!=0则对剩">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/suanfa.jpeg">
+<meta property="og:updated_time" content="2018-03-05T05:24:20.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法总结（一） 排序">
+<meta name="twitter:description" content="本文主要用来系统归纳并总结所遇到的算法及其实现方法 大纲 1.冒泡排序 2.插入排序 3.选择排序 4.希尔排序 5.归并排序 6.快速排序 7.堆排序   1.冒泡排序原始版本：冒泡排序思想(从小到大)：  1.比较相邻的前后两个数据，若前面的数据大于后面的数据，就交换两个数据位置 2.对数组第0个数据到N-1个数据进行一次遍历后，第N-1位置上的就为最大的数据 3.N=N-1，若N!=0则对剩">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/suanfa.jpeg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-suanfa1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        数据结构与算法总结（一） 排序
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/02/suanfa1/" class="article-date">
+            <time datetime="2018-03-02T09:11:07.000Z" itemprop="datePublished">2018-03-02</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/数据结构/">数据结构</a>, <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文主要用来系统归纳并总结所遇到的算法及其实现方法"><a href="#本文主要用来系统归纳并总结所遇到的算法及其实现方法" class="headerlink" title="本文主要用来系统归纳并总结所遇到的算法及其实现方法"></a>本文主要用来系统归纳并总结所遇到的算法及其实现方法</h3><p><img src="/images/suanfa.jpeg" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><ul>
+<li>1.<a href="#a1">冒泡排序</a></li>
+<li>2.<a href="#a2">插入排序</a></li>
+<li>3.<a href="#a3">选择排序</a></li>
+<li>4.<a href="#a4">希尔排序</a></li>
+<li>5.<a href="#a5">归并排序</a></li>
+<li>6.<a href="#a6">快速排序</a></li>
+<li>7.<a href="#a7">堆排序</a></li>
+</ul>
+<p></p><p id="a1"></p><p></p>
+<h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h3><p><strong>原始版本：</strong>冒泡排序思想(从小到大)：</p>
+<ul>
+<li>1.比较相邻的前后两个数据，若前面的数据大于后面的数据，就交换两个数据位置</li>
+<li>2.对数组第0个数据到N-1个数据进行一次遍历后，第N-1位置上的就为最大的数据</li>
+<li>3.N=N-1，若N!=0则对剩下的数组执行12步，否则排序完成<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void bubbleSort(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  for(int i=0;i&lt;n;i++)  //i表示整体遍历次数，即排好数据的个数</span><br><span class="line">    for(int j=1;j&lt;n-i;j++) //j表示每次的比较遍历，每完成一次i就减少j遍历的域一个，因此j只遍历到n-i</span><br><span class="line">      if(a[j-1]&gt;a[j]) Swap(a[j-1],a[j]);  </span><br><span class="line">&#125;</span><br><span class="line">//Tips：若用j与j+1比较，则内部循环为</span><br><span class="line">//for(int j=0;j&lt;n-i-1;j++) </span><br><span class="line">//  if(a[j]&gt;a[j+1]) Swap(a[j],a[j+1]);  </span><br></pre></td></tr></table></figure>
+<strong>改良1</strong>：冒泡排序比较<strong>刻板</strong>，有时候已经排序好了缺还继续遍历，导致后面的多次遍历都是读取值不交换，浪费了时间，因此我们可以改良一下，<strong>设置一个标志</strong>，若有一次遍历<strong>没有发生交换</strong>，则表示排序完成</li>
+<li>1.外层循环不再以整体遍历次数作为循环结束条件，而是以<strong>是否交换的标志</strong>作为循环结束条件</li>
+<li>2.控制内层循环还是需要使用i作为整体循环次数，减少遍历已经排好位置的值的多余遍历<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void bubbleSort(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  bool signal=true;</span><br><span class="line">  int i=0; //排好数据的个数</span><br><span class="line">  while(signal)  //1.</span><br><span class="line">  &#123;  </span><br><span class="line">    signal=false;</span><br><span class="line">    for(int j=1;j&lt;n-i;j++)   //2.</span><br><span class="line">      if(a[j-1]&gt;a[j]) </span><br><span class="line">        &#123;</span><br><span class="line">          Swap(a[j-1],a[j]);  </span><br><span class="line">          signal=true;</span><br><span class="line">        &#125;</span><br><span class="line">    i++;  //2.</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<strong>改良2</strong>：若每次进行遍历时，后面部分的数组已经排好序了且都大于前面的数组，在每次遍历就只需要遍历前面的数组即可，我们可以<strong>记录最后交换的位置确定下次循环的范围</strong>，下次循环到这个位置即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void bubbleSort(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  int signal=n;  //最后交换的位置</span><br><span class="line">  int i; //排好数据的个数</span><br><span class="line">  while(signal&gt;0)  //1.</span><br><span class="line">  &#123;  </span><br><span class="line">    i=signal;</span><br><span class="line">    signal=0;  //signal初始化为0，因为一开始交换的位置不知道</span><br><span class="line">    for(int j=1;j&lt;i;j++)   </span><br><span class="line">      if(a[j-1]&gt;a[j]) </span><br><span class="line">        &#123;</span><br><span class="line">          Swap(a[j-1],a[j]);  </span><br><span class="line">          signal=j;  //记录最后交换的位置</span><br><span class="line">        &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><p id="a2"></p><p></p>
+<h3 id="2-插入排序"><a href="#2-插入排序" class="headerlink" title="2.插入排序"></a>2.插入排序</h3><p>基本思想：每次将一个<strong>待排序的值</strong>插入到<strong>已排序的序列中的正确位置</strong>，直到全部记录插入完成<br><strong>原始版本</strong>：由小到大</p>
+<ul>
+<li>1.初始时数组第一个数组成了已排序序列</li>
+<li>2.<strong>搜索</strong>过程：将待排序的值与已排序的序列比较，找到其正确位置</li>
+<li>3.<strong>数据后移</strong>过程：将大于待排序的值的数向后移一个单位，空出位置填入待排序的值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void insertSort(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  int i,j,k;</span><br><span class="line">  for(int i=1;i&lt;n;i++)  //1.从i=1开始遍历</span><br><span class="line">  &#123;</span><br><span class="line">    for(j=i-1;j&gt;=0;j--)  //2.搜索过程</span><br><span class="line">    &#123;</span><br><span class="line">      if(a[j]&lt;a[i]) break;</span><br><span class="line">    &#125;</span><br><span class="line">    if(j!=i-1)  //若找到合适位置(若j=i-1则这个值已排好序)</span><br><span class="line">    &#123; </span><br><span class="line">      int temp=a[i];</span><br><span class="line">      for(k=i-1;k&gt;j;k--)  //3.数据后移过程</span><br><span class="line">      &#123;</span><br><span class="line">        a[k+1]=a[k];</span><br><span class="line">      &#125;</span><br><span class="line">      a[j+1]=temp;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<strong>改良1：</strong>原始版本<strong>3个for循环</strong>太不清晰简洁，将<strong>搜索与数据后移过程合并</strong>可减少一个循环</li>
+<li>1.待排序的值大于已排序序列中的最大值(最后一位)，则无需插入</li>
+<li>2.<strong>搜索+数据后移</strong>：搜索的时候将已排序序列值与待排序的值比较，若大则往后移，直到找到比待排序的值小的值，此时直接插入其后一位即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void insertSort(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  int i,j;</span><br><span class="line">  for(i=1;i&lt;n;i++)  </span><br><span class="line">  &#123;</span><br><span class="line">    if(a[i]&lt;a[i-1])  //1.判断是否需要插入排序</span><br><span class="line">    &#123;</span><br><span class="line">      int temp=a[i];  //保存待排序的值</span><br><span class="line">      for(j=i-1;j&gt;=0;j--)</span><br><span class="line">      &#123;</span><br><span class="line">        if(a[j]&gt;temp) a[j+1]=a[j];  //若已排序序列的值比待排序的值大，则后移</span><br><span class="line">        else break;  //若已排序序列的值比待排序的值小，则停止循环</span><br><span class="line">      &#125;</span><br><span class="line">      a[j+1]=temp; //直接插入其后一位</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><p id="a3"></p><p></p>
+<h3 id="3-选择排序"><a href="#3-选择排序" class="headerlink" title="3.选择排序"></a>3.选择排序</h3><p>基本思想：与插入排序类似，都将数据分为<strong>有序区和无序区</strong>，不同的是，插入排序是将<strong>无序区第一个元素直接插入有序区形成更大的有序区</strong>，选择排序是<strong>从无序区选择最小(大)的元素放入有序区的最后</strong><br><strong>原始版本</strong>：</p>
+<ul>
+<li>1.无序区最大数的下标初始化为有序区的最大数下标，便于写循环函数，若初始化为无序区第一个数下标，则循环从无序区第二个数开始</li>
+<li>2.交换函数<strong>最好使用中间变量</strong>，因为有可能自己与自己交换,不使用中间变量需判断<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">void selectSort(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  int i,j,maxIndex;</span><br><span class="line">  for(i=0;i&lt;n;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    maxIndex=i;  //1.</span><br><span class="line">    for(j=i+1;j&lt;n;j++)</span><br><span class="line">    &#123;</span><br><span class="line">      if(a[j]&gt;a[maxIndex]) maxIndex=j; </span><br><span class="line">    &#125;</span><br><span class="line">    Swap(a[i],a[maxIndex]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">void Swap(int &amp;a,int &amp;b)  //2.使用中间变量无需判断</span><br><span class="line">&#123;</span><br><span class="line">  int c=a;</span><br><span class="line">  a=b;</span><br><span class="line">  b=c;</span><br><span class="line">&#125;</span><br><span class="line">void Swap(int $a,int &amp;b) //2.不使用中间变量需判断</span><br><span class="line">&#123;</span><br><span class="line">  if (a != b)  </span><br><span class="line">  &#123;  </span><br><span class="line">    a ^= b;  </span><br><span class="line">    b ^= a;  </span><br><span class="line">    a ^= b;  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><p id="a4"></p><p></p>
+<h3 id="4-希尔排序"><a href="#4-希尔排序" class="headerlink" title="4.希尔排序"></a>4.希尔排序</h3><p>基本思想：实质是<strong>分组插入排序</strong>，先将待排序元素<strong>分割成若干个子序列</strong>(相隔某个增量)，分别进行<strong>插入排序</strong>，然后依次<strong>缩小增量</strong>再进行排序，最后对<strong>全体元素</strong>进行插入排序，由于此时序列的有序程度已经很高了，因此效率较高<br><strong>原始版本</strong>：</p>
+<ul>
+<li>1.<strong>计算步长</strong>：通常是数组长度/2</li>
+<li>2.确定分组个数：从0到一个步长的元素个数为分组个数，这些元素都是分组中的第一个元素</li>
+<li>3.每个分组进行插入排序(两个for循环)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">void shellSort(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  int i,j,gap,k;</span><br><span class="line"></span><br><span class="line">  for(gap=n/2;gap&gt;0;gap=gap/2)  //1.计算步长</span><br><span class="line">  &#123;</span><br><span class="line">    for(i=0;i&lt;gap;i++)  //2.确定分组个数</span><br><span class="line">    &#123;</span><br><span class="line">      for(j=i+gap;j&lt;n;j=j+gap)  //3.每个分组进行插入排序</span><br><span class="line">      &#123;</span><br><span class="line">        if(a[j]&lt;a[j-gap])</span><br><span class="line">        &#123;</span><br><span class="line">          int temp=a[j];</span><br><span class="line">          for(k=j-gap;k&gt;=0;k=k-gap)</span><br><span class="line">          &#123;</span><br><span class="line">            if(a[k]&gt;temp) a[k+gap]=a[k];</span><br><span class="line">            else break;</span><br><span class="line">          &#125;</span><br><span class="line">          a[k+gap]=temp;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><p id="a5"></p><p></p>
+<h3 id="5-归并排序"><a href="#5-归并排序" class="headerlink" title="5.归并排序"></a>5.归并排序</h3><p>归并排序是基于<strong>分治法</strong>，基本思想是<br><strong>归</strong>：将数组一直拆分，直到拆分成一个数据的时候，可以认为这个子数组为有序的<br><strong>并</strong>：若两个子数组均有序，按顺序合并成一个数组就是有序的<br><strong>原始版本</strong>：</p>
+<ul>
+<li>1.<strong>合并函数</strong>：设定两个指针指向两个已排序数组的起始位置，比较指针所指元素，选择小的元素<strong>放入合并空间中</strong>并移动指针到下一个位置，若某一指针超出自身子数组的序列范围，则将另一子数组剩下所有元素赋值到合并序列中，最后<strong>将合并序列的元素覆盖原先数组元素的位置</strong></li>
+<li>2.<strong>分解函数</strong>：将传入的数组分解成两个数组，之后继续分解分解出来的两个子数组，直到分解出来的数组中<strong>仅有一个元素则可认为有序</strong>，之后调用合并函数合并子数组</li>
+<li>3.<strong>归并排序</strong>：先<strong>申请空间</strong>，用来存放<strong>合并序列</strong>，调用分解函数后<strong>释放空间</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">void mergeArray(int a[],int start,int mid,int end,int temp[])  //1.合并函数</span><br><span class="line">&#123;</span><br><span class="line">  int i=start,j=mid+1;  //两个子数组的头元素</span><br><span class="line">  int m=mid,n=end;  //两个子数组的尾元素</span><br><span class="line">  int k=0;  //temp数组所赋值的位置</span><br><span class="line"></span><br><span class="line">  while(i&lt;=m&amp;&amp;j&lt;=n)</span><br><span class="line">  &#123;</span><br><span class="line">    if(a[i]&lt;a[j]) temp[k++]=a[i++];</span><br><span class="line">    else temp[k++]=a[j++];</span><br><span class="line">  &#125;</span><br><span class="line">  while(i&lt;=m) temp[k++]=a[i++];</span><br><span class="line">  while(j&lt;=n) temp[k++]=a[j++];</span><br><span class="line">  </span><br><span class="line">  for(i=0;i&lt;k;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    a[start+i]=temp[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void splitArray(int a[],int start,int end,int temp[])  //2.分解函数</span><br><span class="line">&#123;</span><br><span class="line">  if(start&lt;end)</span><br><span class="line">  &#123;</span><br><span class="line">    int mid=(start+end)/2;</span><br><span class="line">    splitArray(a,start,mid,temp);</span><br><span class="line">    splitArray(a,mid+1,end,temp);</span><br><span class="line">    mergeArray(a,start,mid,end,temp);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool mergeSort(int a[],int n)  //3.归并排序</span><br><span class="line">&#123;</span><br><span class="line">  int *p = new int[n];</span><br><span class="line">  if(p==NULL) return false;</span><br><span class="line">  splitArray(a,0,n-1,p);</span><br><span class="line">  delete[] p;</span><br><span class="line">  return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><p id="a6"></p><p></p>
+<h3 id="6-快速排序"><a href="#6-快速排序" class="headerlink" title="6.快速排序"></a>6.快速排序</h3><p>快速排序基于<strong>分治法</strong><br><strong>剑指offer</strong>上给出的是<strong>分区(Partition)</strong>方法是</p>
+<ul>
+<li>1.随机找基准值</li>
+<li>2.将基准值移至数组尾部</li>
+<li>3.从数组头部开始遍历数组，找到一个小于基准值的数就将其移到数组前方</li>
+<li>4.将基准值移到最后一个小于基准值的数的下一个位置上</li>
+<li>5.返回基准值位置</li>
+</ul>
+<p>之后便是<strong>快速排序(QuickSort)</strong>：</p>
+<ul>
+<li>1.若传入数组为一个数，则表示排序完成</li>
+<li>2.否则调用分区(Partition)函数</li>
+<li>3.分区完成后，对于左分区(小于基准值)右分区(大于基准值)再递归调用快速排序(QuickSort)方法，直到排序完成<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//分区(Partition)</span><br><span class="line">int Partition(int data[], int length, int start, int end)//分区</span><br><span class="line">&#123;</span><br><span class="line">  if(data==NULL || length&lt;=0 || start&lt;0 || end&gt;=length)  //输入参数有效行检验</span><br><span class="line">    throw new std::exception(&quot;Invalid Parameters&quot;);</span><br><span class="line"> </span><br><span class="line">  int index = RandomInRange(start,end); //1.随机找基准值</span><br><span class="line">  Swap(&amp;data[index], &amp;data[end]);       //2.将基准值移至数组尾部</span><br><span class="line"></span><br><span class="line">  int small = start-1;     //small位置表示小于基准数的值要填入的位置</span><br><span class="line">  //3.从数组头部开始遍历数组，找到一个小于基准值的数就将其移到数组前方</span><br><span class="line">  for(index=start; index&lt;end; index++)  </span><br><span class="line">  &#123;</span><br><span class="line">    if(data[index]&lt;data[end])     //如果找到一个小于基准数的值</span><br><span class="line">    &#123;</span><br><span class="line">      small++;      //先small++找到应该放入数组的位置</span><br><span class="line">      if(small!=index) Swap(&amp;data[index], &amp;data[small]);   </span><br><span class="line">      //若small位置等于index位置，证明index位置的值是处于正确位置上不需要交换</span><br><span class="line">      //否则证明index位置上的值小于基准数还不处于应该填入的位置上，需要交换到small位置上</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  small++;  </span><br><span class="line">  Swap(&amp;data[small], &amp;data[end]);  //4.将基准值移到最后一个小于基准值的数的下一个位置上</span><br><span class="line"></span><br><span class="line">  return small; //5.返回基准值位置，此时small左边为小于基准数的值，small右边为大于基准数的值</span><br><span class="line">&#125;</span><br><span class="line">//快速排序(QuickSort)</span><br><span class="line">void QuickSort(int data[],int length,int,start,int end)</span><br><span class="line">&#123;</span><br><span class="line">  if(start==end) return;   //1.若传入数组为一个数，则表示排序完成</span><br><span class="line">  </span><br><span class="line">  int index=Partition(data,length,start,end); //2.否则调用分区(Partition)函数</span><br><span class="line"></span><br><span class="line">  3.分区完成后，对于左分区(小于基准值)右分区(大于基准值)再递归调用快速排序(QuickSort)方法，直到排序完成</span><br><span class="line">  if(index&gt;start) QuickSort(data,length,start,index-1);</span><br><span class="line">  if(index&lt;end) QuickSort(data,length,index+1,end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>MoreWindows</strong>博客大大提出了另一种实现方法，<strong>较为简洁</strong>，与剑指Offer提出的实现方法相比，有如下改动</p>
+<ul>
+<li>1.直接选取第一个数作为基准数(也可以随机选择)</li>
+<li>2.有前后指针同时遍历数组，而不是单一从前往后遍历</li>
+<li>3.采用<strong>挖坑填数</strong>思想：<strong>将基准数保存</strong>，之后<strong>尾指针遍历</strong>，若是所指向的<strong>值比基准数小</strong>则填入<strong>头指针所指向的位置</strong>，之后<strong>头指针遍历</strong>，若是所指向的<strong>值比基准数大</strong>则填入<strong>尾指针所指向的位置</strong>，直到头指针与尾指针指向同一个位置，在这个<strong>位置填入基准数</strong>即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//快速排序  </span><br><span class="line">void quick_sort(int s[], int l, int r) //l为头指针，r为尾指针</span><br><span class="line">&#123;  </span><br><span class="line">  if (l &lt; r)  //递归停止条件：若l=r即为数组只有一个元素时则停止递归</span><br><span class="line">  &#123;  </span><br><span class="line">      //Swap(s[l], s[RandomInRange(l,r)]); //1.直接选取第一个数作为基准数(也可以随机选择)</span><br><span class="line">      int i = l, j = r, x = s[l];  //将基准数保存在x里面，i为头指针，j为尾指针</span><br><span class="line">      while (i &lt; j)  </span><br><span class="line">      &#123;  </span><br><span class="line">          while(i &lt; j &amp;&amp; s[j] &gt;= x) // 从尾向头找第一个小于基准数的数  </span><br><span class="line">              j--;    </span><br><span class="line">          if(i &lt; j)       // 填入头指针所指向的位置并头指针指向下一个位置</span><br><span class="line">              s[i++] = s[j];  </span><br><span class="line">            </span><br><span class="line">          while(i &lt; j &amp;&amp; s[i] &lt; x) // 从头向尾找第一个大于等于x的数  </span><br><span class="line">              i++;    </span><br><span class="line">          if(i &lt; j)   // 填入尾指针所指向的位置并尾指针指向下一个位置</span><br><span class="line">              s[j--] = s[i];  </span><br><span class="line">      &#125;  </span><br><span class="line">      s[i] = x;   //将基准数填入头尾指针所指向的位置</span><br><span class="line">      quick_sort(s, l, i - 1); // 将左分区递归调用排序</span><br><span class="line">      quick_sort(s, i + 1, r); // 将右分区递归调用排序</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Python</strong>实现更加简单，因为python在分治中很容易找到<strong>比基准值大或者小的数并放在一个数组里</strong>，而且<strong>Python合并数组</strong>也十分简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//Python实现快速排序</span><br><span class="line">def quicksort(array):</span><br><span class="line">  if(len(array)&lt;2):</span><br><span class="line">    return array</span><br><span class="line">  else:</span><br><span class="line">    pivot=array[0]</span><br><span class="line">    less=[i for i in array[1:] if i &lt;= pivot]</span><br><span class="line">    greater=[i for i in array[1:] if i&gt; pivot]</span><br><span class="line">    return quicksort(less)+[pivot]+quicksort(greater)</span><br></pre></td></tr></table></figure></p>
+<p></p><p id="a7"></p><p></p>
+<h3 id="7-堆排序"><a href="#7-堆排序" class="headerlink" title="7.堆排序"></a>7.堆排序</h3><p><strong>二叉堆</strong>：是完全二叉树或者近似完全二叉树，满足两个特点</p>
+<ul>
+<li>1.父节点的键值总是大于(小于或者等于)任何一个子节点的键值，是一个<strong>最大堆(最小堆)</strong></li>
+<li>2.每个节点的左子树和右子树都是一个二叉堆</li>
+</ul>
+<p><strong>堆的存储</strong>：从上到下、从左到右遍历堆存储，一般用<strong>数组存储</strong>，这样节点有这样的规律：<br>对于<strong>i节点</strong>：其父节点下标为<strong>(i-1)/2</strong>，其左右子节点为<strong>2*i+1和2\i+2</strong><br><img src="/images/suanfa1.png" alt=""><br><strong>插入堆</strong>：总是将插入的数据放在数组最后，可通过<strong>将其与父节点比较调整位置</strong>，从而让数组满足堆的条件<br><img src="/images/suanfa11.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void insertHeap(int a[],int n,int newData)</span><br><span class="line">&#123;</span><br><span class="line">  a[n]=newData;  //将插入的数据放在数组最后</span><br><span class="line">  int j=n;  //子节点下标</span><br><span class="line">  int i=(j-1)/2;  //父节点下标</span><br><span class="line">  while(i &gt;=0 &amp;&amp; j !=0)  </span><br><span class="line">  &#123;</span><br><span class="line">    //若父节点的值大于子节点，则交换并继续比较新的父节点与子节点(最小堆)</span><br><span class="line">    if(a[i]&gt;a[j])  </span><br><span class="line">    &#123;</span><br><span class="line">      Swap(a[i],a[j]);</span><br><span class="line">      j=i;  //交换后的父节点变新的子节点</span><br><span class="line">      i=(j-1)/2  //新的子节点的父节点</span><br><span class="line">    &#125;</span><br><span class="line">    else break;  //若父节点的值小于等于子节点，则停止交换</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>删除堆</strong>：按照定义每次只能删除第0个数据，为了便于重建堆，实际是将最后一个数据的值赋给根节点，再将<strong>根节点与其子节点比较调整位置</strong>，从而让数组满足堆的条件<br><img src="/images/suanfa12.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void deleteHeap(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  Swap(a[0],a[n-1]);  //最后一个数据的值赋给头节点，此时尾节点下标为n-2</span><br><span class="line">  int i=0;  //父节点下标</span><br><span class="line">  int j=2*i+1;  //左子树节点 </span><br><span class="line">  while(j&lt;=n-2)</span><br><span class="line">  &#123;</span><br><span class="line">    if(j+1&lt;=n-2 &amp;&amp; a[j+1]&lt;a[j]) j++; //在左右子树节点找到最小的</span><br><span class="line">    //若父节点的值大于子节点，则交换并继续比较新的父节点与子节点(最小堆)</span><br><span class="line">    if(a[i]&gt;a[j])  </span><br><span class="line">    &#123;</span><br><span class="line">      Swap(a[i],a[j]);</span><br><span class="line">      i=j;  //交换后的子节点变为新的父节点</span><br><span class="line">      j=2*i+1;  //新的父节点的子节点</span><br><span class="line">    &#125;</span><br><span class="line">    else break;  //若父节点的值小于等于子节点，则停止交换</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>堆化数组</strong>：只要将非叶子节点从下往上从右往左遍历，进行<strong>下沉调整</strong>即可<br><strong>下沉函数</strong>：类似于删除堆中的操作，即<strong>父节点其子节点比较调整位置</strong>，从而让数组满足堆的条件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//下沉函数</span><br><span class="line">void sink(int a[],int i,int n)  //参数：数组，需要调整的父节点，数组长度</span><br><span class="line">&#123;</span><br><span class="line">  int j=2*i+1;</span><br><span class="line">  while(j&lt;=n-1)</span><br><span class="line">  &#123;</span><br><span class="line">    if(j+1&lt;=n-1 &amp;&amp; a[j+1]&lt;a[j]) j++; </span><br><span class="line">    if(a[i]&gt;a[j])  </span><br><span class="line">    &#123;</span><br><span class="line">      Swap(a[i],a[j]);</span><br><span class="line">      i=j;  </span><br><span class="line">      j=2*i+1;  </span><br><span class="line">    &#125;</span><br><span class="line">    else break;  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">//建立最小堆</span><br><span class="line">void makeHeap(int a[],int n)</span><br><span class="line">&#123;</span><br><span class="line">  for(int i=n/2-1;i&gt;=0;i--)</span><br><span class="line">  &#123;</span><br><span class="line">    sink(a,i,n);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>堆排序</strong>：建立好的最小堆中第0个数据时堆中最小的数据，取出这个数据再执行下堆的删除，这样堆中第0个数据又是最小的数据，重复上述步骤直到堆中只有一个数据就直接取出，则取出的数据就是有序序列了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void heapSort(int a[],int n)</span><br><span class="line">&#123;  </span><br><span class="line">  for(int i=n-1;i&gt;0;i--)</span><br><span class="line">  &#123;</span><br><span class="line">    makeHeap(a,i+1);</span><br><span class="line">    deleteHeap(a,i+1);    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/04/redis1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Redis(一)安装
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/03/02/offer2/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">剑指Offer算法记录(二)算法</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/06/redis4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(四)Redis-PHP实战" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/06/redis4/" class="title">Redis(四)Redis-PHP实战</a></p>
+                            <p class="item-date"><time datetime="2018-03-06T01:22:31.000Z" itemprop="datePublished">2018-03-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity3/" class="title">webSecurity3</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:41.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity2/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity2/" class="title">webSecurity2</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:36.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/webSecurity1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/web.jpg)" alt="WEB信息系统安全（一）概念与内涵" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/webSecurity1/" class="title">WEB信息系统安全（一）概念与内涵</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T11:58:31.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/04/redis3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/redis.jpg)" alt="Redis(三)PHP操作Redis" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/04/redis3/" class="title">Redis(三)PHP操作Redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-04T07:49:05.000Z" itemprop="datePublished">2018-03-04</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">31</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 12.5px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 17.5px;">swoole</a> <a href="/tags/数据结构/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/03/02/suanfa1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
