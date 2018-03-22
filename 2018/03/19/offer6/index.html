@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>剑指Offer基础知识(六)面试中的各项能力 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="剑指Offer,解题思路" />
+    
+    <meta name="description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展，其中的算法面试题请看剑指Offer面试题集 6.2沟通和学习能力沟通能力：面试者无论在介绍项目经验还是介绍解题思路时，都需要逻辑清晰明了，语言详略得当，表述时突出重点、观点明确学习能力：计算机知识技术更新换代很快，从业人员需要很强的学习能力，面试官通常有两种方法考擦，第一种是询问最近在看什么书、做什么项目、从中学习到了什么新">
+<meta name="keywords" content="剑指Offer,解题思路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指Offer基础知识(六)面试中的各项能力">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/03/19/offer6/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展，其中的算法面试题请看剑指Offer面试题集 6.2沟通和学习能力沟通能力：面试者无论在介绍项目经验还是介绍解题思路时，都需要逻辑清晰明了，语言详略得当，表述时突出重点、观点明确学习能力：计算机知识技术更新换代很快，从业人员需要很强的学习能力，面试官通常有两种方法考擦，第一种是询问最近在看什么书、做什么项目、从中学习到了什么新">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/offer.png">
+<meta property="og:updated_time" content="2018-03-21T14:32:39.145Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="剑指Offer基础知识(六)面试中的各项能力">
+<meta name="twitter:description" content="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展，其中的算法面试题请看剑指Offer面试题集 6.2沟通和学习能力沟通能力：面试者无论在介绍项目经验还是介绍解题思路时，都需要逻辑清晰明了，语言详略得当，表述时突出重点、观点明确学习能力：计算机知识技术更新换代很快，从业人员需要很强的学习能力，面试官通常有两种方法考擦，第一种是询问最近在看什么书、做什么项目、从中学习到了什么新">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/offer.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-offer6" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        剑指Offer基础知识(六)面试中的各项能力
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/19/offer6/" class="article-date">
+            <time datetime="2018-03-19T12:59:31.000Z" itemprop="datePublished">2018-03-19</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/剑指Offer/">剑指Offer</a>, <a class="tag-link" href="/tags/解题思路/">解题思路</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/images/offer.png" alt=""></p>
+<h3 id="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展，其中的算法面试题请看剑指Offer面试题集"><a href="#本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展，其中的算法面试题请看剑指Offer面试题集" class="headerlink" title="本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展，其中的算法面试题请看剑指Offer面试题集"></a>本文主要记录阅读剑指Offer这本书所遇到的算法解释并作一些个人的拓展，其中的算法面试题请看<a href="harviealwayshere.github.io/2018/03/09/offerMianshi/">剑指Offer面试题集</a></h3><hr>
+<h3 id="6-2沟通和学习能力"><a href="#6-2沟通和学习能力" class="headerlink" title="6.2沟通和学习能力"></a>6.2沟通和学习能力</h3><p><strong>沟通能力：</strong>面试者无论在<strong>介绍项目经验</strong>还是<strong>介绍解题思路</strong>时，都需要逻辑清晰明了，语言详略得当，表述时突出重点、观点明确<br><strong>学习能力：</strong>计算机知识技术更新换代很快，从业人员需要很强的学习能力，面试官通常有两种方法考擦，第一种是<strong>询问最近在看什么书、做什么项目、从中学习到了什么新技术</strong>，第二种是<strong>抛出一个新概念</strong>，接下来观察应聘者能不能在短时间<strong>理解新概念并解决相关问题</strong>，如丑数、二叉树镜像、逆序对等<br><strong>提问能力：</strong>学习能力强的人应该具有<strong>主动积极的态度</strong>，对未知的领域有强烈的求知欲望，遇到不懂的问题应该主动提问</p>
+<h3 id="6-3知识迁移能力"><a href="#6-3知识迁移能力" class="headerlink" title="6.3知识迁移能力"></a>6.3知识迁移能力</h3><p>知识需要可以<strong>变现</strong>，即将已有的技术理解迁移到学习新技术的过程中，一般考察方式有两种<br>第一种是<strong>将经典问题稍作变换</strong>，考察面试者找到和经典问题的联系，并从中<strong>受到启发解决新问题</strong><br>如面试题38<strong>数字在排序数组中出现的次数</strong>，排序数组可以想到<strong>二分查找</strong>，我们可以把二分查找的思想迁移稍作变换，用二分查找找到排序数组中<strong>重复数字的第一个和最后一个</strong>，从而得到数字在数组中出现的次数<br>第二种是<strong>先问一个简单问题之后追问一个相关的难度更大的问题</strong>，考察面试者<strong>总结简单问题的思路方法迁移至解决困难问题</strong><br>如面试题40<strong>数组中只出现一次的数字</strong>，如面试官先问数组中只有一个数字出现一次的情况，后面追问数组中有多个数字出现一次等<br>重要的是<strong>举一反三的能力</strong>，题目是刷不完的，只有总结题目的特点和思路，才能分析新题目的相关性提高举一反三的能力</p>
+<h3 id="6-4抽象建模能力"><a href="#6-4抽象建模能力" class="headerlink" title="6.4抽象建模能力"></a>6.4抽象建模能力</h3><p>针对<strong>实际生产生活</strong>，面试官喜欢从其中提炼出问题，考查面试者是否能<strong>建立数学模型解决问题</strong><br>建模第一步是<strong>选择合理的数据结构来表示问题</strong>，需要根据问题的特点考虑性能、编程难度等<br>如面试题44中<strong>用一个数组表示一副牌</strong>，用11、12、13表示JQK，用0表示大小王<br>在面试题45中<strong>用一个环形链表模拟一个圆圈</strong><br>建模第二步是<strong>分析模型中的内在规律</strong>，只有对问题进行细微的分析，才能找到模型中的规律解决问题<br>如面试题”青蛙跳台阶”内在规律是<strong>斐波那契数列</strong><br>如面试题43本质是求<strong>数列fn=f(n-1)+f(n-2)+f(n-3)+f(n-4)+f(n-5)+f(n-6)</strong></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/03/17/offer5/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">剑指Offer基础知识(五)优化时间和空间的效率</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/19/offer6/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/offer.png)" alt="剑指Offer基础知识(六)面试中的各项能力" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/19/offer6/" class="title">剑指Offer基础知识(六)面试中的各项能力</a></p>
+                            <p class="item-date"><time datetime="2018-03-19T12:59:31.000Z" itemprop="datePublished">2018-03-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/17/offer5/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/offer.png)" alt="剑指Offer基础知识(五)优化时间和空间的效率" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/17/offer5/" class="title">剑指Offer基础知识(五)优化时间和空间的效率</a></p>
+                            <p class="item-date"><time datetime="2018-03-17T09:00:11.000Z" itemprop="datePublished">2018-03-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/12/offer4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/offer.png)" alt="剑指Offer基础知识(四)解决面试题的思路" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/12/offer4/" class="title">剑指Offer基础知识(四)解决面试题的思路</a></p>
+                            <p class="item-date"><time datetime="2018-03-12T08:22:11.000Z" itemprop="datePublished">2018-03-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/10/offer3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/offer.png)" alt="剑指Offer基础知识(三)高质量代码" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/10/offer3/" class="title">剑指Offer基础知识(三)高质量代码</a></p>
+                            <p class="item-date"><time datetime="2018-03-10T06:32:57.000Z" itemprop="datePublished">2018-03-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/09/offerMianshi/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/offer.png)" alt="剑指Offer面试题集" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/03/09/offerMianshi/" class="title">剑指Offer面试题集</a></p>
+                            <p class="item-date"><time datetime="2018-03-09T03:21:35.000Z" itemprop="datePublished">2018-03-09</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">36</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.67px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.67px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/WEB安全/" style="font-size: 10px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 18.33px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/剑指Offer/" style="font-size: 16.67px;">剑指Offer</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 10px;">校园课程</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/解题思路/" style="font-size: 13.33px;">解题思路</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/03/19/offer6/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
