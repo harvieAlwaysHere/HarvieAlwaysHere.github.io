@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>安卓开发(二) 四大组件—活动 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="安卓开发" />
+    
+    <meta name="description" content="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案 大纲活动(Activity)活动包含用户界面的组件，用于与用户交互，一个应用中可以包含多个活动 活动用法1.创建活动：用于调用布局和元素用来与用户交互创建一个空活动(Add No Activity)，可在app/src/main/java/com.example.activitytest中创建活动(New-Act">
+<meta name="keywords" content="安卓开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓开发(二) 四大组件—活动">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/03/30/android2/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案 大纲活动(Activity)活动包含用户界面的组件，用于与用户交互，一个应用中可以包含多个活动 活动用法1.创建活动：用于调用布局和元素用来与用户交互创建一个空活动(Add No Activity)，可在app/src/main/java/com.example.activitytest中创建活动(New-Act">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/android.jpg">
+<meta property="og:updated_time" content="2018-04-01T16:22:45.379Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安卓开发(二) 四大组件—活动">
+<meta name="twitter:description" content="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案 大纲活动(Activity)活动包含用户界面的组件，用于与用户交互，一个应用中可以包含多个活动 活动用法1.创建活动：用于调用布局和元素用来与用户交互创建一个空活动(Add No Activity)，可在app/src/main/java/com.example.activitytest中创建活动(New-Act">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/android.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-android2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        安卓开发(二) 四大组件—活动
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/30/android2/" class="article-date">
+            <time datetime="2018-03-30T02:22:32.000Z" itemprop="datePublished">2018-03-30</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/安卓开发/">安卓开发</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案"><a href="#本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案" class="headerlink" title="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案"></a>本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案</h3><p><img src="/images/android.jpg" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="活动-Activity"><a href="#活动-Activity" class="headerlink" title="活动(Activity)"></a>活动(Activity)</h3><p>活动包含<strong>用户界面的组件</strong>，用于与用户交互，一个应用中可以包含多个活动</p>
+<h3 id="活动用法"><a href="#活动用法" class="headerlink" title="活动用法"></a>活动用法</h3><p><strong>1.创建活动：</strong>用于<strong>调用布局和元素</strong>用来与用户交互<br>创建一个空活动(Add No Activity)，可在<strong>app/src/main/java/com.example.activitytest</strong>中<strong>创建活动(New-Activity-EmptyActiviy)</strong><br><img src="/images/android20.png" alt=""><br>创建的是EmptyActivity十分简洁，在onCreate()中仅<strong>调用了父类的onCreate()方法</strong></p>
+<p><strong>2.创建布局和元素：</strong>活动对应的布局用来显示<strong>界面内容</strong><br>创建一个布局，在<strong>app/src/main/res</strong>下创建一个<strong>存储布局文件的文件夹layout</strong>，然后在里面添加一个<strong>布局文件(New-Layout resource file)</strong><br>创建一个Button元素，指定id和属性<br><img src="/images/android21.png" alt=""></p>
+<p><strong>3.活动加载布局和元素：</strong>使用<strong>setContentView(layoutId)方法加载布局</strong><br>layoutId可在<strong>R文件中找到</strong>，因为<font color="red"><strong>项目中任何资源都会在R文件中生成对应的资源id</strong></font>，调用方式为<strong>R.ResourceCategory.FileName</strong>如layout下的firstLayout为R.layout.firstLayout</p>
+<p><strong>4.注册活动：</strong>AS在创建活动时会自动在<strong>AndroidManifest.xml</strong>中帮我们注册活动或其他组件<br>在<application>标签中使用<strong><activity>标签注册活动</activity></strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:name=<span class="string">".FirstActivity"</span>  <span class="comment">//指定注册活动名</span></span><br><span class="line">  android:label=<span class="string">"This is FirstActivity"</span>&gt;  <span class="comment">//活动标题栏内容</span></span><br><span class="line">  &lt;intent-filter&gt;</span><br><span class="line">    &lt;action android:name=<span class="string">"android.intent.action.MAIN"</span> /&gt;  <span class="comment">//设置主活动</span></span><br><span class="line">    &lt;category android:name=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;  <span class="comment">//设置主活动</span></span><br><span class="line">  &lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure></application></p>
+<h3 id="简单的活动"><a href="#简单的活动" class="headerlink" title="简单的活动"></a>简单的活动</h3><font color="blue"><strong>1.Toast(短小消息提醒)：</strong></font><br>Toast.makeText(Context,Msg,Time).show()<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//FirstActivity.java</span></span><br><span class="line"><span class="comment">//在活动中设置Button监听点击事件触发Toast</span></span><br><span class="line">Button button1=(Button)findViewById(R.id.ButtonFirst);</span><br><span class="line">button1.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span></span>&#123;</span><br><span class="line">    Toast.makeText(FirstActivity.<span class="keyword">this</span>,<span class="string">"FirstToast!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br><br><font color="blue"><strong>2.Menu(菜单)：</strong></font><br>创建<strong>菜单资源文件</strong>，res-&gt;New directory-&gt;menu，menu-&gt;New-&gt;Menu resource file<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.xml</span></span><br><span class="line">&lt;item                     <span class="comment">//菜单项</span></span><br><span class="line">  android:id=<span class="string">"@+id/addItem"</span>  </span><br><span class="line">  android:title=<span class="string">"Add"</span>/&gt;</span><br><span class="line">&lt;item</span><br><span class="line">  android:id=<span class="string">"@+id/removeItem"</span></span><br><span class="line">  android:title=<span class="string">"Remove"</span>/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//FirstActivity.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu)</span></span>&#123;</span><br><span class="line">  getMenuInflater().inflate(R.menu.main,menu);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span></span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (item.getItemId())&#123;</span><br><span class="line">    <span class="keyword">case</span> R.id.addItem:</span><br><span class="line">      Toast.makeText(<span class="keyword">this</span>,<span class="string">"Add!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> R.id.removeItem:</span><br><span class="line">      Toast.makeText(<span class="keyword">this</span>,<span class="string">"Remove!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><br><font color="blue"><strong>3.finish()销毁活动：</strong></font>
+
+<h3 id="活动跳转-Intent"><a href="#活动跳转-Intent" class="headerlink" title="活动跳转(Intent)"></a>活动跳转(Intent)</h3><p>Intent是Android中<strong>组件之间进行交互的方式</strong>，可用于<strong>指明当前组件动作和组件间传递数据</strong>，一般用于<strong>启动互动、启动服务、发送广播等</strong></p>
+<h3 id="显式Intent"><a href="#显式Intent" class="headerlink" title="显式Intent"></a>显式Intent</h3><p>显式Intent的意图明显，如<strong>Intent(Context,Class)</strong>，Context为背景上下文，Class为<strong>目标活动</strong><br>启动活动可以用<strong>startActivity(Intent)</strong></p>
+<h3 id="隐式Intent-程序内活动"><a href="#隐式Intent-程序内活动" class="headerlink" title="隐式Intent(程序内活动)"></a>隐式Intent(程序内活动)</h3><p>隐式Intent意图不明显，不指定启动函数而是由<strong>系统分析出合适活动去启动</strong><br>使用Intent的另一个构造函数<strong>Intent(ActionName)/intent.addCategory(CategoryName)</strong>，ActionName和CategoryName会在<strong>活动注册标签<action>和<category></category></action></strong>中寻找匹配的活动<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//AndroidManifest.xml</span></span><br><span class="line">&lt;activity android:name=<span class="string">".SecondActivity"</span>&gt;</span><br><span class="line">  &lt;intent-filter&gt;</span><br><span class="line">    &lt;action android:name=<span class="string">"com.example.activitytest.ACTION_START"</span>/&gt;</span><br><span class="line">    &lt;category android:name=<span class="string">"android.intent.category.DEFAULT"</span>/&gt;</span><br><span class="line">  &lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="隐式Intent-程序间活动"><a href="#隐式Intent-程序间活动" class="headerlink" title="隐式Intent(程序间活动)"></a>隐式Intent(程序间活动)</h3><p>隐式Intent还可以启动<strong>其他程序的活动</strong>，使得Android程序间功能共享成为可能<br>如启动安卓内置浏览器打开网页、启动拨打号码活动等</p>
+<h3 id="Intent代码示例"><a href="#Intent代码示例" class="headerlink" title="Intent代码示例"></a>Intent代码示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//显示Intent(Context,Class)</span></span><br><span class="line">Intent intent=<span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>,SecondActivity.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">//隐式Intent(ActionName)+intentObj.addCategory(CategoryName)</span></span><br><span class="line">Intent intent=<span class="keyword">new</span> Intent(<span class="string">"com.example.activitytest.ACTION_START"</span>);</span><br><span class="line">intent.addCategory(<span class="string">"android.intent.category.DEFAULT"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//隐式Intent程序间活动</span></span><br><span class="line">Intent intent=<span class="keyword">new</span> Intent(Intent.ACTION_VIEW);</span><br><span class="line">intent.setData(Uri.parse(<span class="string">"http://www.baidu.com"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//启动活动</span></span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+<h3 id="活动传递数据-Intent"><a href="#活动传递数据-Intent" class="headerlink" title="活动传递数据(Intent)"></a>活动传递数据(Intent)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//传递数据 intent.putExtra(key,value);</span></span><br><span class="line">String data=<span class="string">"Hello Next Activity!"</span>;</span><br><span class="line">Intent intent=<span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>,SecondActivity.class);</span><br><span class="line">intent.putExtra(<span class="string">"passData"</span>,data);</span><br><span class="line">startActivity(intent);</span><br><span class="line"></span><br><span class="line"><span class="comment">//取出数据 getIntent()+intent.getStringExtra(key)</span></span><br><span class="line">Intent intent=getIntent();</span><br><span class="line">String data=intent.getStringExtra(<span class="string">"passData"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="活动返回数据-startActivityForResult"><a href="#活动返回数据-startActivityForResult" class="headerlink" title="活动返回数据(startActivityForResult)"></a>活动返回数据(startActivityForResult)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//启动活动时用startActivityForResult(Intent,Code)</span></span><br><span class="line"><span class="comment">//Code为请求码</span></span><br><span class="line">Intent intent=<span class="keyword">new</span> Intent(FirstActivity.<span class="keyword">this</span>,SecondActivity.class);</span><br><span class="line">startActivityForResult(intent,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//被启动活动将要传递的数据放在intent中并setResult(Status,Intent)</span></span><br><span class="line"><span class="comment">//Status为活动处理结果 RESULT_OK/RESULT_CANCALED</span></span><br><span class="line"><span class="comment">//这段代码可以放在活动元素中或者onBackPressed()中(用户按back键销毁活动)</span></span><br><span class="line">Intent intent=<span class="keyword">new</span> Intent();</span><br><span class="line">intent.putExtra(<span class="string">"dataReturn"</span>,<span class="string">"Hello Previous Activity!"</span>);</span><br><span class="line">setResult(RESULT_OK,intent);</span><br><span class="line"></span><br><span class="line"><span class="comment">//被启动的活动销毁后会调用上一个活动的onActivityResult(Code,Status,Intent)</span></span><br><span class="line"><span class="comment">//Code为请求码，Status为活动处理结果，Intent为带有数据的返回Intent</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> code,<span class="keyword">int</span> status,Intent data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">switch</span>(code)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">      <span class="keyword">if</span>(status==RESULT_OK) &#123;</span><br><span class="line">        String returnData=data.getStringExtra(<span class="string">"dataReturn"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="活动的生命周期"><a href="#活动的生命周期" class="headerlink" title="活动的生命周期"></a>活动的生命周期</h3><p>Android使用<strong>任务(Task)</strong>来管理活动的，一个任务就是一组存放在<strong>返回栈中的活动集合</strong><br><img src="/images/android22.png" alt=""></p>
+<h3 id="活动的状态"><a href="#活动的状态" class="headerlink" title="活动的状态"></a>活动的状态</h3><p><font color="blue"><strong>运行状态：</strong></font><strong>栈顶</strong>活动</p>
+<p><font color="blue"><strong>暂停状态：</strong></font><strong>不处于栈顶</strong>但是仍然<strong>可见</strong>的活动</p>
+<p><font color="blue"><strong>停止状态：</strong></font><strong>不处于栈顶并且不可见</strong>的活动</p>
+<p><font color="blue"><strong>销毁状态：</strong></font><strong>出栈</strong>的活动</p>
+<h3 id="活动改变状态函数"><a href="#活动改变状态函数" class="headerlink" title="活动改变状态函数"></a>活动改变状态函数</h3><p>Tips：活动从停止状态变为运行状态，有两条路径，取决于停止状态时活动是否被<strong>系统回收</strong>，若已经被系统回收，则返回到活动时需要调用onCreate()重新创建活动，否则调用onRestart()重新启动活动<br><img src="/images/android23+.jpg" alt=""></p>
+<h3 id="活动回收时保存数据"><a href="#活动回收时保存数据" class="headerlink" title="活动回收时保存数据"></a>活动回收时保存数据</h3><p>活动在被系统回收时若需要保存当前活动数据，可以在<strong>onSaveInstanceState()</strong>函数中使用<strong>Bundle数据类型的putString/putInt(key,value)等</strong>保存数据，函数保证<strong>活动回收前一定被调用</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//保存数据</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function">protect <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span></span>&#123;</span><br><span class="line">  <span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">  outState.putString(key,value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//取出数据</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(savedInstanceState!=<span class="keyword">null</span>)&#123;</span><br><span class="line">    String data=savedInstanceState.getSrring(key);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="活动启动模式"><a href="#活动启动模式" class="headerlink" title="活动启动模式"></a>活动启动模式</h3><p>通过在AndroidManiFest.xml中给<activity>标签指定<strong>android:launchMode属性</strong>指定活动启动模式</activity></p>
+<p><font color="blue"><strong>standard模式：</strong></font>活动每次启动都<strong>创建一个新的活动实例</strong></p>
+<p><font color="blue"><strong>singleTop模式：</strong></font><strong>处于栈顶</strong>的活动启动不会创建新的活动实例</p>
+<p><font color="blue"><strong>singleTask模式：</strong></font>在<strong>栈内</strong>的活动会被调用至栈顶并弹出这个活动以上的所有活动</p>
+<p><font color="blue"><strong>singleInstance：</strong></font><strong>创建一个单独栈</strong>启动活动，其他活动均调用这个栈内的活动实例</p>
+<h3 id="活动小技巧"><a href="#活动小技巧" class="headerlink" title="活动小技巧"></a>活动小技巧</h3><p>可以创建一个活动基类BaseActivity添加一些方法辅助我们编写活动<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span></span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function">protect <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle saveInstanceState)</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(saveInstanceState);</span><br><span class="line">    Log.d(<span class="string">"NowActivity"</span>,getClass().getSimpleName());  <span class="comment">//打印当前创造的活动名</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>被启动的活动若需要传递参数启动可以编写一个函数用于<strong>启动活动时调用</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如启动活动需传递一个String值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">actionStart</span><span class="params">(Context context,String data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  Intent intent=<span class="keyword">new</span> Intent(context,startActivityName.class);</span><br><span class="line">  intent.putExtra(key,data);</span><br><span class="line">  context.startActivity(intent);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//别的活动就可以调用这个函数来启动活动</span></span><br><span class="line">String NeedData;</span><br><span class="line">startActivityName.actionStart(FirstActivity.<span class="keyword">this</span>,NeedData);</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/04/02/webSecurity4/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            WEB信息系统安全（四）身份认证与访问控制
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/03/30/android1/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">安卓开发(一) 环境搭建+简单入门</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/25/txmianshi/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/txms.png)" alt="腾讯后台开发面试总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/25/txmianshi/" class="title">腾讯后台开发面试总结</a></p>
+                            <p class="item-date"><time datetime="2018-04-25T13:04:38.000Z" itemprop="datePublished">2018-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/24/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(二) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/24/swtest2/" class="title">软件测试(二) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-24T02:02:01.000Z" itemprop="datePublished">2018-04-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/23/swtest1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt10.png)" alt="软件测试(一) 黑盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/23/swtest1/" class="title">软件测试(一) 黑盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-23T06:43:42.000Z" itemprop="datePublished">2018-04-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/12/androidProject1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓实战开发(一) GroQuiz" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/12/androidProject1/" class="title">安卓实战开发(一) GroQuiz</a></p>
+                            <p class="item-date"><time datetime="2018-04-12T07:12:03.000Z" itemprop="datePublished">2018-04-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/10/android4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓开发(四) 四大组件—广播" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/10/android4/" class="title">安卓开发(四) 四大组件—广播</a></p>
+                            <p class="item-date"><time datetime="2018-04-10T01:16:40.000Z" itemprop="datePublished">2018-04-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/软件测试/" style="font-size: 11.43px;">软件测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/03/30/android2/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

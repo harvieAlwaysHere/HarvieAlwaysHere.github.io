@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>WEB信息系统安全（二）机密性保护 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="WEB安全,校园课程" />
+    
+    <meta name="description" content="本系列是陈春华教授所讲授的信息系统安全课程的个人笔记 大纲 数据机密性保护 加密概念 古典算法 替代算法 换位算法 现代密码体制 对称密码体制 非对称密码体制 对称与非对称体制相比 Https    数据的机密性保护机密性保护定义：保护数据不为非授权者(用户、实体或者过程)获取或者使用分类：  可读性保护：借助数据加密技术 可见性保护：借助数据隐藏技术  数据加密概念数据加密：隐藏数据的可读性，使">
+<meta name="keywords" content="WEB安全,校园课程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WEB信息系统安全（二）机密性保护">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/03/29/webSecurity2/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本系列是陈春华教授所讲授的信息系统安全课程的个人笔记 大纲 数据机密性保护 加密概念 古典算法 替代算法 换位算法 现代密码体制 对称密码体制 非对称密码体制 对称与非对称体制相比 Https    数据的机密性保护机密性保护定义：保护数据不为非授权者(用户、实体或者过程)获取或者使用分类：  可读性保护：借助数据加密技术 可见性保护：借助数据隐藏技术  数据加密概念数据加密：隐藏数据的可读性，使">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/web.jpg">
+<meta property="og:updated_time" content="2018-03-29T14:20:08.458Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WEB信息系统安全（二）机密性保护">
+<meta name="twitter:description" content="本系列是陈春华教授所讲授的信息系统安全课程的个人笔记 大纲 数据机密性保护 加密概念 古典算法 替代算法 换位算法 现代密码体制 对称密码体制 非对称密码体制 对称与非对称体制相比 Https    数据的机密性保护机密性保护定义：保护数据不为非授权者(用户、实体或者过程)获取或者使用分类：  可读性保护：借助数据加密技术 可见性保护：借助数据隐藏技术  数据加密概念数据加密：隐藏数据的可读性，使">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/web.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-webSecurity2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        WEB信息系统安全（二）机密性保护
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/29/webSecurity2/" class="article-date">
+            <time datetime="2018-03-29T11:58:36.000Z" itemprop="datePublished">2018-03-29</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/WEB安全/">WEB安全</a>, <a class="tag-link" href="/tags/校园课程/">校园课程</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本系列是陈春华教授所讲授的信息系统安全课程的个人笔记"><a href="#本系列是陈春华教授所讲授的信息系统安全课程的个人笔记" class="headerlink" title="本系列是陈春华教授所讲授的信息系统安全课程的个人笔记"></a>本系列是陈春华教授所讲授的信息系统安全课程的个人笔记</h3><p><img src="/images/web.jpg" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><ul>
+<li>数据机密性保护<ul>
+<li>加密概念</li>
+<li>古典算法</li>
+<li>替代算法</li>
+<li>换位算法</li>
+<li>现代密码体制</li>
+<li>对称密码体制</li>
+<li>非对称密码体制</li>
+<li>对称与非对称体制相比</li>
+<li>Https</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据的机密性保护"><a href="#数据的机密性保护" class="headerlink" title="数据的机密性保护"></a>数据的机密性保护</h3><p>机密性保护定义：保护数据不为<strong>非授权者</strong>(用户、实体或者过程)<strong>获取或者使用</strong><br>分类：</p>
+<ul>
+<li>可读性保护：借助<strong>数据加密</strong>技术</li>
+<li>可见性保护：借助<strong>数据隐藏</strong>技术</li>
+</ul>
+<h3 id="数据加密概念"><a href="#数据加密概念" class="headerlink" title="数据加密概念"></a>数据加密概念</h3><p>数据加密：隐藏数据的可读性，使非授权用户<strong>不能直接了解数据内容</strong><br>加密系统：明文+算法+秘钥=密文<br><img src="/images/web20.png" alt=""><br>加密算法分类：<br><img src="/images/web21.png" alt=""></p>
+<h3 id="古典算法（不安全-密钥空间小-计算机可穷举秘钥破解）"><a href="#古典算法（不安全-密钥空间小-计算机可穷举秘钥破解）" class="headerlink" title="古典算法（不安全 密钥空间小 计算机可穷举秘钥破解）"></a>古典算法（不安全 密钥空间小 计算机可穷举秘钥破解）</h3><p><font color="red"><strong>1.替代算法：substitution cipher</strong></font><br>原理：将明文中<strong>每个位置的字母用其他字母代替</strong><br>举例：</p>
+<ul>
+<li>凯撒密码算法：明文字母替换成<strong>字母表中后面举例5位的字母</strong>，如CHINA-&gt;HMNSF</li>
+<li>维基利亚密码：按照<strong>秘钥长度分解明文</strong>成若干节，对于每个明文字母用对应秘钥和<strong>维基利亚方阵</strong>进行替换，具体为字母对应的<strong>秘钥为行数</strong>，<strong>字母本身为列数</strong>，在方阵中查找替换字母</li>
+</ul>
+<p><font color="red"><strong>2.换位算法：transposition cipher</strong></font><br>原理：将明文中的<strong>字母位置重新排列</strong><br>举例：</p>
+<ul>
+<li>简单替换：将明文<strong>倒序</strong>输出</li>
+<li>列换位法：按照<strong>秘钥长度分解明文</strong>，按照<strong>秘钥的字母在字母表中的顺序输出对应列的明文</strong></li>
+</ul>
+<h3 id="现代密码体制"><a href="#现代密码体制" class="headerlink" title="现代密码体制"></a>现代密码体制</h3><p><img src="/images/web22.png" alt=""><br><strong>C</strong>为明文，<strong>E</strong>为加密函数，<strong>EK</strong>为加密秘钥<br><strong>M</strong>为密文，<strong>D</strong>为解密函数，<strong>DK</strong>为解密秘钥<br>按照<strong>DK与EK的关系</strong>，现代密码体制可分为</p>
+<ul>
+<li><font color="blue"><strong>对称密码体制：</strong></font>DK==EK</li>
+<li><font color="blue"><strong>非对称密码体制：</strong></font>DK!=EK</li>
+</ul>
+<p><font color="red"><strong>1.对称密码体制</strong></font><br>原理：加密与解密用<strong>相同秘钥</strong><br>举例：</p>
+<ul>
+<li><font color="blue"><strong>流加密(stream cipher)</strong></font>：RC4算法等<ul>
+<li>原理：对明文与<strong>密钥流</strong>进行<strong>逐比特位(bit)</strong>进行加密操作<strong>(异或运算)</strong><br><img src="/images/web23.png" alt=""></li>
+<li>密钥流：基于<strong>种子秘钥K</strong>，通过<strong>密钥流生成函数</strong>不断产生Keystream</li>
+<li><strong>安全性：</strong></li>
+<li>1.密钥流生成函数需要有<strong>伪随机性(长周期不重复和不可推断)</strong></li>
+<li>2.种子秘钥K<strong>不重复使用</strong>，仅使用在一个通信会话中</li>
+<li>3.长周期的种子秘钥更换：显示中<strong>真随机源(无周期重复)较难实现</strong>，一般采用<strong>线性反馈移位寄存器结构</strong>，具有很长的周期性即可</li>
+</ul>
+</li>
+<li><font color="blue"><strong>块加密(block cipher)</strong></font>：DES算法和AES算法<ul>
+<li>原理：将明文<strong>编码(如01编码)</strong>，按照一定<strong>长度(m)分组</strong>，再将<strong>各组明文编码</strong>分别在秘钥的控制下加密<br><img src="/images/web24.png" alt=""></li>
+<li><strong>操作模式：</strong></li>
+<li>1.<strong>ECB(Electronic Codebook，电码本)</strong>：明文被处理成大小合适的分组之后对每个分组进行<strong>独立的加密解密操作</strong><br><img src="/images/web25.png" alt=""></li>
+<li>2.<strong>CBC(Cipher-block chaining，密码分组连接)</strong>：每个<strong>明文块先于前一个密文进行异或</strong>后在进行加密，因此每个<strong>密文快都依赖于它前面所有的明文块</strong><br><img src="/images/web26.png" alt=""></li>
+<li><strong>安全性：</strong>明文块的<strong>长度(m)</strong>对安全性十分关键，至少需要<strong>64bit</strong>，推荐<strong>128bit以上</strong>，抵挡字典攻击</li>
+<li><strong>DES(Data Encryption Standard，数据加密标准)：</strong>块长度64位，秘钥长度56位</li>
+<li><strong>AES(Advanced Encryptio Standard，高级数据加密标准)：</strong>块长度128位，可变秘钥长度128/192/256位</li>
+</ul>
+</li>
+<li><font color="blue"><strong>对称秘钥体制问题</strong></font>：通信双方共享一个用于加密/解密的秘钥K，在规模为n的通信群体中共需要n(n-1)个秘钥，规模庞大时，秘钥管理困难</li>
+</ul>
+<p><font color="red"><strong>2.非对称密码体制</strong></font><br>原理：加密与解密使用<strong>不同秘钥</strong>，使用其中一个秘钥<strong>(公钥PK)进行加密</strong>，可以用对应的另一个秘钥<strong>(私钥SK)进行解密</strong><br>安全性：仅知道公钥<strong>难以求得私钥</strong><br>解决秘钥管理问题：每个实体仅需要<strong>保管一个公私秘钥对</strong><br>举例： <font color="blue"><strong>RSA算法</strong></font>，安全性依赖于<strong>大整数素因子分解难题</strong></p>
+<h3 id="对称与非对称体制比较"><a href="#对称与非对称体制比较" class="headerlink" title="对称与非对称体制比较"></a>对称与非对称体制比较</h3><p>对称加密：</p>
+<ul>
+<li>运算效率高，使用方便，加密效率高</li>
+<li>秘钥需要<strong>安全信道传输</strong>，若秘钥泄密，损失惨重<br>非对称加密：</li>
+<li>安全性高</li>
+<li>运算效率低，通常用于<strong>加密对称秘钥</strong></li>
+</ul>
+<h3 id="HTTPS加密"><a href="#HTTPS加密" class="headerlink" title="HTTPS加密"></a>HTTPS加密</h3><p>HTTPs采用混合的加密机制，使用<strong>公开密钥(非对称加密)</strong>加密用于<strong>传输对称密钥</strong>，之后使用<strong>对称密钥加密进行通信</strong><br>PublicKey为<strong>非对称加密的公钥</strong>，PrivateKey为<strong>非对称加密的私钥</strong>，用于传输<strong>对称加密秘钥SessionKey</strong><br><img src="/images/web27.png" alt=""><br>这存在一个问题：<font color="red"><strong>怎么保证获取到的公钥PublickKey为真正的公钥呢？</strong></font><br>答案是<font color="red"><strong>证书认证(签名)</strong></font><br><strong>数字证书认证机构（CA，Certificate Authority</strong>是客户端与服务器双方都<strong>可信赖的第三方机构</strong>。<br>服务器的运营人员向CA提出<strong>公开密钥的申请</strong>，CA在判明提出申请者的身份之后，会对<strong>已申请的公开密钥做数字签名</strong>，然后分配这个已签名的公开密钥，并将该<strong>公开密钥放入公开密钥证书后绑定</strong>在一起。<br>进行HTTPs通信时，服务器会把证书发送给客户端，客户端取得其中的公开密钥之后进行<strong>验证其中的数字签名是否为CA</strong>，如果验证通过，就可以开始通信。<br>使用<strong>OpenSSL这套开源程序</strong>，每个人都可以构建一套属于自己的认证机构，从而自己给自己颁发服务器证书。浏览器在访问该服务器时，会显示“无法确认连接安全性”或“该网站的安全证书存在问题”等警告消息。<br><img src="/images/web28.png" alt=""></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/29/webSecurity3/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            WEB信息系统安全（三）数据完整性和不可否认性保护
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/03/26/leetcode/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">LeetCode算法总结</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/25/txmianshi/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/txms.png)" alt="腾讯后台开发面试总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/25/txmianshi/" class="title">腾讯后台开发面试总结</a></p>
+                            <p class="item-date"><time datetime="2018-04-25T13:04:38.000Z" itemprop="datePublished">2018-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/24/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(二) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/24/swtest2/" class="title">软件测试(二) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-24T02:02:01.000Z" itemprop="datePublished">2018-04-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/23/swtest1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt10.png)" alt="软件测试(一) 黑盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/23/swtest1/" class="title">软件测试(一) 黑盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-23T06:43:42.000Z" itemprop="datePublished">2018-04-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/12/androidProject1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓实战开发(一) GroQuiz" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/12/androidProject1/" class="title">安卓实战开发(一) GroQuiz</a></p>
+                            <p class="item-date"><time datetime="2018-04-12T07:12:03.000Z" itemprop="datePublished">2018-04-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/10/android4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓开发(四) 四大组件—广播" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/10/android4/" class="title">安卓开发(四) 四大组件—广播</a></p>
+                            <p class="item-date"><time datetime="2018-04-10T01:16:40.000Z" itemprop="datePublished">2018-04-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/软件测试/" style="font-size: 11.43px;">软件测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/03/29/webSecurity2/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

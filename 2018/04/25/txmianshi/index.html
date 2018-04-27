@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>腾讯后台开发面试总结 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="面试总结,后台开发" />
+    
+    <meta name="description" content="总结腾讯后台开发所遇到的问题大纲Linux和操作系统OSnetstat命令：显示网络连接状态  netstat -a：显示tcp、udp和unix协议下套接字的所有连接 netstat -t：tcp协议连接 netstat -u：udp协议连接 netstat -n：默认netstat会通过反向域名解析技术查找每个ip地址对应的主机名，会降低查找速度，如果仅直到ip地址即可，可通过-n禁用域名解析">
+<meta name="keywords" content="面试总结,后台开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="腾讯后台开发面试总结">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/04/25/txmianshi/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="总结腾讯后台开发所遇到的问题大纲Linux和操作系统OSnetstat命令：显示网络连接状态  netstat -a：显示tcp、udp和unix协议下套接字的所有连接 netstat -t：tcp协议连接 netstat -u：udp协议连接 netstat -n：默认netstat会通过反向域名解析技术查找每个ip地址对应的主机名，会降低查找速度，如果仅直到ip地址即可，可通过-n禁用域名解析">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/txms.png">
+<meta property="og:updated_time" content="2018-04-27T03:50:07.152Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="腾讯后台开发面试总结">
+<meta name="twitter:description" content="总结腾讯后台开发所遇到的问题大纲Linux和操作系统OSnetstat命令：显示网络连接状态  netstat -a：显示tcp、udp和unix协议下套接字的所有连接 netstat -t：tcp协议连接 netstat -u：udp协议连接 netstat -n：默认netstat会通过反向域名解析技术查找每个ip地址对应的主机名，会降低查找速度，如果仅直到ip地址即可，可通过-n禁用域名解析">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/txms.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-txmianshi" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        腾讯后台开发面试总结
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/04/25/txmianshi/" class="article-date">
+            <time datetime="2018-04-25T13:04:38.000Z" itemprop="datePublished">2018-04-25</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/后台开发/">后台开发</a>, <a class="tag-link" href="/tags/面试总结/">面试总结</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="总结腾讯后台开发所遇到的问题"><a href="#总结腾讯后台开发所遇到的问题" class="headerlink" title="总结腾讯后台开发所遇到的问题"></a>总结腾讯后台开发所遇到的问题</h3><h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="Linux和操作系统OS"><a href="#Linux和操作系统OS" class="headerlink" title="Linux和操作系统OS"></a>Linux和操作系统OS</h3><p><strong>netstat命令：</strong>显示网络连接状态</p>
+<ol>
+<li>netstat -a：显示tcp、udp和unix协议下套接字的所有连接</li>
+<li>netstat -t：tcp协议连接</li>
+<li>netstat -u：udp协议连接</li>
+<li>netstat -n：默认netstat会通过<strong>反向域名解析技术</strong>查找每个ip地址对应的主机名，会降低查找速度，如果仅直到ip地址即可，可通过-n<strong>禁用域名解析功能</strong></li>
+<li>netstat -l：只列出<strong>监听中的连接</strong>，-tl列出监听状态的tcp端口和连接，-ul列出监听状态的udp端口和连接，<strong>不能使用-al这会列出所有连接</strong></li>
+<li>netstat -p：查看端口号的同时查看<strong>对应的进程名和进程号</strong></li>
+<li>netstat -s：打印网络统计数据，包括协议下的收发包数量</li>
+<li>netstat -r：打印内核路由情况</li>
+<li>netstat -i：打印网络接口信息</li>
+<li>netstat -c：持续输出信息</li>
+<li>netstat -aple | grep +服务：可以查看http、smtp、ntp等服务是否在运行</li>
+</ol>
+<p><strong>tcpdump命令：</strong>即dump the traffic on a network根据使用者的定义对网络上的数据包进行截获的包分析工具。<br>tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p>
+<ol>
+<li>tcpdump -c number：限制截获number数量的数据包</li>
+<li>tcpdump -q：精简模式显示</li>
+</ol>
+<p><strong>ipcs命令：</strong>报告进程间通信设施状态，包括共享内存，消息队列，信号量等</p>
+<ol>
+<li>ipcs -a：打印出当前系统<strong>所有进程通信方式信息</strong></li>
+<li>ipcs -m -q -s：分别打印出使用<strong>共享内存、消息队列、信号</strong>进行进程通信的信息</li>
+<li>ipcs -t：输出信息的详细时间变化</li>
+<li>ipcs -p：输出创建ipc方式的<strong>进程ID</strong></li>
+<li>ipcs -c：输出ipc方式的<strong>创建者、拥有者</strong></li>
+<li>ipcs -u：输出当前系统下ipc方式的<strong>状态信息</strong></li>
+</ol>
+<p><strong>ipcrm命令：</strong>移除一个消息对象、共享内存段、信号集，同时会将与ipc对象相关链的数据也一起移除，只有超级管理员，或者ipc对象的创建者才有这项权利</p>
+<ol>
+<li>ipcrm -M shmkey：移除用shmkey创建的共享内存段</li>
+<li>ipcrm -m shmid：移除用shmid标识的共享内存段</li>
+<li>ipcrm -Q msgkey：移除用msqkey创建的消息队列</li>
+<li>ipcrm -q msqid：移除用msqid标识的消息队列</li>
+<li>ipcrm -S semkey：移除用semkey创建的信号</li>
+<li>ipcrm -s semid：移除用semid标识的信号</li>
+</ol>
+<p>关系<strong>系统命令</strong>方面的命令：</p>
+<ol>
+<li>top：实时显示进程状态</li>
+<li>ps -ef|grep +进程名：查看进程名的进程状态</li>
+<li>kill -9 +进程ID：强制杀死进程</li>
+<li>chmod u+x +文件名：给予文件运行权限</li>
+<li>find / -name “文件名”：搜索文件</li>
+</ol>
+<p>关于<strong>文本编辑</strong>方面的命令：</p>
+<ol>
+<li>awk：报告生成器，格式化以后显示，对处理的文件数据生成报告</li>
+<li>sed：Sed是Strem Editor(流编辑器)缩写，是操作、过滤和转换文本内容的强大工具。常用功能有增删改查，过滤，取行。</li>
+<li>grep：文本搜集工具, 搜索文本，过滤文本字符串。</li>
+</ol>
+<p>多线程和多进程的区别<br>进程是<strong>资源分配</strong>的基本单位，一个进程可以有多个线程，多个进程可以<strong>并发</strong>执行<br>线程是<strong>系统独立调度和CPU独立运行</strong>的基本单位，一个进程中的线程可以共享进程的资源</p>
+<p>线程和进程的区别：</p>
+<ol>
+<li>资源占用：进程时资源分配基本条件，线程不拥有资源只可以访问隶属进程的资源</li>
+<li>CPU调度：线程是独立调度的基本单位，同一进程的线程切换不会引起进程切换，不同进程的线程切换会引起线程切换</li>
+<li>系统开销：创建撤销进程时，系统都要分配或者回收资源，如<strong>内存空间、IO设备等</strong>，开销大于创建撤销线程。进程切换时系统要保存当前CPU执行环境和新调度进程的CPU环境设置，开销大于线程切换时仅需保存和设置少量<strong>寄存器内容</strong></li>
+<li>通信：进程间通信（IPC）需要使用<strong>同步、互斥</strong>手段，保持数据一致性，线程则可以通过读写同一进程的<strong>数据段（如全局变量）</strong>进行通信</li>
+</ol>
+<p>并发和并行的区别：<br>并发：系统的CPU小于线程数时，系统会将CPU运行时间划分为<strong>若干个时间段（时间片）</strong>,分配给各个线程执行，一个时间段的线程代码执行时另外的线程处于挂起状态<br>并行：系统CPU大于同时运行的线程数时，每个CPU执行一个线程，多个线程不互相抢占CPU资源，可以同时执行</p>
+<p>线程共享环境：进程代码段，进程共有数据(全局变量等),进程打开的文件描述符，进程的当前目录，进程用户ID，进程组ID<br>线程私有环境：线程ID，<strong>寄存器组的值</strong>(将当前线程的寄存器集合状态保存再线程重新被切换时能回复原本的运行状态)，线程堆栈（保证调用的函数能正常执行不受其他线程影响），错误返回码，线程优先级</p>
+<p>C语言辨别系统64位/32位：<br>位指的是<strong>操作系统的位数</strong>，在C中直观的就是<strong>指针类型占用的字节数</strong>，32位系统指针占32位即4字节，64位系统指针占64位即8字节<br>int main()<br>{<br>    int bits= sizeof(char *);<br>    if(bits == 4) printf(“32位\n”);<br>    else if(bits == 8) printf(“64位\n”);<br>    else printf(“others, bits = %d\n”, bits);<br>}</p>
+<p><strong>信号：</strong><br>是Linux系统中用来通知<strong>进程发生了异步事件</strong>，它是一种进程间的通信通知机制。<br>[1,31]为Unix支持的传统信号，是不可靠信号(<strong>不实时，不支持排队（可能丢失）</strong>)，[32,63]是扩充信号，是可靠信号(<strong>实时信号，支持排队</strong>)<br><img src="/images/txms.png" alt=""><br>产生信号：</p>
+<ol>
+<li>终端组合键：如Ctrl+C发出信号2SIGINT，Ctrl+\发出信号3SIGQUIT</li>
+<li>硬件异常产生的信号：如当前进程执行了除以0的命令，CPU运算单元产生异常，内核会将异常解释为SIGFPE信号发给进程；如当前进程访问了非法地址，MMU会产生异常，内核会将异常解释为SIGSEG发送给进程</li>
+<li>调用系统函数向进程发信号：如kill命令、raise函数给当前进程发送指定信号、abort函数给当前进程发送SIGABRT终止信号</li>
+<li>由软件条件产生信号：调用软件函数如alarm函数发送SIGALRM信号</li>
+</ol>
+<p>接受信号产生的动作：</p>
+<ol>
+<li>忽略此信号</li>
+<li>执行该信号的默认处理动作(终止该信号)</li>
+<li>执行自定义的信号处理函数处理信号，称作<strong>捕捉信号</strong></li>
+</ol>
+<p><strong>核心转储Core Dumped：</strong>当⼀个进程要异常终止时，可以选择把进程的用户空间内存数据全部保存到磁盘上，文件名通常是core，这叫做Core Dump。也叫核心转储，帮助开发者进行调试，在程序崩溃时把内存数据dump到硬盘上，让gdb识别。</p>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p><strong>SQL语句优化：</strong></p>
+<ol>
+<li>使用索引查询：具体方法有在where、orderby语句中涉及的列上建立索引，避免全表查询，在where语句中不使用!=、不进行null值判断、不用or连接、in用between代替、不对字段进行表达式或者函数操作等，以上都是使用索引不进行全表查询的注意点</li>
+<li>适当使用索引：若索引列有大量重复数据时不使用索引，过多的索引会降低inset和update效率，一般的表中索引最好不超过6个</li>
+<li>避免更新聚集索引：因为聚集索引数据列的顺序就是数据表的物理存储序列，若更新则会导致整个表的记录顺序调整，若频繁更新聚集索引数据列则需考虑是否将该索引建为聚集索引</li>
+<li>用varchar代替char：节省空间、查询效率高</li>
+<li>用数字字段代替字符字段：提升查询和连接性能，字符字段的查询和连接需要比较字符串中每一个字符，而数字仅需比较一次</li>
+<li>避免大事务操作，提升系统并发能力</li>
+</ol>
+<p><strong>锁机制：</strong></p>
+<ol>
+<li>乐观锁：通过版本控制，实际上不加锁先执行，若执行完毕后版本号发生改变，则回滚重新执行</li>
+<li>悲观锁：上锁，每次数据只有一个线程访问，其余的线程会阻塞</li>
+<li>共享锁(lock in share mode)：读锁，允许多个线程并发读取资源，不允许写入资源</li>
+<li>排它锁(for update)：写锁，会阻塞其他的读锁或写锁请求，确保同一时刻只能有一个连接可以写入资源，并防止其他连接读取或者写资源</li>
+<li>区间锁：next key lock，锁定某个范围区间，如between 10 and 30</li>
+<li>边界锁：gapLock，锁定某个边界</li>
+<li>表锁：锁定整个表，影响整个表的读写</li>
+<li>行锁：仅锁定某些行，其他行仍可以被其他链接请求读写</li>
+</ol>
+<p><strong>SQL事务的隔离级别：</strong></p>
+<ol>
+<li>RU(Read Uncommited)未提交读：事务中的修改没有提交也对其他会话可见，会导致<strong>脏读(读取到一个事务未提交的数据，因为无法保证事务是否执行成功，因此读取到的数据不一定准确)</strong></li>
+<li>RC(Read Commited)提交读：事务中的操作对其他会话不可见，但可能出现<strong>不可重复读(一个事务读取到的数据可能产生变化，同一个sql在一个事务中执行多次得到不同结果)</strong></li>
+<li>RR(Repeatable Read)可重复读：事务中多次执行统一sql返回结果相同，<strong>mysql默认的隔离等级</strong></li>
+<li>Serializable可串行化：事务中每次读取的行加锁，写加写锁</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/04/24/swtest2/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">软件测试(二) 白盒测试</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/25/txmianshi/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/txms.png)" alt="腾讯后台开发面试总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/25/txmianshi/" class="title">腾讯后台开发面试总结</a></p>
+                            <p class="item-date"><time datetime="2018-04-25T13:04:38.000Z" itemprop="datePublished">2018-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/24/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(二) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/24/swtest2/" class="title">软件测试(二) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-24T02:02:01.000Z" itemprop="datePublished">2018-04-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/23/swtest1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt10.png)" alt="软件测试(一) 黑盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/23/swtest1/" class="title">软件测试(一) 黑盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-23T06:43:42.000Z" itemprop="datePublished">2018-04-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/12/androidProject1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓实战开发(一) GroQuiz" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/12/androidProject1/" class="title">安卓实战开发(一) GroQuiz</a></p>
+                            <p class="item-date"><time datetime="2018-04-12T07:12:03.000Z" itemprop="datePublished">2018-04-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/10/android4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓开发(四) 四大组件—广播" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/10/android4/" class="title">安卓开发(四) 四大组件—广播</a></p>
+                            <p class="item-date"><time datetime="2018-04-10T01:16:40.000Z" itemprop="datePublished">2018-04-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/软件测试/" style="font-size: 11.43px;">软件测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/04/25/txmianshi/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

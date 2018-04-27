@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>安卓开发(一) 环境搭建+简单入门 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="安卓开发" />
+    
+    <meta name="description" content="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案 大纲Android Studio安装百度网盘下载Android Studio 2.2版本Tips：不要去什么安卓中文官网下载3.*版本的AS，原因如下1.下载的安装包不包括Android SDK2.下载的3.*版本对于Android SDK的版本要求过高，容易不兼容低版本sdk导致项目Build失败，市场份额最高">
+<meta name="keywords" content="安卓开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓开发(一) 环境搭建+简单入门">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/03/30/android1/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案 大纲Android Studio安装百度网盘下载Android Studio 2.2版本Tips：不要去什么安卓中文官网下载3.*版本的AS，原因如下1.下载的安装包不包括Android SDK2.下载的3.*版本对于Android SDK的版本要求过高，容易不兼容低版本sdk导致项目Build失败，市场份额最高">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/android.jpg">
+<meta property="og:updated_time" content="2018-04-01T01:57:01.913Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安卓开发(一) 环境搭建+简单入门">
+<meta name="twitter:description" content="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案 大纲Android Studio安装百度网盘下载Android Studio 2.2版本Tips：不要去什么安卓中文官网下载3.*版本的AS，原因如下1.下载的安装包不包括Android SDK2.下载的3.*版本对于Android SDK的版本要求过高，容易不兼容低版本sdk导致项目Build失败，市场份额最高">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/android.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-android1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        安卓开发(一) 环境搭建+简单入门
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/30/android1/" class="article-date">
+            <time datetime="2018-03-30T02:16:24.000Z" itemprop="datePublished">2018-03-30</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/安卓开发/">安卓开发</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案"><a href="#本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案" class="headerlink" title="本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案"></a>本文主要记录第一行代码中安卓开发流程总结和个人安卓APP开发中遇到的实战问题解决方案</h3><p><img src="/images/android.jpg" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="Android-Studio安装"><a href="#Android-Studio安装" class="headerlink" title="Android Studio安装"></a>Android Studio安装</h3><p><a href="https://pan.baidu.com/s/1nuABMDb" target="_blank" rel="noopener">百度网盘</a>下载Android Studio 2.2版本<br><strong>Tips：</strong>不要去什么安卓中文官网下载3.*版本的AS，原因如下<br>1.下载的安装包不包括Android SDK<br>2.下载的3.*版本对于Android SDK的版本要求过高，容易不兼容低版本sdk导致项目Build失败，市场份额最高的安卓sdk版本为15，不需要追求太高的版本</p>
+<h3 id="模拟器创建和安装"><a href="#模拟器创建和安装" class="headerlink" title="模拟器创建和安装"></a>模拟器创建和安装</h3><p>点击顶部工具栏中的AVD Manager<br><img src="/images/android10.png" alt=""><br>选择<strong>Nexus 5X</strong>机型+<strong>Nougat Android 7.0</strong>操作系统版本+保持默认配置即可<br><img src="/images/android11.png" alt=""><br>点击Finish即可创建好模拟器，之后点击<strong>三角形Start启动模拟器</strong></p>
+<h3 id="运行Android项目在模拟器上"><a href="#运行Android项目在模拟器上" class="headerlink" title="运行Android项目在模拟器上"></a>运行Android项目在模拟器上</h3><p>下面工具栏对应<strong>编译项目+选择运行项目+运行项目</strong><br><img src="/images/android12.png" alt=""><br>点击运行项目选择刚才创建的模拟器即可将选择运行的项目在模拟器上运行<br><img src="/images/android13.png" alt=""></p>
+<h3 id="真机调试"><a href="#真机调试" class="headerlink" title="真机调试"></a>真机调试</h3><p>1.将手机使用USB连接至PC端后打开<strong>USB调试功能(开发者选项)</strong><br>2.在<strong>选择运行项目的app栏</strong>中选择<strong>Edit Configuration</strong>中的<strong>Deployment Target Options选项</strong>中选择<strong>USB Device</strong><br>3.点击运行项目，若出现<strong>Error running app: No target device found.错误</strong>，则点击下方的<strong>Android Monitor选项卡</strong>，会自动帮你识别你的设备，如下<br><img src="/images/android14.png" alt=""><br>4.此时再运行项目，AS会自动将项目<strong>打包成.apk格式</strong>安装到你的手机上并自动运行</p>
+<h3 id="安卓项目结构"><a href="#安卓项目结构" class="headerlink" title="安卓项目结构"></a>安卓项目结构</h3><p>重点学习app项目，其他文件了解即可，后期才会学习<br><img src="/images/android15.png" alt=""></p>
+<h3 id="安卓项目运行流程"><a href="#安卓项目运行流程" class="headerlink" title="安卓项目运行流程"></a>安卓项目运行流程</h3><p>以HelloWorld项目为例<br><strong>1.在AndroidMainfest.xml中注册HelloWorld活动：</strong><intent-filter>标签里的语句表示这个活动是<strong>主活动</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:name=<span class="string">".HelloWorld"</span>&gt;</span><br><span class="line">  &lt;intent-filter&gt;</span><br><span class="line">    &lt;action android:name=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span><br><span class="line">    &lt;category android:name=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span><br><span class="line">  &lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure><br><strong>2.在Java文件夹下编写HelloWorld活动代码：</strong>继承Activity类(AppCompatActivity为其子类用于向下兼容)，重载父类的onCreate方法，setContentView引入布局文件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">      setContentView(R.layout.activity_hello_world);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>3.在res/layout中编写布局文件：</strong>可以看到布局文件中有个<textview>组件其中有个属性为text=”Hello World!”，因此整个活动就是显示这个text为HelloWorld！的TextView组件</textview></intent-filter></p>
+<h3 id="资源引用"><a href="#资源引用" class="headerlink" title="资源引用"></a>资源引用</h3><p>对于res文件夹里面的资源，可以使用两种方式引用，以引用res/values/strings中的字符串为例<br><img src="/images/android16.png" alt=""></p>
+<font color="blue"><br><strong>代码中R.string|drawable|mipmap.ValueName</strong><br><strong>布局XML中@string|drawable|mipmap/ValueName</strong></font>
+
+<h3 id="Adnroid-Studio的构建脚本"><a href="#Adnroid-Studio的构建脚本" class="headerlink" title="Adnroid Studio的构建脚本"></a>Adnroid Studio的构建脚本</h3><p>AS采用<strong>Gradle</strong>来构建项目，Gradle是一个先进的<strong>项目构建工具</strong>，摈弃了XML的繁琐配置，使用了特定的DSL语言来<strong>简洁构建项目</strong></p>
+<p><font color="red"><strong>外层项目中的build.gradle：</strong></font><br>1.使用了<strong>jcenter()配置</strong>，是一个代码托管仓库，配置之后就可以<strong>引用jcenter的开源项目</strong><br>2.声明了<strong>构建项目类型为安卓项目</strong>，通过dependencies闭包中的classpath指定构建项目的<strong>Gradle插件</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath <span class="string">'com.android.tools.build:gradle:2.2.0'</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// <span class="doctag">NOTE:</span> Do not place your application dependencies here; they belong</span></span><br><span class="line">        <span class="comment">// in the individual module build.gradle files</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><font color="red"><strong>app模块的build.gradle：</strong></font></p>
+<p><font color="blue">1.apply plugin指定模块类：</font>com.android.application为应用模块，com.android.library为库模块</p>
+<p><font color="blue">2.android闭包指定项目构建属性</font><br>compileSdkVersion  编译版本<br>buildToolsVersion  项目构建工具版本<br>applicationId  项目包名<br>minSdkVersion  最低兼容安卓系统版本<br>targetSdkVersion 目标运行安卓版本<br>versionCode  项目版本号<br>versionName  项目版本名</p>
+<p><font color="blue">3.buildTypes闭包指定生成安装文件配置：</font>包含release闭包指定<strong>正式安装文件配置</strong>和debug闭包(可省略)指定<strong>测试安装文件配置</strong>，<font color="red">AS直接运行项目生成的都是测试版安装文件</font><br>minifyEnabled  是否代码混淆<br>proguardFiles  代码混淆规则</p>
+<p><font color="blue">4.dependencies闭包指定项目依赖关系：</font>AS项目中有三种依赖关系，<strong>本地依赖(本地Jar包或者目录)</strong>，<strong>库依赖(项目中的库模块)</strong>，<strong>远程依赖(jcenter库上的开源项目)</strong><br>compile fileTree 本地依赖中的一种<br>com.android.support:appcompat-v7:24.2.1  远程依赖库格式 域名:组名称:版本号<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.android.application'</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">24</span></span><br><span class="line">    buildToolsVersion <span class="string">"27.0.3"</span></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId <span class="string">"com.example.admin.helloworld"</span></span><br><span class="line">        minSdkVersion <span class="number">15</span></span><br><span class="line">        targetSdkVersion <span class="number">24</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">"1.0"</span></span><br><span class="line">        testInstrumentationRunner <span class="string">"android.support.test.runner.AndroidJUnitRunner"</span></span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="keyword">false</span></span><br><span class="line">            <span class="function">proguardFiles <span class="title">getDefaultProguardFile</span><span class="params">(<span class="string">'proguard-android.txt'</span>)</span>, 'proguard-rules.pro'</span></span><br><span class="line"><span class="function">        &#125;</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">dependencies </span>&#123;</span><br><span class="line">    <span class="function">compile <span class="title">fileTree</span><span class="params">(dir: <span class="string">'libs'</span>, include: [<span class="string">'*.jar'</span>])</span></span></span><br><span class="line"><span class="function">    <span class="title">androidTestCompile</span><span class="params">(<span class="string">'com.android.support.test.espresso:espresso-core:2.2.2'</span>, &#123;</span></span></span><br><span class="line"><span class="function"><span class="params">        exclude group: <span class="string">'com.android.support'</span>, <span class="keyword">module</span>: <span class="string">'support-annotations'</span></span></span></span><br><span class="line"><span class="function"><span class="params">    &#125;)</span></span></span><br><span class="line"><span class="function">    compile 'com.android.support:appcompat-v7:24.2.1'</span></span><br><span class="line"><span class="function">    testCompile 'junit:junit:4.12'</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="日志工具"><a href="#日志工具" class="headerlink" title="日志工具"></a>日志工具</h3><p>Android的日志工具类是<strong>Log(android.util.Log)</strong>，提供五个级别的方法来打印日志信息<br>Log.v()——verbose——繁琐意义最小的日志信息<br>Log.d()——debug——调试信息<br>Log.i()——info——重要数据如用户行为<br>Log.w()——warn——警告信息<br>Log.e()——error——错误信息如catch</p>
+<p>在HelloWorld中的onCreate中加入一条log.d(),运行项目后可在<strong>Android Monitor中的logcat中看到日志信息</strong><br><img src="/images/android17.png" alt=""></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/30/android2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            安卓开发(二) 四大组件—活动
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/03/29/webSecurity3/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">WEB信息系统安全（三）数据完整性和不可否认性保护</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/25/txmianshi/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/txms.png)" alt="腾讯后台开发面试总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/25/txmianshi/" class="title">腾讯后台开发面试总结</a></p>
+                            <p class="item-date"><time datetime="2018-04-25T13:04:38.000Z" itemprop="datePublished">2018-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/24/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(二) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/24/swtest2/" class="title">软件测试(二) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-24T02:02:01.000Z" itemprop="datePublished">2018-04-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/23/swtest1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt10.png)" alt="软件测试(一) 黑盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/23/swtest1/" class="title">软件测试(一) 黑盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-23T06:43:42.000Z" itemprop="datePublished">2018-04-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/12/androidProject1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓实战开发(一) GroQuiz" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/12/androidProject1/" class="title">安卓实战开发(一) GroQuiz</a></p>
+                            <p class="item-date"><time datetime="2018-04-12T07:12:03.000Z" itemprop="datePublished">2018-04-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/10/android4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓开发(四) 四大组件—广播" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/10/android4/" class="title">安卓开发(四) 四大组件—广播</a></p>
+                            <p class="item-date"><time datetime="2018-04-10T01:16:40.000Z" itemprop="datePublished">2018-04-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/软件测试/" style="font-size: 11.43px;">软件测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/03/30/android1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Scrapy爬虫实战(二) 爬取新闻网站 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Scrapy爬虫,Python,Linux" />
+    
+    <meta name="description" content="本文记录Scrapy爬虫在Linux系统下的实战 大纲scrapy startproject projectname1.创建项目：scrapy startproject demo2.项目结构和文件作用：用户编写的主要就是spiders+items+pipeline模块 编写爬虫前的设置(settings.py)1.设置爬虫不遵守robots.txt，robots协议就是网站规定的爬虫爬取规则12#">
+<meta name="keywords" content="Scrapy爬虫,Python,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy爬虫实战(二) 爬取新闻网站">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/04/02/scrapy2/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文记录Scrapy爬虫在Linux系统下的实战 大纲scrapy startproject projectname1.创建项目：scrapy startproject demo2.项目结构和文件作用：用户编写的主要就是spiders+items+pipeline模块 编写爬虫前的设置(settings.py)1.设置爬虫不遵守robots.txt，robots协议就是网站规定的爬虫爬取规则12#">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/scrapy.jpg">
+<meta property="og:updated_time" content="2018-04-09T02:30:50.302Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scrapy爬虫实战(二) 爬取新闻网站">
+<meta name="twitter:description" content="本文记录Scrapy爬虫在Linux系统下的实战 大纲scrapy startproject projectname1.创建项目：scrapy startproject demo2.项目结构和文件作用：用户编写的主要就是spiders+items+pipeline模块 编写爬虫前的设置(settings.py)1.设置爬虫不遵守robots.txt，robots协议就是网站规定的爬虫爬取规则12#">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/scrapy.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-scrapy2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Scrapy爬虫实战(二) 爬取新闻网站
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/04/02/scrapy2/" class="article-date">
+            <time datetime="2018-04-02T11:47:34.000Z" itemprop="datePublished">2018-04-02</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/Python/">Python</a>, <a class="tag-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文记录Scrapy爬虫在Linux系统下的实战"><a href="#本文记录Scrapy爬虫在Linux系统下的实战" class="headerlink" title="本文记录Scrapy爬虫在Linux系统下的实战"></a>本文记录Scrapy爬虫在Linux系统下的实战</h3><p><img src="/images/scrapy.jpg" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="scrapy-startproject-projectname"><a href="#scrapy-startproject-projectname" class="headerlink" title="scrapy startproject projectname"></a>scrapy startproject projectname</h3><p><strong>1.创建项目：scrapy startproject demo</strong><br><img src="/images/scrapy21.png" alt=""><br><strong>2.项目结构和文件作用：</strong><br><img src="/images/scrapy22.png" alt=""><br><strong>用户编写</strong>的主要就是<strong>spiders+items+pipeline模块</strong><br><img src="/images/scrapy23.png" alt=""></p>
+<h3 id="编写爬虫前的设置-settings-py"><a href="#编写爬虫前的设置-settings-py" class="headerlink" title="编写爬虫前的设置(settings.py)"></a>编写爬虫前的设置(settings.py)</h3><p>1.设置爬虫<strong>不遵守robots.txt</strong>，robots协议就是网站规定的爬虫爬取规则<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Obey robots.txt rules</span></span><br><span class="line">ROBOTSTXT_OBEY = <span class="keyword">False</span></span><br></pre></td></tr></table></figure></p>
+<p>2.设置<strong>取消Cookies</strong>，Cookies是服务器识别计算机的资料<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Disable cookies (enabled by default)</span></span><br><span class="line">COOKIES_ENABLED = <span class="keyword">False</span></span><br></pre></td></tr></table></figure></p>
+<p>3.设置<strong>用户代理(USER_AGENT)</strong>，可在浏览器<strong>F12-Network-Headers</strong>里找到浏览器代理，让爬虫伪装成浏览器<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Crawl responsibly by identifying yourself (and your website) on the user-agent</span></span><br><span class="line">USER_AGENT = <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'</span></span><br></pre></td></tr></table></figure></p>
+<p>4.设置<strong>IP地址</strong>，一般来说有些网站被同一个IP访问过于频繁多次会封锁IP，这时候需要更换代理IP继续爬取</p>
+<h3 id="编写items模块"><a href="#编写items模块" class="headerlink" title="编写items模块"></a>编写items模块</h3><p>items模块主要定义爬取的数据字典<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DemoItem</span><span class="params">(scrapy.Item)</span>:</span></span><br><span class="line">  url=scrapy.Field()</span><br><span class="line">  title = scrapy.Field()</span><br><span class="line">  time = scrapy.Field()</span><br><span class="line">  source = scrapy.Field()</span><br><span class="line">  img=scrapy.Field()</span><br><span class="line">  content=scrapy.Field()</span><br><span class="line">  <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="编写spiders模块"><a href="#编写spiders模块" class="headerlink" title="编写spiders模块"></a>编写spiders模块</h3><p><strong>1.新建爬虫文件：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy genspider -t basic spiderName spiderUrl</span><br></pre></td></tr></table></figure><br>这里以爬取虎扑新闻(<a href="https://voice.hupu.com/nba/" target="_blank" rel="noopener">https://voice.hupu.com/nba/</a> )为例，则新建爬虫可以为scrapy genspider -t basic hupu hupu.com<br><strong>2.编写爬虫文件</strong></p>
+<p><font color="blue"><strong>2.1爬取所有页面整体</strong></font><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HupuSpider</span><span class="params">(scrapy.Spider)</span>:</span></span><br><span class="line">    name = <span class="string">'hupu'</span></span><br><span class="line">    allowed_domains = [<span class="string">'hupu.com'</span>]</span><br><span class="line">    start_urls = [<span class="string">'http://hupu.com/'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 规定爬取的url后会进入parse回调函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        <span class="comment"># 观察新闻每个页数的url，我们可以发现规律为</span></span><br><span class="line">        <span class="comment"># 页数i对应的url为https://voice.hupu.com/nba/i</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">1</span>):</span><br><span class="line">            url=<span class="string">'https://voice.hupu.com/nba/'</span>+str(i+<span class="number">1</span>)</span><br><span class="line">            <span class="comment"># yield类似于这个数的return后循环在下一个数执行 </span></span><br><span class="line">            <span class="comment"># Request(url,callback)用于迭代爬取 可以调用callback进一步爬取传入的url</span></span><br><span class="line">            <span class="comment"># 记得引入from scrapy.http import Request</span></span><br><span class="line">            <span class="comment"># 这个语句的意思是 将每个遍历到的url做进一步处理再执行下一个遍历到的url</span></span><br><span class="line">            <span class="keyword">yield</span> Request(url=url,callback=self.newsPage)</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<p><font color="blue"><strong>2.1爬取每个页面需要的内容</strong></font><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 上一个Request传入的url响应的response作为参数传入回调函数newsPage</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">newsPage</span><span class="params">(self,response)</span>:</span></span><br><span class="line">  <span class="comment"># 通过观察页面我们知道每个页面中的新闻的连接在</span></span><br><span class="line">  <span class="comment"># 属性为class=list-hd的div标签下的h4标签下的a标签下的href属性中</span></span><br><span class="line">  <span class="comment"># 可用response.xpath().extract()得到这个页面所有新闻的url</span></span><br><span class="line">  allPageUrl=response.xpath(<span class="string">'//div[@class="list-hd"]/h4/a/@href'</span>).extract()</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(allPageUrl)): <span class="comment">#len(allPageUrl)</span></span><br><span class="line">      <span class="comment"># 同样地 将这个页面的url一个一个遍历处理</span></span><br><span class="line">      <span class="keyword">yield</span> Request(url=allPageUrl[i],callback=self.aNewPage)</span><br><span class="line">      <span class="keyword">pass</span></span><br><span class="line">  <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<p><font color="blue"><strong>2.1爬取每个新闻详情页面的信息</strong></font><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment"># 上一个Request传入的每个新闻的url的响应response即新闻详情页面传入</span></span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">aNewPage</span><span class="params">(self,response)</span>:</span></span><br><span class="line"><span class="comment"># 此时要将爬取到的数据存入item中了</span></span><br><span class="line">   <span class="comment"># 引入from news.items import NewsItem 新建item对象</span></span><br><span class="line">   item=NewsItem()</span><br><span class="line">   <span class="comment"># 观察页面中所需信息的xpath信息再利用xpath存入对应的item字段</span></span><br><span class="line">   item[<span class="string">'url'</span>]=[response.url]</span><br><span class="line">   item[<span class="string">'title'</span>]=response.xpath(<span class="string">'//div[@class="artical-title"]/h1/text()'</span>).extract()</span><br><span class="line">   item[<span class="string">'time'</span>]=response.xpath(<span class="string">'//div[@class="artical-info"]/span/a/span/text()'</span>).extract()</span><br><span class="line">   item[<span class="string">'source'</span>]=response.xpath(<span class="string">'//div[@class="artical-info"]/span/span/a/text()'</span>).extract()</span><br><span class="line">   item[<span class="string">'img'</span>]=response.xpath(<span class="string">'//div[@class="artical-importantPic"]/img/@src'</span>).extract()</span><br><span class="line">   content=response.xpath(<span class="string">'//div[@class="artical-main-content"]//p/text()'</span>).extract()</span><br><span class="line">   <span class="comment"># 注意爬取到的content为多段&lt;p&gt;标签组成 需要合并处理</span></span><br><span class="line">   item[<span class="string">'content'</span>]=[<span class="string">"\n"</span>.join(content)]</span><br><span class="line">   <span class="comment"># 爬取到的数据交给pipelines处理</span></span><br><span class="line">   <span class="keyword">yield</span> item</span><br></pre></td></tr></table></figure></p>
+<h3 id="编写pipelines模块"><a href="#编写pipelines模块" class="headerlink" title="编写pipelines模块"></a>编写pipelines模块</h3><p>pipeline主要功能为<strong>读取item中爬取到的数据</strong>+<strong>做相应数据处理</strong>+<strong>保存数据(数据库/文件/..)</strong><br><strong>1.读取item中爬取到的数据：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">  url = item[<span class="string">'url'</span>][<span class="number">0</span>]</span><br><span class="line">  title = item[<span class="string">'title'</span>][<span class="number">0</span>]</span><br><span class="line">  timeT = item[<span class="string">'time'</span>][<span class="number">0</span>]</span><br><span class="line">  source = item[<span class="string">'source'</span>][<span class="number">0</span>]</span><br><span class="line">  img = item[<span class="string">'img'</span>][<span class="number">0</span>]</span><br><span class="line">  content = item[<span class="string">'content'</span>]</span><br></pre></td></tr></table></figure><br><strong>2.数据处理：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如title中有杂乱的空格和\r\n数据</span></span><br><span class="line">title = title.replace(<span class="string">' '</span>,<span class="string">''</span>).replace(<span class="string">'\r\n'</span>,<span class="string">''</span>)</span><br><span class="line"><span class="comment"># 如需要将时间转换成时间戳存储</span></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">datetimeTime=datetime.strptime(str(timeT).replace(<span class="string">' '</span>,<span class="string">''</span>), <span class="string">'%Y-%m-%d%H:%M:%S'</span>)</span><br><span class="line">timestampTime=time.mktime(datetimeTime.timetuple())</span><br></pre></td></tr></table></figure><br><strong>3.保存数据至数据库：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python操作数据库模块</span></span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="comment"># 数据库连接参数</span></span><br><span class="line">config=&#123;</span><br><span class="line">  <span class="string">'host'</span>:<span class="string">'127.0.0.1'</span>,</span><br><span class="line">  <span class="string">'port'</span>:<span class="number">3306</span>,</span><br><span class="line">  <span class="string">'user'</span>:<span class="string">'root'</span>,</span><br><span class="line">  <span class="string">'password'</span>:<span class="string">''</span>,</span><br><span class="line">  <span class="string">'db'</span>:<span class="string">'news'</span>,</span><br><span class="line">  <span class="string">'charset'</span>:<span class="string">'utf8'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line">  <span class="comment"># 连接数据库</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.conn=pymysql.connect(**config)</span><br><span class="line">	</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">      url = item[<span class="string">'url'</span>][<span class="number">0</span>]</span><br><span class="line">      title = item[<span class="string">'title'</span>][<span class="number">0</span>].replace(<span class="string">' '</span>,<span class="string">''</span>).replace(<span class="string">'\r\n'</span>,<span class="string">''</span>)</span><br><span class="line">      timeT = item[<span class="string">'time'</span>][<span class="number">0</span>]</span><br><span class="line">      source = item[<span class="string">'source'</span>][<span class="number">0</span>]</span><br><span class="line">      img = item[<span class="string">'img'</span>][<span class="number">0</span>]</span><br><span class="line">      content = item[<span class="string">'content'</span>]</span><br><span class="line">      </span><br><span class="line">      <span class="comment"># 时间转成时间戳存储</span></span><br><span class="line">      <span class="comment"># str-&gt;datetime 字符串转datetime格式</span></span><br><span class="line">      datetimeTime=datetime.strptime(str(timeT).replace(<span class="string">' '</span>,<span class="string">''</span>), <span class="string">'%Y-%m-%d%H:%M:%S'</span>)</span><br><span class="line">      <span class="comment">#datetime-&gt;timestamp datetime格式转timestamp格式</span></span><br><span class="line">      timestampTime=time.mktime(datetimeTime.timetuple())</span><br><span class="line">      </span><br><span class="line">      print(<span class="string">'----------start--------\n'</span>)</span><br><span class="line">      <span class="comment"># 初始化游标用于存储数据</span></span><br><span class="line">      cursor=self.conn.cursor()</span><br><span class="line">      sql=<span class="string">'INSERT INTO news (url,title,time,source,img,content) VALUES (%s,%s,%s,%s,%s,%s)'</span></span><br><span class="line">      cursor.execute(sql,(url,title,timestampTime,source,img,content))</span><br><span class="line">      self.conn.commit()</span><br><span class="line">      print(<span class="string">'新闻链接：'</span>, url)</span><br><span class="line">      print(<span class="string">'新闻标题：'</span>, title)</span><br><span class="line">      print(<span class="string">'----------end--------\n'</span>)</span><br><span class="line">      <span class="keyword">return</span> item</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">      <span class="comment"># 存储失败打印错误信息</span></span><br><span class="line">      print(str(err))</span><br><span class="line">      <span class="keyword">pass</span></span><br><span class="line">		</span><br><span class="line">  <span class="comment"># 关闭游标和数据库</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">close_spider</span><span class="params">(self)</span>:</span></span><br><span class="line">      cursor.close()</span><br><span class="line">      self.conn.close()</span><br></pre></td></tr></table></figure></p>
+<h3 id="编写自动化脚本周期执行爬虫"><a href="#编写自动化脚本周期执行爬虫" class="headerlink" title="编写自动化脚本周期执行爬虫"></a>编写自动化脚本周期执行爬虫</h3><p><strong>1.编写自动化脚本：</strong><br>在linux下执行的python文件需要<strong>指定执行.py文件的python路径</strong>，可用<strong>which python</strong>命令找到路径，写在.py文件顶部，如#!/usr/bin/python<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环执行</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    <span class="keyword">print</span> time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, time.localtime())</span><br><span class="line">    print(<span class="string">"---------Run Scrapy!-----------"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 发送系统指令 执行爬虫命令就是scrapy crawl hupu --nolog</span></span><br><span class="line">    os.system(<span class="string">"scrapy crawl hupu --nolog"</span>)</span><br><span class="line">    print(<span class="string">"---------End Scrapy!-----------"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 执行更新新闻脚本 在后续文件中</span></span><br><span class="line">    os.system(<span class="string">"./updateNews.py"</span>)</span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 规定脚本每执行一次阻塞10分钟 即每10分钟执行一次爬取</span></span><br><span class="line">    time.sleep(<span class="number">60</span>*<span class="number">10</span>)</span><br></pre></td></tr></table></figure></p>
+<p><strong>2.编写自动化更新新闻(删除旧新闻)脚本</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> timedelta</span><br><span class="line"></span><br><span class="line">config=&#123;</span><br><span class="line">  <span class="string">'host'</span>:<span class="string">'127.0.0.1'</span>,</span><br><span class="line">  <span class="string">'port'</span>:<span class="number">3306</span>,</span><br><span class="line">  <span class="string">'user'</span>:<span class="string">'root'</span>,</span><br><span class="line">  <span class="string">'password'</span>:<span class="string">'123456'</span>,</span><br><span class="line">  <span class="string">'db'</span>:<span class="string">'news'</span>,</span><br><span class="line">  <span class="string">'charset'</span>:<span class="string">'utf8'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">  conn=pymysql.connect(**config)</span><br><span class="line">  cursor=conn.cursor()</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 得到昨天此时的时间戳</span></span><br><span class="line">  lastday=datetime.now()-timedelta(days=<span class="number">1</span>)</span><br><span class="line">  lastdayTimestamp=time.mktime(lastday.timetuple())</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 将时间戳小于昨天此时的时间戳的新闻删除</span></span><br><span class="line">  sql=<span class="string">'DELETE FROM news WHERE news.time&lt;'</span>+str(lastdayTimestamp)</span><br><span class="line">  deleteCount=cursor.execute(sql)</span><br><span class="line">  conn.commit()</span><br><span class="line">  print(<span class="string">'-----------DELETE OLD NEWS NUM:----------'</span>)</span><br><span class="line">  print(deleteCount)</span><br><span class="line">  print(<span class="string">'---------------DELETE END--------------------'</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">  print(<span class="string">'DELETE FAIL MSG BEHIND:'</span>)</span><br><span class="line">  print(str(err))</span><br><span class="line">  <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>3.执行自动化脚本</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 若是windows编写的.py文件在linux下执行需要更改文件格式：</span></span><br><span class="line">vim run.py</span><br><span class="line">:set ff=unix</span><br><span class="line"><span class="comment"># 添加执行权限 </span></span><br><span class="line">chmod u+x run.py</span><br><span class="line"><span class="comment"># 在后台执行脚本并输出执行日志在脚本目录下</span></span><br><span class="line">nohup ./run.py &gt; nohup.log <span class="number">2</span>&gt;&amp;<span class="number">1</span> &amp; </span><br><span class="line"><span class="comment"># 查看脚本是否执行</span></span><br><span class="line">ps -ef|grep python</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/04/10/android4/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            安卓开发(四) 四大组件—广播
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/04/02/scrapy1/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Scrapy爬虫实战(一) Linux下的安装</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/25/txmianshi/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/txms.png)" alt="腾讯后台开发面试总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/25/txmianshi/" class="title">腾讯后台开发面试总结</a></p>
+                            <p class="item-date"><time datetime="2018-04-25T13:04:38.000Z" itemprop="datePublished">2018-04-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/24/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(二) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/24/swtest2/" class="title">软件测试(二) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-24T02:02:01.000Z" itemprop="datePublished">2018-04-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/23/swtest1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt10.png)" alt="软件测试(一) 黑盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/23/swtest1/" class="title">软件测试(一) 黑盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-04-23T06:43:42.000Z" itemprop="datePublished">2018-04-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/12/androidProject1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓实战开发(一) GroQuiz" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/04/12/androidProject1/" class="title">安卓实战开发(一) GroQuiz</a></p>
+                            <p class="item-date"><time datetime="2018-04-12T07:12:03.000Z" itemprop="datePublished">2018-04-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/10/android4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/android.jpg)" alt="安卓开发(四) 四大组件—广播" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/10/android4/" class="title">安卓开发(四) 四大组件—广播</a></p>
+                            <p class="item-date"><time datetime="2018-04-10T01:16:40.000Z" itemprop="datePublished">2018-04-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/软件测试/" style="font-size: 11.43px;">软件测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/04/02/scrapy2/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
