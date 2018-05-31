@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>机器学习实战(三) 决策树算法 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="python,机器学习" />
+    
+    <meta name="description" content="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结 大纲 决策树基础概念 建立简单决策树 使用隐形眼镜(真实数据)建立决策树  概念分类树（决策树）：是一种十分常用的监督学习分类方法。监督学习就是给定一堆样本，每个样本都有一组属性和一个类别，这些类别是事先确定的，那么通过学习得到一个决策树分类器，这个分类器能够对新出现的对象给出正确的分类。决策树选择哪一个特征作为分类标准是依据">
+<meta name="keywords" content="python,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习实战(三) 决策树算法">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/05/23/ml03/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结 大纲 决策树基础概念 建立简单决策树 使用隐形眼镜(真实数据)建立决策树  概念分类树（决策树）：是一种十分常用的监督学习分类方法。监督学习就是给定一堆样本，每个样本都有一组属性和一个类别，这些类别是事先确定的，那么通过学习得到一个决策树分类器，这个分类器能够对新出现的对象给出正确的分类。决策树选择哪一个特征作为分类标准是依据">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/ml.png">
+<meta property="og:updated_time" content="2018-05-25T01:59:11.839Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战(三) 决策树算法">
+<meta name="twitter:description" content="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结 大纲 决策树基础概念 建立简单决策树 使用隐形眼镜(真实数据)建立决策树  概念分类树（决策树）：是一种十分常用的监督学习分类方法。监督学习就是给定一堆样本，每个样本都有一组属性和一个类别，这些类别是事先确定的，那么通过学习得到一个决策树分类器，这个分类器能够对新出现的对象给出正确的分类。决策树选择哪一个特征作为分类标准是依据">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/ml.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-ml03" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        机器学习实战(三) 决策树算法
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/05/23/ml03/" class="article-date">
+            <time datetime="2018-05-23T07:45:01.000Z" itemprop="datePublished">2018-05-23</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/python/">python</a>, <a class="tag-link" href="/tags/机器学习/">机器学习</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结"><a href="#本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结" class="headerlink" title="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结"></a>本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结</h3><p><img src="/images/ml.png" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><ul>
+<li>决策树基础概念</li>
+<li>建立简单决策树</li>
+<li>使用隐形眼镜(真实数据)建立决策树</li>
+</ul>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p><strong>分类树（决策树）：</strong>是一种十分常用的<strong>监督学习</strong>分类方法。监督学习就是给定一堆样本，每个样本都有一组属性和一个类别，这些类别是事先确定的，那么通过学习得到一个决策树分类器，这个分类器能够对<strong>新出现的对象</strong>给出正确的分类。<br>决策树选择哪一个特征作为分类标准是依据<strong>信息熵</strong>，信息熵通俗来说就是<strong>数据集的不确定性、混乱程度</strong>，数据集的信息熵越高，则混乱程度越高，数据集越不纯洁，决策树根据遍历所有特征来拆分数据集，得出<strong>使得信息熵最低的子数据集的拆分特征</strong>，这个特征就是决策树选择分类标准的特征</p>
+<h3 id="根据简单的数据建立简单的决策树"><a href="#根据简单的数据建立简单的决策树" class="headerlink" title="根据简单的数据建立简单的决策树"></a>根据简单的数据建立简单的决策树</h3><p>首先创造一些简单的测试数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创造一些测试数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createDataSet</span><span class="params">()</span>:</span></span><br><span class="line">	dataSet=[[<span class="number">1</span>,<span class="number">1</span>,<span class="string">'yes'</span>],</span><br><span class="line">			[<span class="number">1</span>,<span class="number">1</span>,<span class="string">'yes'</span>],</span><br><span class="line">			[<span class="number">1</span>,<span class="number">0</span>,<span class="string">'no'</span>],</span><br><span class="line">			[<span class="number">0</span>,<span class="number">1</span>,<span class="string">'no'</span>],</span><br><span class="line">			[<span class="number">0</span>,<span class="number">1</span>,<span class="string">'no'</span>]]</span><br><span class="line">	featureName=[<span class="string">'no surfacing'</span>,<span class="string">'flippers'</span>]</span><br><span class="line">	<span class="keyword">return</span> dataSet,featureName</span><br></pre></td></tr></table></figure><br>编写计算数据集信息熵的函数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 香农熵：变量的不确定性(无序程度)越大，熵也就越大，数据集越混乱</span></span><br><span class="line"><span class="comment"># 计算给定数据集的香农熵 公式：对于所有可能的标签数求和-p(xn)*log2(p(xn))</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calShannoEnt</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">	numRow=len(dataSet)</span><br><span class="line">	labelCounts=&#123;&#125;</span><br><span class="line">	<span class="comment"># 统计数据集最后一列标签列每个标签出现的次数</span></span><br><span class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> dataSet:</span><br><span class="line">		label=item[<span class="number">-1</span>]</span><br><span class="line">		<span class="keyword">if</span> label <span class="keyword">not</span> <span class="keyword">in</span> labelCounts.keys():</span><br><span class="line">			labelCounts[label]=<span class="number">0</span></span><br><span class="line">		labelCounts[label] +=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 计算香农熵 求和-p(xn)*log2(p(xn))</span></span><br><span class="line">	shannoEnt=<span class="number">0.0</span></span><br><span class="line">	<span class="keyword">for</span> key <span class="keyword">in</span> labelCounts:</span><br><span class="line">		pxn=float(labelCounts[key])/numRow</span><br><span class="line">		shannoEnt-=pxn*log(pxn,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> shannoEnt</span><br></pre></td></tr></table></figure><br>根据编写的计算信息熵的函数，可以通过遍历所有特征量拆分数据集来找到使得子数据集信息熵最低的特征<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到划分数据集后香农熵最低的特征的索引</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">chooseBestSplitFeature</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">	numFeature=len(dataSet[<span class="number">0</span>])<span class="number">-1</span></span><br><span class="line">	beforeSplitShanno=calShannoEnt(dataSet)</span><br><span class="line">	bestInfoGain=<span class="number">0.0</span></span><br><span class="line">	bestFeature=<span class="number">-1</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(numFeature):</span><br><span class="line">		<span class="comment"># 计算这个特征有多少value</span></span><br><span class="line">		allValue=[item[i] <span class="keyword">for</span> item <span class="keyword">in</span> dataSet]</span><br><span class="line">		<span class="comment"># 取集合去除重复项</span></span><br><span class="line">		uniqueValue=set(allValue)</span><br><span class="line">		<span class="comment"># 计算特征i划分时的香农熵</span></span><br><span class="line">		splitShanno=<span class="number">0.0</span></span><br><span class="line">		<span class="keyword">for</span> value <span class="keyword">in</span> uniqueValue:</span><br><span class="line">			splitDataSet=[]</span><br><span class="line">			<span class="comment"># 将dataSet中每项以特征i的value划分</span></span><br><span class="line">			<span class="keyword">for</span> item <span class="keyword">in</span> dataSet:</span><br><span class="line">				<span class="keyword">if</span> item[i]==value:splitDataSet.append(item)</span><br><span class="line">			<span class="comment"># 计算以特征i的值value划分的子数据集的香农熵</span></span><br><span class="line">			<span class="comment"># 公式为子数据集的个数和总数据集的比例乘以子数据集的香农熵</span></span><br><span class="line">			splitRate=len(splitDataSet)/float(len(dataSet))</span><br><span class="line">			splitShanno+=splitRate*calShannoEnt(splitDataSet)</span><br><span class="line">		<span class="comment"># 计算特征i划分时的香农熵与香农熵的差</span></span><br><span class="line">		<span class="comment"># 差值越大证明熵下降不混乱度下降 数据集更纯洁</span></span><br><span class="line">		infoGain=beforeSplitShanno-splitShanno</span><br><span class="line">		<span class="keyword">if</span> infoGain&gt;bestInfoGain:</span><br><span class="line">			bestInfoGain=infoGain</span><br><span class="line">			bestFeature=i</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> bestFeature</span><br></pre></td></tr></table></figure><br>根据找到的这个特征，可以开始递归建树，以字典的形式保存二叉树，key为特征名， value为子节点(子树)<br>递归建树中的节点存在一个<strong>投票表决</strong>的停止过程，因此也需要编写投票表决函数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 递归建树</span></span><br><span class="line"><span class="comment"># 停止条件：程序遍历完所有特征 或者 每个分支下的实例均具有相同的label</span></span><br><span class="line"><span class="comment"># 投票表决：若用完了所有特征有分支下的实例还不具有相同label则这个分支节点的分类属于多数实例的label</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">voteLabel</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">	<span class="comment"># 对于每项的分类投票</span></span><br><span class="line">	classCount=&#123;&#125;</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(dataSet):</span><br><span class="line">		label=dataSet[i][<span class="number">-1</span>]</span><br><span class="line">		classCount[label]=classCount.get(label,<span class="number">0</span>)+<span class="number">1</span></span><br><span class="line">	<span class="comment"># 返回最多的分类</span></span><br><span class="line">	count=<span class="number">0</span></span><br><span class="line">	maxLabel=<span class="string">''</span></span><br><span class="line">	<span class="keyword">for</span> key <span class="keyword">in</span> classCount:</span><br><span class="line">		num=classCount[key]</span><br><span class="line">		<span class="keyword">if</span>(num&gt;count):</span><br><span class="line">			count=num</span><br><span class="line">			maxLabel=key</span><br><span class="line">	<span class="keyword">return</span> maxLabel</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归建树 返回子节点的类别名</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createDecisionTree</span><span class="params">(dataSet,featureName)</span>:</span></span><br><span class="line">	<span class="comment"># 检测传入数据集的类别种类</span></span><br><span class="line">	allLabelValue=[item[<span class="number">-1</span>] <span class="keyword">for</span> item <span class="keyword">in</span> dataSet]</span><br><span class="line">	uniqueLabel=set(allLabelValue)</span><br><span class="line">	<span class="comment"># 集合数为1则证明传入数据集的类别相同 停止划分</span></span><br><span class="line">	<span class="keyword">if</span> len(uniqueLabel)==<span class="number">1</span>: <span class="keyword">return</span> allLabelValue[<span class="number">0</span>]</span><br><span class="line">	<span class="comment"># 遍历完所有特征则返回数据集中出现次数多的类别</span></span><br><span class="line">	<span class="keyword">if</span> len(dataSet[<span class="number">0</span>])==<span class="number">1</span>: <span class="keyword">return</span> voteLabel(dataSet)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 若还有特征可划分 则选择最好的特征划分数据集</span></span><br><span class="line">	bestSplitFeatureIndex=chooseBestSplitFeature(dataSet)</span><br><span class="line">	bestSplitFeatureName=featureName[bestSplitFeatureIndex]</span><br><span class="line">	decisionTree=&#123;bestSplitFeatureName:&#123;&#125;&#125;</span><br><span class="line">	<span class="keyword">del</span>(featureName[bestSplitFeatureIndex])</span><br><span class="line">	<span class="comment"># 通过bestFeature的取值value将数据集分成子数据集</span></span><br><span class="line">	allSplitValue=[item[bestSplitFeatureIndex] <span class="keyword">for</span> item <span class="keyword">in</span> dataSet]</span><br><span class="line">	uniqueSplitValue=set(allSplitValue)</span><br><span class="line">	<span class="keyword">for</span> value <span class="keyword">in</span> uniqueSplitValue:</span><br><span class="line">		<span class="comment"># 复制</span></span><br><span class="line">		subFeatureName=featureName[:]</span><br><span class="line">		<span class="comment"># 按照bestSplitFeatureIndex和value划分数据集</span></span><br><span class="line">		splitDataSet=[]</span><br><span class="line">		<span class="keyword">for</span> item <span class="keyword">in</span> dataSet:</span><br><span class="line">			<span class="keyword">if</span> item[bestSplitFeatureIndex]==value:</span><br><span class="line">				<span class="comment"># 注意子数据集需要去除划分的feature</span></span><br><span class="line">				itemCopy=item[:]</span><br><span class="line">				itemCopy.pop(bestSplitFeatureIndex)</span><br><span class="line">				splitDataSet.append(itemCopy)</span><br><span class="line">		<span class="comment"># 将划分的数据集填充到decisionTree中</span></span><br><span class="line">		<span class="comment"># 递归建树</span></span><br><span class="line">		decisionTree[bestSplitFeatureName][value]=createDecisionTree(splitDataSet,subFeatureName)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> decisionTree</span><br></pre></td></tr></table></figure><br>有了决策树字典，我们需要根据这个字典来预测未知数据的标签<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用决策树的分类</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify</span><span class="params">(decisionTree,testVector,vectorFeatureName)</span>:</span></span><br><span class="line">	<span class="comment"># 用于分类的特征 </span></span><br><span class="line">	<span class="comment"># py3中dict.keys()返回的是dict_keys，类似集合不能使用索引</span></span><br><span class="line">	splitFeature=list(decisionTree.keys())[<span class="number">0</span>]</span><br><span class="line">	<span class="comment"># print(splitFeature)</span></span><br><span class="line">	<span class="comment"># 剩下的决策树</span></span><br><span class="line">	restTree=decisionTree[splitFeature]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 在输入数据集中用于分类的特征的下标</span></span><br><span class="line">	featureIndex=vectorFeatureName.index(splitFeature)</span><br><span class="line">	<span class="keyword">for</span> key <span class="keyword">in</span> restTree.keys():</span><br><span class="line">		<span class="comment"># 遍历到决策树正确路径</span></span><br><span class="line">		<span class="keyword">if</span> testVector[featureIndex]==key:</span><br><span class="line">			<span class="comment"># 判断是否是节点</span></span><br><span class="line">			<span class="keyword">if</span> type(restTree[key]).__name__==<span class="string">'dict'</span>:</span><br><span class="line">				<span class="comment"># 不是节点 继续遍历</span></span><br><span class="line">				classLabel=classify(restTree[key],testVector,vectorFeatureName)</span><br><span class="line">			<span class="comment"># 是节点 则输出相应值</span></span><br><span class="line">			<span class="keyword">else</span>: classLabel=restTree[key]</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> classLabel</span><br></pre></td></tr></table></figure><br>编写完所有函数后，我们可以开始测试简单数据，使用简单数据来构建一个决策树<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	dataSet,featureName=createDataSet()</span><br><span class="line">	featureNameCopy=featureName[:]</span><br><span class="line">	decisionTree=createDecisionTree(dataSet,featureNameCopy)</span><br><span class="line">	print(decisionTree)</span><br></pre></td></tr></table></figure><br>运行查看构建的决策树<br><img src="/images/ml30.png" alt=""><br>使用构建的决策树进行预测位置数据的标签<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	dataSet,featureName=createDataSet()</span><br><span class="line">	featureNameCopy=featureName[:]</span><br><span class="line">	decisionTree=createDecisionTree(dataSet,featureNameCopy)</span><br><span class="line">	print(classify(decisionTree,[<span class="number">1</span>,<span class="number">1</span>],featureName))</span><br></pre></td></tr></table></figure><br>运行查看构建的预测结果<br><img src="/images/ml31.png" alt=""></p>
+<h3 id="使用隐形眼镜的数据构建决策树"><a href="#使用隐形眼镜的数据构建决策树" class="headerlink" title="使用隐形眼镜的数据构建决策树"></a>使用隐形眼镜的数据构建决策树</h3><p>首先查看隐形眼镜的数据<br><img src="/images/ml24.png" alt=""><br>可以看到有4个特征，最后一列为标签值，我们先读取文件转换成数据集和创建特征名向量<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 读取隐形眼镜数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">glassesDataSet</span><span class="params">()</span>:</span></span><br><span class="line">	fr=open(<span class="string">'lenses.txt'</span>)</span><br><span class="line">	dataSet=[item.strip().split(<span class="string">'\t'</span>) <span class="keyword">for</span> item <span class="keyword">in</span> fr.readlines()]</span><br><span class="line">	featureName=[<span class="string">'age'</span>,<span class="string">'prescript'</span>,<span class="string">'astigmatic'</span>,<span class="string">'tearRate'</span>]</span><br><span class="line">	<span class="keyword">return</span> dataSet,featureName</span><br></pre></td></tr></table></figure><br>由于有4个特征属于较多特征，决策树构建的过程比较耗时，我们可以将构建的决策树使用pickle序列化保存到本地，下次需要用可以直接读取，这样就不需要每次构建决策树<br>编写pickle序列化对象和读取文件转换成对象的方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 存储决策树:构建决策树比较耗时 可以使用pickle序列化对象在磁盘上保存对象</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">storeTree</span><span class="params">(inputTree,fileName)</span>:</span></span><br><span class="line">	<span class="keyword">import</span> pickle</span><br><span class="line">	<span class="comment"># 打开方式需要加上b 二进制方式打开 因为pickle存储方式默认是二进制方式</span></span><br><span class="line">	fw=open(fileName,<span class="string">'wb'</span>)</span><br><span class="line">	pickle.dump(inputTree,fw)</span><br><span class="line">	fw.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTree</span><span class="params">(fileName)</span>:</span></span><br><span class="line">	<span class="keyword">import</span> pickle</span><br><span class="line">	<span class="comment"># 打开方式需要加上b 二进制方式打开 因为pickle存储方式默认是二进制方式</span></span><br><span class="line">	fr=open(fileName,<span class="string">'rb'</span>)</span><br><span class="line">	<span class="keyword">return</span> pickle.load(fr)</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>根据隐形眼镜数据集构建决策树并序列化保存<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	<span class="comment"># 使用决策树预测隐形眼镜类型</span></span><br><span class="line">	<span class="comment"># 隐形眼镜数据</span></span><br><span class="line">	dataSet,featureName=glassesDataSet()</span><br><span class="line">	<span class="comment"># 创建决策树并保存</span></span><br><span class="line">	featureNameCopy=featureName[:]</span><br><span class="line">	decisionTree=createDecisionTree(dataSet,featureNameCopy)</span><br><span class="line">	storeTree(decisionTree,<span class="string">'lensesDecisionTree.txt'</span>)</span><br></pre></td></tr></table></figure><br>读取保存的决策树文件并打印出构建的决策树<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	decisionTree=getTree(<span class="string">'lensesDecisionTree.txt'</span>)</span><br><span class="line">	print(decisionTree)</span><br></pre></td></tr></table></figure><br>运行并查看结果<br><img src="/images/ml32.png" alt=""></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/25/ml04/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            机器学习实战(四) 朴素贝叶斯算法
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/16/react2/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">React(二) 阮一峰React入门</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/31/swtest6/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw00.png)" alt="软件测试(七) 知识点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/31/swtest6/" class="title">软件测试(七) 知识点总结</a></p>
+                            <p class="item-date"><time datetime="2018-05-31T01:33:13.000Z" itemprop="datePublished">2018-05-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest5/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest5/" class="title">软件测试(六) 系统测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T12:52:59.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw40.png)" alt="软件测试(五) 单元测试与集成测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest4/" class="title">软件测试(五) 单元测试与集成测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T04:56:08.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/29/swtest3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/29/swtest3/" class="title">软件测试(四) 静态测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-29T12:05:02.000Z" itemprop="datePublished">2018-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/28/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(三) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/28/swtest2/" class="title">软件测试(三) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-28T07:35:15.000Z" itemprop="datePublished">2018-05-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/React/" style="font-size: 11.43px;">React</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 15.71px;">python</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.43px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.43px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 14.29px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 17.14px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/05/23/ml03/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

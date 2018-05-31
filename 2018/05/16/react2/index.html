@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>React(二) 阮一峰React入门 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="React,前端" />
+    
+    <meta name="description" content="阮一峰博主通过React实例教程演示React入门大纲Demo1——HelloWorld源码1234567891011121314151617&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;  &amp;lt;head&amp;gt;    &amp;lt;script src=&quot;../build/react.js&quot;&amp;gt;&amp;lt;/script&amp;gt;    &amp;lt;script src=&quot;../bu">
+<meta name="keywords" content="React,前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React(二) 阮一峰React入门">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/05/16/react2/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="阮一峰博主通过React实例教程演示React入门大纲Demo1——HelloWorld源码1234567891011121314151617&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;  &amp;lt;head&amp;gt;    &amp;lt;script src=&quot;../build/react.js&quot;&amp;gt;&amp;lt;/script&amp;gt;    &amp;lt;script src=&quot;../bu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/react20.png">
+<meta property="og:updated_time" content="2018-05-17T06:41:56.401Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React(二) 阮一峰React入门">
+<meta name="twitter:description" content="阮一峰博主通过React实例教程演示React入门大纲Demo1——HelloWorld源码1234567891011121314151617&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;  &amp;lt;head&amp;gt;    &amp;lt;script src=&quot;../build/react.js&quot;&amp;gt;&amp;lt;/script&amp;gt;    &amp;lt;script src=&quot;../bu">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/react20.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-react2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        React(二) 阮一峰React入门
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/05/16/react2/" class="article-date">
+            <time datetime="2018-05-16T03:29:02.000Z" itemprop="datePublished">2018-05-16</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/React/">React</a>, <a class="tag-link" href="/tags/前端/">前端</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="阮一峰博主通过React实例教程演示React入门"><a href="#阮一峰博主通过React实例教程演示React入门" class="headerlink" title="阮一峰博主通过React实例教程演示React入门"></a>阮一峰博主通过React实例教程演示React入门</h3><h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="Demo1——HelloWorld"><a href="#Demo1——HelloWorld" class="headerlink" title="Demo1——HelloWorld"></a>Demo1——HelloWorld</h3><p>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">      ReactDOM.render(</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>,</span></span><br><span class="line"><span class="undefined">        document.getElementById('example')</span></span><br><span class="line"><span class="undefined">      );</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><br>这是我们构建的第一个React项目——HelloWorld，让我们一步一步来解析这个项目：</p>
+<ol>
+<li><strong>引入React库文件：</strong>首先通过在<head>中引入三个JS文件脚本，来将React相关库加载进来，<strong>react.js</strong>是React的核心库，<strong>react-dom.js</strong>是React提供DOM操作的库，<strong>browser.js</strong>是将JSX语法转化为JS语法的库</head></li>
+<li><p><strong>JSX语法：</strong>React采用的JSX语法需要经过babel解析才能被转换成JS被浏览器所解析，因此在书写JSX语法的地方需要使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>标签声明，浏览器才能在渲染网页时识别出JSX语法并调用babel解析器将其转换成JS语法</p>
+</li>
+<li><p><strong>ReactDOM.render()：</strong>是React最基本的方法，用于<strong>将模板转为HTML语言，并插入指定的DOM节点中</strong>，注意这里面是有<strong>两步操作对应render()方法的两个参数</strong>，第一个参数是模板，里面可以将<strong>HTML语言直接写在JS语言中</strong>，第二参数是DOM节点，用于将第一个参数插入到指定的DOM节点中</p>
+</li>
+</ol>
+<p>运行HelloWorld文件可看到<br><img src="/images/react20.png" alt=""><br>成功在id为example的div节点中插入了HelloWorld标签</p>
+<h3 id="Demo2——JSX解析模板"><a href="#Demo2——JSX解析模板" class="headerlink" title="Demo2——JSX解析模板"></a>Demo2——JSX解析模板</h3><p>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">      var names = ['Alice', 'Emily', 'Kate'];</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">      //对于JS数组，可用函数循环返回</span></span><br><span class="line"><span class="undefined">      ReactDOM.render(</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="undefined">        &#123;</span></span><br><span class="line"><span class="undefined">          names.map(function (name, index) &#123;</span></span><br><span class="line"><span class="xml">            return <span class="tag">&lt;<span class="name">h1</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span>&gt;</span>Hello, &#123;name&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="undefined">          &#125;)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>,</span></span><br><span class="line"><span class="undefined">        document.getElementById('example1')</span></span><br><span class="line"><span class="undefined">      );</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">      var arr = [</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">key</span>=<span class="string">"1"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>,</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h2</span> <span class="attr">key</span>=<span class="string">"2"</span>&gt;</span>React is awesome<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>,</span></span><br><span class="line"><span class="undefined">      ];</span></span><br><span class="line"><span class="undefined">      </span></span><br><span class="line"><span class="undefined">      //对于JSX数组，可直接调用，JSX会将数组全部展开</span></span><br><span class="line"><span class="undefined">      ReactDOM.render(</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;arr&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span>,</span></span><br><span class="line"><span class="undefined">        document.getElementById('example2')</span></span><br><span class="line"><span class="undefined">      );</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><br>上述是JSX解析<strong>模板语法</strong>的实例，可以看出</p>
+<ol>
+<li><strong>JSX解析模板规则：</strong>最外层为一个div标签，因此<strong>遇到HTML标签</strong>，使用HEML标签规则解析，遇到<strong>{}代码块</strong>，使用JS规则解析，在{}代码块内可用JS任何语法，如循环遍历数组等</li>
+<li><strong>模板内插入JS变量：</strong>若变量为一个数组，则JSX会展开数组的所有成员</li>
+</ol>
+<p>运行上述代码，如下<br><img src="/images/react21.png" alt=""><br>循环遍历出了数组元素，并且展开了数组所有成员</p>
+<h3 id="Demo3——组件"><a href="#Demo3——组件" class="headerlink" title="Demo3——组件"></a>Demo3——组件</h3><p><strong>组件：</strong>React允许将代码封装成组件（component），然后像插入普通HTML标签一样，在网页中插入这个组件<br>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">  var HelloMessage = React.createClass(&#123;</span></span><br><span class="line"><span class="undefined">    render: function() &#123;</span></span><br><span class="line"><span class="xml">      return <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello &#123;this.props.name&#125;,&#123;this.props.msg&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  ReactDOM.render(</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">HelloMessage</span> <span class="attr">name</span>=<span class="string">"John"</span> <span class="attr">msg</span>=<span class="string">"Nice to meet you!"</span> /&gt;</span>,</span></span><br><span class="line"><span class="undefined">    document.getElementById('example')</span></span><br><span class="line"><span class="undefined">  );</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br>上面就是在JSX中自定义组件和将组件插入到DOM中了，注意其中的细节：</p>
+<ol>
+<li>声明组件名必须以<strong>大写字母开头</strong></li>
+<li>组件内只能包含<strong>一个顶层标签</strong>，不能出现顶层并列多个标签</li>
+<li>组件必须<strong>重写render方法</strong>，用于输出组件</li>
+<li>在组件内部可使用<strong>{this.props.属性名}</strong>获取组件属性的value</li>
+</ol>
+<p>运行上述代码，如下<br><img src="/images/react22.png" alt=""><br>可以看到将自定义的HelloMessage组件插入到DOM标签中了</p>
+<h3 id="Demo4——组件特殊属性【this-props-children】"><a href="#Demo4——组件特殊属性【this-props-children】" class="headerlink" title="Demo4——组件特殊属性【this.props.children】"></a>Demo4——组件特殊属性【this.props.children】</h3><p>this.props对象属性与组件属性一一对应，但<strong>this.props.children属性表示组件所有子节点</strong><br>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">  var NotesList = React.createClass(&#123;</span></span><br><span class="line"><span class="undefined">    render: function() &#123;</span></span><br><span class="line"><span class="undefined">      return (</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">ol</span>&gt;</span></span></span><br><span class="line"><span class="undefined">          &#123;</span></span><br><span class="line"><span class="undefined">            React.Children.map(this.props.children, function (child) &#123;</span></span><br><span class="line"><span class="xml">              return <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;child&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span>;</span></span><br><span class="line"><span class="undefined">            &#125;)</span></span><br><span class="line"><span class="undefined">          &#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span></span><br><span class="line"><span class="undefined">      );</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  ReactDOM.render(</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">NotesList</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">span</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">span</span>&gt;</span>world<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">NotesList</span>&gt;</span>,</span></span><br><span class="line"><span class="undefined">    document.getElementById('example')</span></span><br><span class="line"><span class="undefined">  );</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br>处理子节点有几点需要注意：</p>
+<ol>
+<li><strong>this.props.children返回值：</strong>组件没有子节点返回undefined，一个自己子节点返回object，多个子节点返回array</li>
+<li><strong>React.Children提供方法处理：</strong>如使用<strong>React.Children.map遍历数组</strong>，使用<strong>React.Children.forEach遍历数组但不返回</strong>，使用<strong>React.Children.count返回子节点数量</strong>，使用<strong>React.Children.only验证是否只有一个子节点并返回</strong></li>
+</ol>
+<p>运行上述代码，如下<br><img src="/images/react23.png" alt=""><br>可以看到有两个子节点并将他们遍历放在li便签中输出</p>
+<h3 id="Demo5——组件属性方法"><a href="#Demo5——组件属性方法" class="headerlink" title="Demo5——组件属性方法"></a>Demo5——组件属性方法</h3><p>对于获取到的组件属性，我们可以使用<strong>PropTypes验证其是否符合要求</strong>，可以使用<strong>getDefaultProps设置组件默认属性</strong><br>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  var data = 123;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  var MyTitle = React.createClass(&#123;</span></span><br><span class="line"><span class="undefined">    propTypes: &#123;</span></span><br><span class="line"><span class="undefined">      title: React.PropTypes.string.isRequired,</span></span><br><span class="line"><span class="undefined">    &#125;,</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    getDefaultProps : function () &#123;</span></span><br><span class="line"><span class="undefined">      return &#123;</span></span><br><span class="line"><span class="undefined">        title : 'Hello World',</span></span><br><span class="line"><span class="undefined">        name : 'Harvie'</span></span><br><span class="line"><span class="undefined">      &#125;;</span></span><br><span class="line"><span class="undefined">    &#125;,</span></span><br><span class="line"><span class="undefined">    render: function() &#123;</span></span><br><span class="line"><span class="xml">      return <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">               <span class="tag">&lt;<span class="name">h1</span>&gt;</span> title:&#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">               <span class="tag">&lt;<span class="name">h1</span>&gt;</span> name:&#123;this.props.name&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span>   </span></span><br><span class="line"><span class="xml">             <span class="tag">&lt;/<span class="name">div</span>&gt;</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  ReactDOM.render(</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">MyTitle</span> <span class="attr">title</span>=<span class="string">&#123;data&#125;</span> /&gt;</span>,</span></span><br><span class="line"><span class="undefined">    document.getElementById('example')</span></span><br><span class="line"><span class="undefined">  );</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br>上述分别使用了PropTypes和getDefaultProps方法</p>
+<ol>
+<li>使用PropTypes验证了title属性是否为string</li>
+<li>使用getDefaultProps规定了默认name属性值为Harvie</li>
+</ol>
+<p>运行上述代码，如下<br><img src="/images/react24.png" alt=""><br>可以看到没有添加name属性但是还是输出了默认name属性，title属性不是string但还是显示出来了，查看控制台<br><img src="/images/react25.png" alt=""><br>可以看到控制台发生报错，修改为string后可取消报错</p>
+<h3 id="Demo6——this-refs-refName获取真实DOM"><a href="#Demo6——this-refs-refName获取真实DOM" class="headerlink" title="Demo6——this.refs.refName获取真实DOM"></a>Demo6——this.refs.refName获取真实DOM</h3><p>组件不是真实的DOM节点，是存在于<strong>内存中的虚拟DOM</strong>，只有插入文档中才会变成真实DOM<br>React规定，<strong>所有DOM变化，都先在虚拟DOM上变化，之后再放映在真实DOM</strong>，可以极大提高网页性能<br>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">  var MyComponent = React.createClass(&#123;</span></span><br><span class="line"><span class="undefined">    handleClick: function() &#123;</span></span><br><span class="line"><span class="undefined">      this.refs.showText.innerHTML=this.refs.myTextInput.value;</span></span><br><span class="line"><span class="undefined">    &#125;,</span></span><br><span class="line"><span class="undefined">    render: function() &#123;</span></span><br><span class="line"><span class="undefined">      return (</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">h1</span> <span class="attr">ref</span>=<span class="string">"showText"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ref</span>=<span class="string">"myTextInput"</span> /&gt;</span></span></span><br><span class="line"><span class="xml">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Show the text input"</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="undefined">      );</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">  ReactDOM.render(</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">MyComponent</span> /&gt;</span>,</span></span><br><span class="line"><span class="undefined">    document.getElementById('example')</span></span><br><span class="line"><span class="undefined">  );</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><br>上述代码实现了React组件中的点击事件，注意以下细节：</p>
+<ol>
+<li><strong>使用ref属性从组件获取真实DOM节点：</strong>虚拟DOM中获取不到输入数据，需要在text标签中绑定ref属性，通过<strong>this.ref.[refName]获取真实DOM节点</strong>，获取真实DOM节点后就像JS中操作DOM节点了，如其value、innerHTML、attribute属性等</li>
+<li><strong>React事件：</strong>通过在组件中声明点击回调函数(如handleClick)，在<strong>HTML中指定onClick指定点击回调函数</strong>，来实现Click点击事件，除了Click事件后还有许多事件，如KeyDown 、Copy、Scroll等</li>
+</ol>
+<p>运行上述代码，如下<br><img src="/images/react26.png" alt=""><br>可以看到，输入文本Harvie后，点击按钮，触发handleClick函数获取input标签的text内容填充到h1标签中</p>
+<h3 id="Demo7——this-state"><a href="#Demo7——this-state" class="headerlink" title="Demo7——this.state"></a>Demo7——this.state</h3><p>props是组件中的不变特性，state是组件中一个<strong>可变的变量</strong>，随着<strong>与用户互动</strong>组件状态值会改变，每次改变都会<strong>重新渲染UI</strong><br>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">var LikeButton = React.createClass(&#123;</span><br><span class="line">  getInitialState: function() &#123;</span><br><span class="line">    return &#123;liked: false&#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  handleClick: function(event) &#123;</span><br><span class="line">    this.setState(&#123;liked: !this.state.liked&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  render: function() &#123;</span><br><span class="line">    var text = this.state.liked ? 'like' : 'haven\'t liked';</span><br><span class="line">    return (</span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick&#125;</span>&gt;</span></span><br><span class="line">        You &#123;text&#125; this. Click to toggle.</span><br><span class="line">      <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  <span class="tag">&lt;<span class="name">LikeButton</span> /&gt;</span>,</span><br><span class="line">  document.getElementById('example')</span><br><span class="line">);</span><br></pre></td></tr></table></figure><br>上述代码定义了一个通过点击状态改变并显示出来的组件，注意以下细节：</p>
+<ol>
+<li><strong>getInitialState方法：</strong>用于定义<strong>初始状态对象</strong>，这个对象可通过<strong>this.state</strong>读取</li>
+<li><strong>this.setState方法：</strong>用于改变状态值，通过(stateName:value)修改状态值，每次修改后<strong>会自动调用this.render方法重新渲染组件</strong></li>
+</ol>
+<p>运行上述代码，如下<br><img src="/images/react27.png" alt=""><br>点击文字后<br><img src="/images/react28.png" alt=""><br>可以看到点击后调用点击函数内的this.setState函数重新设置状态后重新调用this.render方法重新渲染组件</p>
+<h3 id="Demo8——event-target-value获取输入"><a href="#Demo8——event-target-value获取输入" class="headerlink" title="Demo8——event.target.value获取输入"></a>Demo8——event.target.value获取输入</h3><p>用户在<strong>表单、选项、选择等输入</strong>，属于用户跟组件互动，所以<strong>不能通过this.props读取</strong>，应该使用<strong>event.target.value读取</strong><br>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var Input = React.createClass(&#123;</span><br><span class="line">  getInitialState: function() &#123;</span><br><span class="line">    return &#123;value: 'Hello!'&#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  handleChange: function(event) &#123;</span><br><span class="line">    this.setState(&#123;value: event.target.value&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  render: function () &#123;</span><br><span class="line">    var value = this.state.value;</span><br><span class="line">    return (</span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">&#123;value&#125;</span> <span class="attr">onChange</span>=<span class="string">&#123;this.handleChange&#125;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;value&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="tag">&lt;<span class="name">Input</span>/&gt;</span>, document.body);</span><br></pre></td></tr></table></figure><br>上述代码定义了一个获取输入并显示出来的组件，注意以下细节：</p>
+<ol>
+<li><strong>onChange：</strong>在输入框中的文本改变时，会调用onChange()指定的回调函数</li>
+<li><strong>event.target.value：</strong>用于读取<strong>触发事件的DOM的value值</strong></li>
+</ol>
+<p>运行上述代码，如下<br><img src="/images/react29.png" alt=""><br>可以看到改变输入框内容改变下面的p标签的内容也会改变</p>
+<h3 id="Demo9——组件的生命周期函数"><a href="#Demo9——组件的生命周期函数" class="headerlink" title="Demo9——组件的生命周期函数"></a>Demo9——组件的生命周期函数</h3><p>组件的生命周期有<strong>三个状态：</strong></p>
+<ul>
+<li><strong>Mounting：</strong>已插入真实 DOM</li>
+<li><strong>Updating：</strong>正在被重新渲染</li>
+<li><strong>Unmounting：</strong>已移出真实 DOM</li>
+</ul>
+<p>React为<strong>每种状态提供两种处理函数：</strong>will函数在进入状态前调用，did函数在进入函数后调用</p>
+<ul>
+<li><strong>componentWillMount()</strong></li>
+<li><strong>componentDidMount()</strong></li>
+<li><strong>componentWillUpdate(object nextProps, object nextState)</strong></li>
+<li><strong>componentDidUpdate(object prevProps, object prevState)</strong></li>
+<li><strong>componentWillUnmount()</strong></li>
+</ul>
+<p>此外还有两种<strong>特殊状态处理函数：</strong></p>
+<ul>
+<li><strong>componentWillReceiveProps(object nextProps)：</strong>已加载组件收到新的参数时调用</li>
+<li><strong>shouldComponentUpdate(object nextProps, object nextState)：</strong>组件判断是否重新渲染时调用</li>
+</ul>
+<p>源码<br><img src="/images/react213.png" alt=""></p>
+<p>上述代码定义了一个不透明度不断变化的HelloWorld标签，注意以下细节：</p>
+<ol>
+<li>首先通过<strong>getInitialState设置初始不透明状态为1.0</strong></li>
+<li>通过<strong>componentDidMount函数：</strong>在组件插入真实DOM结束后调用定时器改变组件不透明度状态重新渲染组件</li>
+<li><strong>setInterval(callback function,milliseconds)函数：</strong>在指定milliseconds毫秒数不断执行callback function回调函数，在这里回调函数采用匿名函数，主要是获取当前不透明状态值、-0.05、如果小于0.1就重置为1.0、以新的不透明状态值重新渲染UI，秒数设为100ms</li>
+<li><strong>React组件样式：</strong>是一个对象，因此要写成<img src="/images/react214.png" alt="">，第一个大括号表示<strong>JS语法域</strong>，第二个大括号表示这是一个<strong>样式对象</strong></li>
+</ol>
+<p>运行上述代码，如下<br><img src="/images/react210.png" alt=""><br><img src="/images/react211.png" alt=""><br><img src="/images/react212.png" alt=""><br>出现一个不透明度不断变化的HelloWorld标签</p>
+<h3 id="Demo10——组件数据来源AJAX"><a href="#Demo10——组件数据来源AJAX" class="headerlink" title="Demo10——组件数据来源AJAX"></a>Demo10——组件数据来源AJAX</h3><p>可以通过在componentDidMount函数里面通过AJAX请求数据后通过this.setState改变状态重新渲染组件<br>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount: function() &#123;</span><br><span class="line">   $.get(this.props.source, function(result) &#123;</span><br><span class="line">     var lastGist = result[0];</span><br><span class="line">     if (this.isMounted()) &#123;</span><br><span class="line">       this.setState(&#123;</span><br><span class="line">         username: lastGist.owner.login,</span><br><span class="line">         lastGistUrl: lastGist.html_url</span><br><span class="line">       &#125;);</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;.bind(this));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>上述代码是使用<strong>jQuery完成AJAX请求</strong>后使用<strong>this.setState改变组件状态重新渲染组件</strong></p>
+<p>Promise对象表示先执行一个任务，根据这个任务结果来决定是否执行下个任务，可以使用.then来实现<br>可以将Promise对象作为属性传给组件，然后<strong>组件根据Promise执行首次任务的结果改变组件自身状态重新渲染组件</strong>，从而达到加载的效果<br>源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">var RepoList = React.createClass(&#123;</span><br><span class="line">  //初始化初始状态</span><br><span class="line">  getInitialState: function() &#123;</span><br><span class="line">    return &#123; loading: true, error: null, data: null&#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  //组件插入真实DOM后启动函数</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    //通过promise.then获取执行AJAX的结果</span><br><span class="line">    //若请求成功，则修改loading为false，data为所得到的数据</span><br><span class="line">    //若请求失败，则修改loading为false，error为错误信息</span><br><span class="line">    this.props.promise.then(</span><br><span class="line">      value =&gt; this.setState(&#123;loading: false, data: value&#125;),</span><br><span class="line">      error =&gt; this.setState(&#123;loading: false, error: error&#125;));</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  //渲染组件</span><br><span class="line">  render: function() &#123;</span><br><span class="line">    //若是处于loading状态，则显示loading</span><br><span class="line">    if (this.state.loading) &#123;</span><br><span class="line">      return <span class="tag">&lt;<span class="name">span</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">span</span>&gt;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    //若有错误信息，则显示错误信息</span><br><span class="line">    else if (this.state.error !== null) &#123;</span><br><span class="line">      return <span class="tag">&lt;<span class="name">span</span>&gt;</span>Error: &#123;this.state.error.message&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    //否则显示按照格式显示数据</span><br><span class="line">    else &#123;</span><br><span class="line">      var repos = this.state.data.items;</span><br><span class="line">      var repoList = repos.map(function (repo) &#123;</span><br><span class="line">        return (</span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&#123;repo.html_url&#125;</span>&gt;</span>&#123;repo.name&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span> (&#123;repo.stargazers_count&#125; stars) <span class="tag">&lt;<span class="name">br</span>/&gt;</span> &#123;repo.description&#125;</span><br><span class="line">          <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        );</span><br><span class="line">      &#125;);</span><br><span class="line">      return (</span><br><span class="line">        <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Most Popular JavaScript Projects in Github<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ol</span>&gt;</span>&#123;repoList&#125;<span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">//用AJAX请求api获取到的json数据存在promise对象中</span><br><span class="line">//然后将promise对象以属性的传给组件</span><br><span class="line">ReactDOM.render(</span><br><span class="line">  <span class="tag">&lt;<span class="name">RepoList</span></span></span><br><span class="line"><span class="tag">    <span class="attr">promise</span>=<span class="string">&#123;$.getJSON(</span>'<span class="attr">https:</span>//<span class="attr">api.github.com</span>/<span class="attr">search</span>/<span class="attr">repositories</span>?<span class="attr">q</span>=<span class="string">javascript&amp;sort</span>=<span class="string">stars</span>')&#125;</span></span><br><span class="line"><span class="tag">  /&gt;</span>,</span><br><span class="line">  document.body</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/23/ml03/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            机器学习实战(三) 决策树算法
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/15/ml02/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">机器学习实战(二) K-邻近算法</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/31/swtest6/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw00.png)" alt="软件测试(七) 知识点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/31/swtest6/" class="title">软件测试(七) 知识点总结</a></p>
+                            <p class="item-date"><time datetime="2018-05-31T01:33:13.000Z" itemprop="datePublished">2018-05-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest5/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest5/" class="title">软件测试(六) 系统测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T12:52:59.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw40.png)" alt="软件测试(五) 单元测试与集成测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest4/" class="title">软件测试(五) 单元测试与集成测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T04:56:08.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/29/swtest3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/29/swtest3/" class="title">软件测试(四) 静态测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-29T12:05:02.000Z" itemprop="datePublished">2018-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/28/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(三) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/28/swtest2/" class="title">软件测试(三) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-28T07:35:15.000Z" itemprop="datePublished">2018-05-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/React/" style="font-size: 11.43px;">React</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 15.71px;">python</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.43px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.43px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 14.29px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 17.14px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/05/16/react2/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

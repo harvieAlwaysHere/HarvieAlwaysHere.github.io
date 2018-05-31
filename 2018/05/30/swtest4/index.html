@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>软件测试(五) 单元测试与集成测试 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="软件测试,单元测试,集成测试" />
+    
+    <meta name="description" content="本文是软件测试课程课堂笔记总结大纲单元测试定义单元：有明确功能、规格定义、接口定义的软件设计最小单位单元测试：也称为模块测试，是对软件基本组成单元进行测试，目的在于模块内部可能存在的差错单元测试内容：  单元的内部结构：单元的逻辑和数据流，一般采用白盒测试 单元的外部结构：单元的功能和可观测行为，一般采用黑盒测试  单元测试环境进行单元测试时，如果模块不是独立的程序，需要辅助测试模块辅助测试模块：">
+<meta name="keywords" content="软件测试,单元测试,集成测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件测试(五) 单元测试与集成测试">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/05/30/swtest4/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文是软件测试课程课堂笔记总结大纲单元测试定义单元：有明确功能、规格定义、接口定义的软件设计最小单位单元测试：也称为模块测试，是对软件基本组成单元进行测试，目的在于模块内部可能存在的差错单元测试内容：  单元的内部结构：单元的逻辑和数据流，一般采用白盒测试 单元的外部结构：单元的功能和可观测行为，一般采用黑盒测试  单元测试环境进行单元测试时，如果模块不是独立的程序，需要辅助测试模块辅助测试模块：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/sw40.png">
+<meta property="og:updated_time" content="2018-05-30T12:53:58.378Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="软件测试(五) 单元测试与集成测试">
+<meta name="twitter:description" content="本文是软件测试课程课堂笔记总结大纲单元测试定义单元：有明确功能、规格定义、接口定义的软件设计最小单位单元测试：也称为模块测试，是对软件基本组成单元进行测试，目的在于模块内部可能存在的差错单元测试内容：  单元的内部结构：单元的逻辑和数据流，一般采用白盒测试 单元的外部结构：单元的功能和可观测行为，一般采用黑盒测试  单元测试环境进行单元测试时，如果模块不是独立的程序，需要辅助测试模块辅助测试模块：">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/sw40.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-swtest4" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        软件测试(五) 单元测试与集成测试
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/05/30/swtest4/" class="article-date">
+            <time datetime="2018-05-30T04:56:08.000Z" itemprop="datePublished">2018-05-30</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/单元测试/">单元测试</a>, <a class="tag-link" href="/tags/软件测试/">软件测试</a>, <a class="tag-link" href="/tags/集成测试/">集成测试</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文是软件测试课程课堂笔记总结"><a href="#本文是软件测试课程课堂笔记总结" class="headerlink" title="本文是软件测试课程课堂笔记总结"></a>本文是软件测试课程课堂笔记总结</h3><h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="单元测试定义"><a href="#单元测试定义" class="headerlink" title="单元测试定义"></a>单元测试定义</h3><p><strong>单元：</strong>有<strong>明确功能、规格定义、接口定义</strong>的软件设计最小单位<br><strong>单元测试：</strong>也称为<strong>模块测试</strong>，是对软件基本组成单元进行测试，目的在于<strong>模块内部可能存在的差错</strong><br><strong>单元测试内容：</strong></p>
+<ol>
+<li><strong>单元的内部结构：</strong>单元的逻辑和数据流，一般采用白盒测试</li>
+<li><strong>单元的外部结构：</strong>单元的功能和可观测行为，一般采用黑盒测试</li>
+</ol>
+<h3 id="单元测试环境"><a href="#单元测试环境" class="headerlink" title="单元测试环境"></a>单元测试环境</h3><p>进行单元测试时，如果<strong>模块不是独立的程序</strong>，需要<strong>辅助测试模块</strong><br><strong>辅助测试模块：</strong></p>
+<ol>
+<li><strong>驱动模块(Driver):</strong>代替所测模块的主程序，接受测试数据-调用所测模块传递数据-输出测试结果，主要用于<strong>底层</strong>测试模块</li>
+<li><strong>桩模块(Stub)：</strong>代替所测模块的子模块，用于给所测模块提供数据处理接口，主要用于<strong>顶层</strong>测试模块<br>由被测模块、驱动模块、桩模块共同组成一个<strong>单元测试环境</strong><br><img src="/images/sw40.png" alt=""></li>
+</ol>
+<h3 id="单元测试具体内容"><a href="#单元测试具体内容" class="headerlink" title="单元测试具体内容"></a>单元测试具体内容</h3><ol>
+<li><strong>模块接口测试：</strong>是单元测试的基础，检测数据正确流入、流出模块，如IO参数个数、次序、格式、文件属性等</li>
+<li><strong>局部数据结构测试：</strong>保证临时存储在模块内的数据在程序执行时完整、正确，如数据类型、变量初始化、变量名、溢出、地址异常</li>
+<li><strong>独立路径测试：</strong>通过全局数据发现因计算错误、比较错误、判断错误等造成的错误</li>
+<li><strong>错误处理测试：</strong>预设各种出错处理方案，如输出错误信息难以理解、异常处理不当等</li>
+<li><strong>边界条件测试：</strong>针对边界值及其左右设计测试用例，可能发现新的错误</li>
+</ol>
+<h3 id="集成测试定义"><a href="#集成测试定义" class="headerlink" title="集成测试定义"></a>集成测试定义</h3><p><strong>集成测试定义：</strong>又称作<strong>组装测试</strong>，在单元测试的基础上，将所有模块<strong>按照设计要求组装成子系统或系统</strong>进行测试，检查这些<strong>单元之间的接口</strong>是否存在问题，如数据丢失、模块间相互影响、组合后不能实现主功能<br><strong>集成测试内容：</strong><br>1.<font color="blue"><strong>单元间的接口</strong></font><br>2.<font color="blue"><strong>集成后的功能</strong></font><br><strong>集成测试层次：</strong>根据集成的力度不同可分为3个层次<br>1.模块内集成测试<br>2.子系统内集成测试：将功能模块组个成子系统进行测试<br>3.子系统间集成测试：将子系统之间组合起来进行测试<br><strong>集成测试方法：</strong><br>1.静态测试：针对概要设计<br>2.动态测试：<strong>灰盒测试</strong></p>
+<h3 id="灰盒测试"><a href="#灰盒测试" class="headerlink" title="灰盒测试"></a>灰盒测试</h3><p><strong>灰盒测试定义：</strong>介于白盒测试与黑盒测试之间的一种测试，灰盒测试多用于<strong>集成测试阶段</strong>，不仅<strong>关注输出、输入的正确性</strong>，同时也<strong>关注程序内部的情况</strong>。灰盒测试不像白盒那样详细、完整，但又比黑盒测试更关注程序的内部逻辑，常常是通过一些表征性的现象、事件、标志来判断内部的运行状态。</p>
+<h3 id="集成策略"><a href="#集成策略" class="headerlink" title="集成策略"></a>集成策略</h3><p>根据集成中<strong>各模块如何组合</strong>可分为<strong>渐增式与非渐增式</strong><br><strong>非渐增式集成策略：</strong>先分别测试每个模块，再将<strong>所有模块按设计要求放在一起结合成所需要的程序</strong><br><strong>渐增式集成策略：</strong>将下一个要测试的模块与<strong>已测试好的模块或者系统结合进行测试</strong></p>
+<h3 id="非渐增式集成策略方法"><a href="#非渐增式集成策略方法" class="headerlink" title="非渐增式集成策略方法"></a>非渐增式集成策略方法</h3><p>主要采用<strong>Big Bang集成方法</strong><br><img src="/images/sw41.png" alt=""><br><strong>优点：</strong>方法简单，测试人员可以并行测试，资源利用率高<br><strong>缺点：</strong></p>
+<ol>
+<li>必须为每个模块准备相应的驱动模块和桩模块，测试成本高</li>
+<li>集成后出现错误难以纠正</li>
+</ol>
+<h3 id="渐增式集成策略方法"><a href="#渐增式集成策略方法" class="headerlink" title="渐增式集成策略方法"></a>渐增式集成策略方法</h3><p>根据不同的<strong>实施次序</strong>可分为三个方法：</p>
+<ol>
+<li>自顶向下(Top-Down)</li>
+<li>自底向上(Bottom-Up)</li>
+<li>混合策略(Modified Top-down)</li>
+</ol>
+<h3 id="自顶向下增量测试-Top-Down"><a href="#自顶向下增量测试-Top-Down" class="headerlink" title="自顶向下增量测试(Top-Down)"></a>自顶向下增量测试(Top-Down)</h3><p><strong>步骤：</strong></p>
+<ol>
+<li>主控模块作为测试驱动器</li>
+<li>根据集成的方式(深度或广度)，<strong>将下层桩模块一次一次替换成真正模块</strong></li>
+<li>每个模块被集成时，都需要先进行单元测试，重复2直到整个系统被测试完成<br><img src="/images/sw42.png" alt=""><br><img src="/images/sw43.png" alt=""><br><strong>优点：</strong></li>
+<li>较早验证了<strong>主要控制和判断点</strong></li>
+<li>深度优先可<strong>较早实现验证一个完整的功能</strong></li>
+<li>只需要一个驱动，<strong>减少驱动模块开销</strong><br><strong>缺点：</strong></li>
+<li><strong>底层组件测试被推迟</strong></li>
+<li>需要很多桩模块，<strong>桩模块开销大</strong><br><strong>适用范围：</strong></li>
+<li>产品结构清晰稳定</li>
+<li>高层接口稳定，底层接口变化频繁</li>
+<li>希望尽早看到产品的系统功能行为</li>
+</ol>
+<h3 id="自底向上增量测试-Bottom-Up"><a href="#自底向上增量测试-Bottom-Up" class="headerlink" title="自底向上增量测试(Bottom-Up)"></a>自底向上增量测试(Bottom-Up)</h3><p><font color="red"><strong>最常用的集成策略</strong></font><br><strong>步骤：</strong></p>
+<ol>
+<li>使用驱动模块对模块依赖树的底层叶子模块进行测试</li>
+<li>用<strong>实际模块代替驱动模块</strong>，将其与已测试的子模块组成更大的模块进行测试</li>
+<li>重复2直到<strong>系统最顶层模块被加入已测系统中</strong><br><img src="/images/sw44.png" alt=""><br><strong>优点：</strong></li>
+<li>底层模块<strong>更多更早验证</strong></li>
+<li><strong>桩模块开销小</strong><br><strong>缺点：</strong></li>
+<li><strong>驱动模块开销大</strong></li>
+<li>对高层验证被推迟，<strong>设计上的错误较难及时发现</strong><br><strong>适用范围：</strong></li>
+<li>高层接口变化频繁，底层接口稳定</li>
+<li>底层组件较早被完成的系统</li>
+</ol>
+<h3 id="混合增量测试-Modified-Top-down"><a href="#混合增量测试-Modified-Top-down" class="headerlink" title="混合增量测试(Modified Top-down)"></a>混合增量测试(Modified Top-down)</h3><p><strong>步骤：</strong></p>
+<ol>
+<li>将系统分层上层，<strong>顶层、目标层、底层</strong></li>
+<li>顶层模块采用自顶向下集成</li>
+<li>底层模块采用自底向上集成<br><img src="/images/sw45.png" alt=""><br><strong>优点：</strong>集合了自顶向下和自底向上策略的优点<br><strong>缺点：</strong>中间层测试不充分<br><strong>适用范围：</strong>大多数软件开发项目</li>
+</ol>
+<h3 id="几种集成测试方法性能比较"><a href="#几种集成测试方法性能比较" class="headerlink" title="几种集成测试方法性能比较"></a>几种集成测试方法性能比较</h3><p><img src="/images/sw46.png" alt=""></p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/30/swtest5/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            软件测试(六) 系统测试
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/29/swtest3/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">软件测试(四) 静态测试</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/31/swtest6/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw00.png)" alt="软件测试(七) 知识点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/31/swtest6/" class="title">软件测试(七) 知识点总结</a></p>
+                            <p class="item-date"><time datetime="2018-05-31T01:33:13.000Z" itemprop="datePublished">2018-05-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest5/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest5/" class="title">软件测试(六) 系统测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T12:52:59.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw40.png)" alt="软件测试(五) 单元测试与集成测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest4/" class="title">软件测试(五) 单元测试与集成测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T04:56:08.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/29/swtest3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/29/swtest3/" class="title">软件测试(四) 静态测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-29T12:05:02.000Z" itemprop="datePublished">2018-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/28/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(三) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/28/swtest2/" class="title">软件测试(三) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-28T07:35:15.000Z" itemprop="datePublished">2018-05-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/React/" style="font-size: 11.43px;">React</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 15.71px;">python</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.43px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.43px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 14.29px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 17.14px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/05/30/swtest4/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

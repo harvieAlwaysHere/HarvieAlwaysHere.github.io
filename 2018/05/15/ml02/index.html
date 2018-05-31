@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>机器学习实战(二) K-邻近算法 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="python,机器学习" />
+    
+    <meta name="description" content="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结 大纲 算法概念 简单数据集的KNN 约会数据集(实际数据)的KNN 手写识别数据集(测试集与预测集不同)的KNN  概念K最近邻(k-Nearest Neighbor，KNN)分类算法：如果一个样本在特征空间中的k个最相似(即特征空间中最邻近)的样本中的大多数属于某一个类别，则该样本也属于这个类别。通俗来讲就是基于已经分好类的">
+<meta name="keywords" content="python,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习实战(二) K-邻近算法">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/05/15/ml02/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结 大纲 算法概念 简单数据集的KNN 约会数据集(实际数据)的KNN 手写识别数据集(测试集与预测集不同)的KNN  概念K最近邻(k-Nearest Neighbor，KNN)分类算法：如果一个样本在特征空间中的k个最相似(即特征空间中最邻近)的样本中的大多数属于某一个类别，则该样本也属于这个类别。通俗来讲就是基于已经分好类的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/ml.png">
+<meta property="og:updated_time" content="2018-05-23T07:47:13.474Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战(二) K-邻近算法">
+<meta name="twitter:description" content="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结 大纲 算法概念 简单数据集的KNN 约会数据集(实际数据)的KNN 手写识别数据集(测试集与预测集不同)的KNN  概念K最近邻(k-Nearest Neighbor，KNN)分类算法：如果一个样本在特征空间中的k个最相似(即特征空间中最邻近)的样本中的大多数属于某一个类别，则该样本也属于这个类别。通俗来讲就是基于已经分好类的">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/ml.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-ml02" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        机器学习实战(二) K-邻近算法
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/05/15/ml02/" class="article-date">
+            <time datetime="2018-05-15T02:09:45.000Z" itemprop="datePublished">2018-05-15</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/python/">python</a>, <a class="tag-link" href="/tags/机器学习/">机器学习</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结"><a href="#本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结" class="headerlink" title="本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结"></a>本文主要记录《机器学习实战》中的理论知识拓展和实践问题中解决方案的总结</h3><p><img src="/images/ml.png" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><ul>
+<li>算法概念</li>
+<li>简单数据集的KNN</li>
+<li>约会数据集(实际数据)的KNN</li>
+<li>手写识别数据集(测试集与预测集不同)的KNN</li>
+</ul>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p><strong>K最近邻(k-Nearest Neighbor，KNN)分类算法：</strong>如果一个样本在特征空间中的k个最相似(即特征空间中最邻近)的样本中的大多数属于某一个类别，则该样本也属于这个类别。通俗来讲就是基于已经分好类的邻居，若是这个样本的K个最邻近的邻居多数输入某一类，则这个样本也属于这一类。</p>
+<h3 id="简单的数据集进行测试算法"><a href="#简单的数据集进行测试算法" class="headerlink" title="简单的数据集进行测试算法"></a>简单的数据集进行测试算法</h3><p>首先先创建一些简单的数据集<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一些简单数据进行测试算法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">creatDataSet</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="comment"># 特征</span></span><br><span class="line">	group=array([[<span class="number">1.0</span>,<span class="number">1.1</span>],</span><br><span class="line">				[<span class="number">1.0</span>,<span class="number">1.0</span>],</span><br><span class="line">				[<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">				[<span class="number">0</span>,<span class="number">0.1</span>]])</span><br><span class="line">	<span class="comment"># 标签(分类)</span></span><br><span class="line">	labels=[<span class="string">'A'</span>,<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'B'</span>]</span><br><span class="line">	<span class="keyword">return</span> group,labels</span><br></pre></td></tr></table></figure><br>然后编写KNN算法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对输入样本进行KNN分类</span></span><br><span class="line"><span class="comment"># 步骤：计算距离-选择距离最小的K个点-返回最多的分类</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifify0</span><span class="params">(inX,dataSet,labels,k)</span>:</span></span><br><span class="line">	<span class="comment"># 计算距离:使用欧式公式</span></span><br><span class="line">	dataSetSize=dataSet.shape[<span class="number">0</span>]</span><br><span class="line">	<span class="comment"># tile(A,(m,n))函数用于将数组A延长n倍重复m次构造成新的数组</span></span><br><span class="line">	<span class="comment"># 例如tile(A,(3,2))，得到[[A,A],[A,A],[A,A]]</span></span><br><span class="line">	diffMat=tile(inX,(dataSetSize,<span class="number">1</span>))-dataSet</span><br><span class="line">	sqDiffMat=diffMat**<span class="number">2</span></span><br><span class="line">	<span class="comment"># sum(axis=1)将矩阵每一行向量相加</span></span><br><span class="line">	sqDistances=sqDiffMat.sum(axis=<span class="number">1</span>)</span><br><span class="line">	distances=sqDistances**<span class="number">0.5</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># A.argsort()返回将数组A中元素从小到大排序后的索引值</span></span><br><span class="line">	sortDiantances=distances.argsort()</span><br><span class="line">	classCount=&#123;&#125;</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(k):</span><br><span class="line">		label=labels[sortDiantances[i]]</span><br><span class="line">		<span class="comment"># 字典get(key,default) 返回key对应的value，若没有key则返回default</span></span><br><span class="line">		<span class="comment"># 使用这个函数的好处是不需要使用if判断</span></span><br><span class="line">		classCount[label]=classCount.get(label,<span class="number">0</span>)+<span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 返回最多的分类</span></span><br><span class="line">	count=<span class="number">0</span></span><br><span class="line">	maxLabel=<span class="string">''</span></span><br><span class="line">	<span class="keyword">for</span> key <span class="keyword">in</span> classCount:</span><br><span class="line">		num=classCount[key]</span><br><span class="line">		<span class="keyword">if</span>(num&gt;count):</span><br><span class="line">			count=num</span><br><span class="line">			maxLabel=key</span><br><span class="line">	<span class="keyword">return</span> maxLabel</span><br></pre></td></tr></table></figure><br>开始简单地测试一下在简单数据集下的KNN算法分类<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	<span class="comment"># 简单的K邻近算法</span></span><br><span class="line">	dataSet,labels=creatDataSet()</span><br><span class="line">	predictLebel=classifify0([<span class="number">1.2</span>,<span class="number">1.2</span>],dataSet,labels,<span class="number">3</span>)</span><br><span class="line">	print(predictLebel)</span><br></pre></td></tr></table></figure><br>运行查看结果<br><img src="/images/ml20.png" alt=""></p>
+<h3 id="使用约会数据集预测结果评估KNN分类器的准确率"><a href="#使用约会数据集预测结果评估KNN分类器的准确率" class="headerlink" title="使用约会数据集预测结果评估KNN分类器的准确率"></a>使用约会数据集预测结果评估KNN分类器的准确率</h3><p>首先读入约会数据集<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># KNN约会网站配对(根据3种特征将约会对象分成3类)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入数据并解析成相应格式(数据集和标签)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fileToDataSet</span><span class="params">(fileName)</span>:</span></span><br><span class="line">	fr=open(fileName)</span><br><span class="line">	<span class="comment"># readlines()读取所有数据，每行以字符串的列表形式返回</span></span><br><span class="line">	allRow=fr.readlines()</span><br><span class="line">	numOfRow=len(allRow) <span class="comment"># 返回列表长度，即数据行数</span></span><br><span class="line">	dataSet=zeros((numOfRow,<span class="number">3</span>))</span><br><span class="line">	labels=[]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 处理每一行数据</span></span><br><span class="line">	index=<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> row <span class="keyword">in</span> allRow:</span><br><span class="line">		<span class="comment"># 去除字符串首尾的空白字符(如' '、\t、\n等)</span></span><br><span class="line">		row=row.strip()</span><br><span class="line">		<span class="comment"># 以\t作为分隔符分隔字符串</span></span><br><span class="line">		rowList=row.split(<span class="string">'\t'</span>)</span><br><span class="line">		<span class="comment"># 将每一行数据的前三个数据作为数据集</span></span><br><span class="line">		dataSet[index,:]=rowList[<span class="number">0</span>:<span class="number">3</span>]</span><br><span class="line">		<span class="comment"># 将每一行数据的最后一个数据作为标签</span></span><br><span class="line">		labels.append(int(rowList[<span class="number">-1</span>])) <span class="comment"># append需要指定int否则默认字符串处理</span></span><br><span class="line">		index+=<span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> dataSet,labels</span><br></pre></td></tr></table></figure><br>由于每个特征的数据的范围不同，因此需要将特征值归一化处理<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 归一化数据(将所有特征值转化0-1区间的值)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalizeData</span><span class="params">(dataSet)</span>:</span></span><br><span class="line">	<span class="comment"># 返回数据中每一列的最小值</span></span><br><span class="line">	minVal=dataSet.min(<span class="number">0</span>)</span><br><span class="line">	maxVal=dataSet.max(<span class="number">0</span>)</span><br><span class="line">	range=maxVal-minVal</span><br><span class="line">	normalDataSet=zeros(shape(dataSet))</span><br><span class="line">	numRow=dataSet.shape[<span class="number">0</span>]</span><br><span class="line">	<span class="comment"># 处理公式:value=(value-min)/(max-min)</span></span><br><span class="line">	normalDataSet=dataSet-tile(minVal,(numRow,<span class="number">1</span>))</span><br><span class="line">	normalDataSet=normalDataSet/tile(range,(numRow,<span class="number">1</span>))</span><br><span class="line">	<span class="keyword">return</span> normalDataSet</span><br></pre></td></tr></table></figure><br>将约会数据集作为训练集，再将每条约会数据集作为测试数据对KNN分类器的准确性进行测试<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	<span class="comment"># 约会数据测试KNN准确率</span></span><br><span class="line">	errorNum=<span class="number">0.0</span>;</span><br><span class="line">	<span class="keyword">for</span> index <span class="keyword">in</span> range(len(normalDateDataSet)):</span><br><span class="line">		predictLabel=classifify0(normalDateDataSet[index],normalDateDataSet,dateLabels,<span class="number">3</span>)</span><br><span class="line">		<span class="keyword">if</span>(predictLabel!=dateLabels[index]):errorNum+=<span class="number">1.0</span></span><br><span class="line">		print(<span class="string">'predictLabel is '</span>+str(predictLabel)+<span class="string">', the real label is '</span>+str(dateLabels[index]))</span><br><span class="line">	errorRate=errorNum/float(len(normalDateDataSet))</span><br><span class="line">	print(<span class="string">'the total error rate is '</span>+str(errorRate))</span><br></pre></td></tr></table></figure><br>运行查看结果<br><img src="/images/ml21.png" alt=""><br>可以看到KNN分类器预测的准确性还是很高的，但由于是<strong>训练集与测试集是同一个</strong>，所以并不能准确地知道KNN分类器算法的精确度，我们可以尝试<strong>使用不同的训练集和测试集</strong></p>
+<h3 id="手写识别数据集、不同测试集和训练集评估KNN分类器的准确率"><a href="#手写识别数据集、不同测试集和训练集评估KNN分类器的准确率" class="headerlink" title="手写识别数据集、不同测试集和训练集评估KNN分类器的准确率"></a>手写识别数据集、不同测试集和训练集评估KNN分类器的准确率</h3><p>首先查看下手写识别数据集<br><img src="/images/ml22.png" alt=""><br>可以看到是一个使用<strong>二进制的32*32的文本文件</strong><br>我们可以将其转为1*1024后每一位作为一个特征进行测试<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 手写识别(根据传入的32*32的二进制图像预测未知图像的数字0-9)即1024特征10个标签</span></span><br><span class="line"><span class="comment"># 将传入的32*32的二进制图像转为1*1024的特征</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">imgToVector</span><span class="params">(fileName)</span>:</span></span><br><span class="line">	fr=open(fileName)</span><br><span class="line">	Vector=zeros((<span class="number">1</span>,<span class="number">1024</span>))</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">		row=fr.readline()</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">			Vector[<span class="number">0</span>,<span class="number">32</span>*i+j]=int(row[j])</span><br><span class="line">	<span class="keyword">return</span> Vector</span><br><span class="line"><span class="comment"># 将传入的目录中的所有文件转换成数据集</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">imgFileToDataSet</span><span class="params">(dicName)</span>:</span></span><br><span class="line">	<span class="comment"># 获取目录中文件名和文件个数</span></span><br><span class="line">	trainDic=listdir(dicName)</span><br><span class="line">	numFile=len(trainDic)</span><br><span class="line">	dataSet=zeros((numFile,<span class="number">1024</span>))</span><br><span class="line">	lebel=[]</span><br><span class="line">	<span class="comment"># 将所有文件转成特征矩阵 文件名处理后为标签</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(numFile):</span><br><span class="line">		fileName=trainDic[i]</span><br><span class="line">		dataSet[i,:]=imgToVector(str(dicName)+<span class="string">'/'</span>+str(fileName))</span><br><span class="line">		fileStr=int(fileName.split(<span class="string">'_'</span>)[<span class="number">0</span>])</span><br><span class="line">		lebel.append(fileStr)</span><br><span class="line">	<span class="keyword">return</span> dataSet,lebel</span><br></pre></td></tr></table></figure><br>由于这次训练集与测试集不是同一个文件，因此需要分别读入，之后将测试集中的每个文件用训练集的KNN分类器分类预测标签再与测试集中真实标签进行对比，测试KNN分类器的准确度<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	<span class="comment"># 手写识别</span></span><br><span class="line">	trainDataSet,trainLebel=imgFileToDataSet(<span class="string">'trainingDigits'</span>)</span><br><span class="line">	testDataSet,testLebel=imgFileToDataSet(<span class="string">'testDigits'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 手写识别测试KNN准确率</span></span><br><span class="line">	errorNum=<span class="number">0.0</span>;</span><br><span class="line">	<span class="keyword">for</span> index <span class="keyword">in</span> range(len(testDataSet)):</span><br><span class="line">		predictLabel=classifify0(testDataSet[index],trainDataSet,trainLebel,<span class="number">3</span>)</span><br><span class="line">		<span class="keyword">if</span>(predictLabel!=testLebel[index]):errorNum+=<span class="number">1.0</span></span><br><span class="line">		print(<span class="string">'predictLabel is '</span>+str(predictLabel)+<span class="string">', the real label is '</span>+str(testLebel[index]))</span><br><span class="line">	errorRate=errorNum/float(len(testDataSet))</span><br><span class="line">	print(<span class="string">'the total error rate is '</span>+str(errorRate))</span><br></pre></td></tr></table></figure><br>运行查看结果<br><img src="/images/ml23.png" alt=""><br>由于数据较多，特征也有1024项，因此计算较慢，运行结果来看KNN分类器的预测准确度还是蛮高的</p>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/16/react2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            React(二) 阮一峰React入门
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/15/ml01/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">机器学习实战(一) 环境及入门</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/31/swtest6/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw00.png)" alt="软件测试(七) 知识点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/31/swtest6/" class="title">软件测试(七) 知识点总结</a></p>
+                            <p class="item-date"><time datetime="2018-05-31T01:33:13.000Z" itemprop="datePublished">2018-05-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest5/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest5/" class="title">软件测试(六) 系统测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T12:52:59.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw40.png)" alt="软件测试(五) 单元测试与集成测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest4/" class="title">软件测试(五) 单元测试与集成测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T04:56:08.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/29/swtest3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/29/swtest3/" class="title">软件测试(四) 静态测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-29T12:05:02.000Z" itemprop="datePublished">2018-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/28/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(三) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/28/swtest2/" class="title">软件测试(三) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-28T07:35:15.000Z" itemprop="datePublished">2018-05-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/React/" style="font-size: 11.43px;">React</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 15.71px;">python</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.43px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.43px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 14.29px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 17.14px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/05/15/ml02/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

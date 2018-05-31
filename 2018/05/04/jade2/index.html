@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>分布式智能软件(二)JADE平台 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="分布式智能软件,JADE" />
+    
+    <meta name="description" content="本文是分布式智能软件课程的笔记及心得记录 大纲JADE发展史1998年年底意大利通信公司Telecom发起第一个软件开发计划，最终发展成了JADE(Java Agent DEvelopment framework)平台JADE平台的主要优势是遵循FIPA规范，其基于JAVA语言实现了一个Agent抽象并提供友好的API JADE中的Agent抽象思想 Agent具有自主性：Agent不向其他Age">
+<meta name="keywords" content="分布式智能软件,JADE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式智能软件(二)JADE平台">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/05/04/jade2/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文是分布式智能软件课程的笔记及心得记录 大纲JADE发展史1998年年底意大利通信公司Telecom发起第一个软件开发计划，最终发展成了JADE(Java Agent DEvelopment framework)平台JADE平台的主要优势是遵循FIPA规范，其基于JAVA语言实现了一个Agent抽象并提供友好的API JADE中的Agent抽象思想 Agent具有自主性：Agent不向其他Age">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/jade10.png">
+<meta property="og:updated_time" content="2018-05-15T13:16:05.031Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式智能软件(二)JADE平台">
+<meta name="twitter:description" content="本文是分布式智能软件课程的笔记及心得记录 大纲JADE发展史1998年年底意大利通信公司Telecom发起第一个软件开发计划，最终发展成了JADE(Java Agent DEvelopment framework)平台JADE平台的主要优势是遵循FIPA规范，其基于JAVA语言实现了一个Agent抽象并提供友好的API JADE中的Agent抽象思想 Agent具有自主性：Agent不向其他Age">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/jade10.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-jade2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        分布式智能软件(二)JADE平台
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/05/04/jade2/" class="article-date">
+            <time datetime="2018-05-04T03:56:29.000Z" itemprop="datePublished">2018-05-04</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JADE/">JADE</a>, <a class="tag-link" href="/tags/分布式智能软件/">分布式智能软件</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文是分布式智能软件课程的笔记及心得记录"><a href="#本文是分布式智能软件课程的笔记及心得记录" class="headerlink" title="本文是分布式智能软件课程的笔记及心得记录"></a>本文是分布式智能软件课程的笔记及心得记录</h3><p><img src="/images/jade10.png" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="JADE发展史"><a href="#JADE发展史" class="headerlink" title="JADE发展史"></a>JADE发展史</h3><p>1998年年底意大利通信公司Telecom发起第一个软件开发计划，最终发展成了<strong>JADE(Java Agent DEvelopment framework)</strong>平台<br>JADE平台的主要优势是<strong>遵循FIPA规范</strong>，其<strong>基于JAVA语言实现了一个Agent抽象并提供友好的API</strong></p>
+<h3 id="JADE中的Agent抽象思想"><a href="#JADE中的Agent抽象思想" class="headerlink" title="JADE中的Agent抽象思想"></a>JADE中的Agent抽象思想</h3><ul>
+<li>Agent具有<strong>自主性：</strong>Agent不向其他Agent提供<strong>回调功能和自身对象引用</strong>，因此Agent不能控制其他Agent服务</li>
+<li>Agent具有<strong>主动性：</strong>Agent具有<strong>自己的线程</strong>，利用其控制<strong>自己的生命周期和自主决定的动作</strong></li>
+<li>Agent之间是<strong>松耦合的：</strong>Agent之间的通信是<strong>异步的</strong>，发送者和接受者之间<strong>没有时间依赖</strong>，发送者不需要知道接受者的准确名称标识，只需知道接受者是一个<strong>具有某种特征的Agent集合</strong></li>
+<li>Agent是<strong>端到端的：</strong>每个Agent都定义了一个<strong>全局唯一名称标识</strong>，可以任何时刻<strong>加入或者离开JADE平台</strong>，并通过<strong>白页和黄页服务</strong>发现其他Agent</li>
+</ul>
+<h3 id="JADE核心功能"><a href="#JADE核心功能" class="headerlink" title="JADE核心功能"></a>JADE核心功能</h3><p>基于上述Agent抽象思想，JADE为程序员提供一系列核心功能</p>
+<ul>
+<li><strong>Agent分布式系统：</strong>每个Agent可以作为一个单独线程运行于不同远程机器相互透明交互</li>
+<li><strong>完全兼容FIPA规范</strong></li>
+<li><strong>位置透明的消息传输机制：</strong>实现了高效的跨平台异步消息传递</li>
+<li><strong>白页黄页服务</strong></li>
+<li><strong>Agent生命周期管理：</strong>创建Agent时分配标识符和传输地址(白页服务使用)，简单API和GUI界面完成本地远程Agent生命周期管理(创建、暂停、恢复、冻结、解冻、迁移、复制和销毁)</li>
+<li><strong>Agent在进程、机器之间迁移服务</strong></li>
+<li><strong>Agent订阅机制</strong></li>
+<li><strong>GUI工具：</strong>监视Agent运行、单步调试等</li>
+<li><strong>本体和内容语言</strong></li>
+<li><strong>交互协议库</strong></li>
+</ul>
+<h3 id="JADE平台体系结构"><a href="#JADE平台体系结构" class="headerlink" title="JADE平台体系结构"></a>JADE平台体系结构</h3><p><strong>主容器：</strong>Agent生存在容器中，容器是提供JADE运行环境、管理Agent运行所需服务的<strong>JAVA进程</strong>，主容器是<strong>平台的入口点</strong>，其他容器必须通过在主容器<strong>注册</strong>才能加入JADE平台<br><strong>主容器特殊能力：</strong></p>
+<ul>
+<li>对<strong>容器表(CT)管理：</strong>CT中有平台所有容器节点对象引用和传输地址的注册表</li>
+<li>对<strong>全局Agent描述表(GADT)管理：</strong>GADT中有平台所有Agent的注册表(Agent状态、位置等)</li>
+<li>启动和管理<strong>特殊Agent——Agent管理系统(AMS)：</strong>AMS是监督平台运行、提供<strong>白页服务</strong>的Agent，所有Agent都必须向AMS注册<strong>获得有效的AID</strong></li>
+<li>启动和管理<strong>特殊Agent——目录服务器(DF)：</strong>DF是提供<strong>黄页服务</strong>、<strong>订阅服务</strong>的Agent，Agent需向DF注册其<strong>可提供的服务</strong>和查询DF来<strong>检索其他Agent服务</strong></li>
+</ul>
+<h3 id="JADE平台安装及使用"><a href="#JADE平台安装及使用" class="headerlink" title="JADE平台安装及使用"></a>JADE平台安装及使用</h3><p><a href="http://jade.tilab.com" target="_blank" rel="noopener">官方网站</a>下载JADE压缩包，如JADE-all-4.3.1.zip<br>解压后可得到四个文件<br><img src="/images/jade20.png" alt=""><br>设置环境变量(JADE_HOME和ClassPath):根据解压路径，JADE_HOME为安装路径\JADE-bin-4.3.1\jade，ClassPath添加%JADE_HOME\lib\jade.jar%;D:\JADE\test<br>启动JADE平台：在命令行输入java jade.Boot -gui<br><strong>jade.Boot</strong>是平台的主类，<strong>-gui</strong>表示启动平台的同时创建一个<strong>远程监视Agent RAM(Remote Monitoring Agent)可以图形化显示所有相关Agent与容器</strong><br><img src="/images/jade21.png" alt=""><br><img src="/images/jade22.png" alt=""></p>
+<h3 id="HelloWorld类"><a href="#HelloWorld类" class="headerlink" title="HelloWorld类"></a>HelloWorld类</h3><p>编写HelloWorldAgent的源代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//导入Agent包</span></span><br><span class="line"><span class="keyword">import</span> jade.core.Agent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldAgent</span> <span class="keyword">extends</span> <span class="title">Agent</span> </span>&#123;</span><br><span class="line">  <span class="comment">//每个启动的Agent会首先调用其setup()方法启动</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//输出</span></span><br><span class="line">    System.out.println(<span class="string">"Hello World! My name is "</span>+getLocalName());</span><br><span class="line">    <span class="comment">//调用doDelete()结束Agent生命周期</span></span><br><span class="line">    doDelete();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>编译HelloWorldAgent代码<br>在HelloWorldAgent所在文件夹启动CLI或者GitBash，输入命令<font color="blue"><strong>javac -encoding UTF-8 HelloWorldAgent.java</strong></font><br><img src="/images/jade23.png" alt=""><br>之后可在文件夹看到编译后的.class文件<br><img src="/images/jade24.png" alt=""><br>启动JADE平台，点击主容器Main-Container右键Start New Agent添加HelloWorldAgent<br>AgentName为实例Agent名称，ClassName填入编译Agent类名称<br><img src="/images/jade25.png" alt=""><br>点击OK可以看到在主容器下并没有出现新的Agent是因为HelloWorldAgent在输出信息后调用了doDelete()方法结束了自身，在控制台可看到其输出的消息<br><img src="/images/jade26.png" alt=""></p>
+<h3 id="基础Agent类"><a href="#基础Agent类" class="headerlink" title="基础Agent类"></a>基础Agent类</h3><p><strong>创建Agent类：</strong>只需要从jade.core.Agent类继承Agent类<br><strong>Agent类不同于java类：</strong>其对象由<strong>JADE平台实例化</strong>，对象名从不在外部公开，<strong>Agent间采用异步通信</strong>，不通过方法调用进行交互<br><strong>setup()方法：</strong>用于实现Agent类的初始化操作，通常包括</p>
+<ul>
+<li>显示图形用户界面</li>
+<li>建立数据库连接</li>
+<li>在黄页中注册其提供的服务</li>
+<li>获取启动参数</li>
+<li>添加初始行为<br><strong>识别Agent：</strong>通过Agent标识符AID识别，可在Agent类内部通过getAID()方法查询自身标识符<br><strong>AID：</strong>ADI类提供方法查询Agent实例的<strong>本地名称(getLocalName())、GUID(getName())、地址(getAllAddresses())</strong></li>
+</ul>
+<h3 id="GetName类"><a href="#GetName类" class="headerlink" title="GetName类"></a>GetName类</h3><p>编写GetName类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jade.core.Agent;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GetName</span> <span class="keyword">extends</span> <span class="title">Agent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    System.out.println(<span class="string">"Hello World. I'm an agent!"</span>);</span><br><span class="line">    System.out.println(<span class="string">"My local-name is "</span>+getAID().getLocalName());</span><br><span class="line">    System.out.println(<span class="string">"My GUID is "</span>+getAID().getName());</span><br><span class="line">    System.out.println(<span class="string">"My addresses are:"</span>);</span><br><span class="line">    Iterator it = getAID().getAllAddresses();</span><br><span class="line">    <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">      System.out.println(<span class="string">"- "</span>+it.next());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>编译并运行<br><img src="/images/jade27.png" alt=""></p>
+<h3 id="基础Agent类生命周期"><a href="#基础Agent类生命周期" class="headerlink" title="基础Agent类生命周期"></a>基础Agent类生命周期</h3><p><strong>终止Agent：</strong>可调用其<strong>doDelete()</strong>方法，Agent终止前会调用其<strong>takeDown()方法执行各种终止前的清理操作</strong><br><strong>带参数创建Agent：</strong>可通过指定String参数创建Agent，在Agent内的setup()方法中通过<strong>getArguments()以数组的形式获取启动参数</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Object[] args = getArguments();</span><br><span class="line"><span class="keyword">if</span> (args != <span class="keyword">null</span>) &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; args.length; ++i)</span><br><span class="line">    System.out.println(<span class="string">"- "</span>+args[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Agent行为"><a href="#Agent行为" class="headerlink" title="Agent行为"></a>Agent行为</h3><p>Agent行为表示Agent要执行的任务，通过继承<strong>来自jade.core.behaviours包中的Behaviour类</strong>来实现<br><strong>添加行为：</strong>通过调用<strong>addBehaviour()方法</strong>将行为添加到Agent行为队列中<br><strong>行为类基本方法：</strong>任何继承Behaviour的子类都必须重写两个抽象方法</p>
+<ul>
+<li><strong>action()方法：</strong>行为类每次被调度时执行的操作</li>
+<li><strong>done()方法：</strong>行为类结束操作后执行，返回一个boolean型变量，若为true则将行为从Agent队列删除，否则行为轮换到Agent队列后</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/07/react1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            React(一)了解与入门
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/03/jade1/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">分布式智能软件(一)基础概念</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/31/swtest6/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw00.png)" alt="软件测试(七) 知识点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/31/swtest6/" class="title">软件测试(七) 知识点总结</a></p>
+                            <p class="item-date"><time datetime="2018-05-31T01:33:13.000Z" itemprop="datePublished">2018-05-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest5/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest5/" class="title">软件测试(六) 系统测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T12:52:59.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/30/swtest4/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/sw40.png)" alt="软件测试(五) 单元测试与集成测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/30/swtest4/" class="title">软件测试(五) 单元测试与集成测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-30T04:56:08.000Z" itemprop="datePublished">2018-05-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/29/swtest3/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/29/swtest3/" class="title">软件测试(四) 静态测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-29T12:05:02.000Z" itemprop="datePublished">2018-05-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/28/swtest2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/swt21.png)" alt="软件测试(三) 白盒测试" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/05/28/swtest2/" class="title">软件测试(三) 白盒测试</a></p>
+                            <p class="item-date"><time datetime="2018-05-28T07:35:15.000Z" itemprop="datePublished">2018-05-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/React/" style="font-size: 11.43px;">React</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 15.71px;">python</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.43px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.43px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 14.29px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 17.14px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/05/04/jade2/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
