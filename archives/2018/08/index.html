@@ -229,17 +229,17 @@ ArrayList
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2018/08/13/jvm/" class="thumbnail">
+        <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
     
     
         
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/08/13/jvm/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/08/13/java-Q&amp;A-1/">0</span>
     
 </span>
 
@@ -257,23 +257,23 @@ ArrayList
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2018/08/13/jvm/">Java虚拟机学习笔记</a>
+        <a href="/2018/08/13/java-Q&A-1/">Java面试Q&amp;A(一)携程</a>
         </h1>
     
 
         <p class="article-excerpt">
-            Java虚拟机学习笔记
-走进Java
-Java技术体系结构Sun官方规定Java体系结构如下组成：
+            Java面试Q&amp;A
 
-Java程序设计语言
-各硬件平台上的Java虚拟机
-Class文件格式
-Java API类库
-第三方Java类库
+线程安全
+Java内存模型
 
-我们将124统称为JDK(Java Development Kit)，是支持Java程序开发的最小环境
-我们将Java API类库中的Java SE API子集和Java 虚拟机称为
+主内存：硬件的内存，所有变量均存储在主内存
+工作内存：保存了被该内存使用的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存的变量，线程间无法访问彼此的工作内存中的变量，线程间变量值的传递需要通过主内存来完成
+
+
+线程安全
+CPU读取数据的优先级：寄存器&gt;高速缓存&gt;工作内存
+缓存：线程耗费C
         </p>
     </div>
 </article>
@@ -342,6 +342,67 @@ AbstractCollectionAbstractCollection是一个抽象类，最大限度地实现�
         <article class="article article-summary">
     <div class="article-summary-inner">
         
+        <a href="/2018/08/13/jvm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/08/13/jvm/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
+            </div>
+            <div class="date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/08/13/jvm/">Java虚拟机学习笔记</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            Java虚拟机学习笔记
+走进Java
+Java技术体系结构Sun官方规定Java体系结构如下组成：
+
+Java程序设计语言
+各硬件平台上的Java虚拟机
+Class文件格式
+Java API类库
+第三方Java类库
+
+我们将124统称为JDK(Java Development Kit)，是支持Java程序开发的最小环境
+我们将Java API类库中的Java SE API子集和Java 虚拟机称为
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
         <a href="/2018/08/13/javahigh1-Collection/" class="thumbnail">
     
     
@@ -386,67 +447,6 @@ Collection是元素集合的总接口，定义了一些基本的增删改查等�
 
 抽象方法：
 | Modifier and Type | 方法                                  | 描述         
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="https://harviealwayshere.github.io/2018/08/13/java-Q&amp;A-1/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/ItEassy/">ItEassy</a>
-            </div>
-            <div class="date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/08/13/java-Q&A-1/">Java面试Q&amp;A(一)携程</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Java面试Q&amp;A
-
-线程安全
-Java内存模型
-
-主内存：硬件的内存，所有变量均存储在主内存
-工作内存：保存了被该内存使用的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存的变量，线程间无法访问彼此的工作内存中的变量，线程间变量值的传递需要通过主内存来完成
-
-
-线程安全
-CPU读取数据的优先级：寄存器&gt;高速缓存&gt;工作内存
-缓存：线程耗费C
         </p>
     </div>
 </article>
@@ -676,10 +676,10 @@ RibbonSpring Cloud Ribbon是一个基于HTTP和TCP的客户端负载均衡工具
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/13/jvm/" class="thumbnail">
+                            <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
     
     
 </a>
@@ -688,7 +688,7 @@ RibbonSpring Cloud Ribbon是一个基于HTTP和TCP的客户端负载均衡工具
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/08/13/jvm/" class="title">Java虚拟机学习笔记</a></p>
+                            <p class="item-title"><a href="/2018/08/13/java-Q&A-1/" class="title">Java面试Q&amp;A(一)携程</a></p>
                             <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
                         </div>
                     </li>
@@ -716,6 +716,26 @@ RibbonSpring Cloud Ribbon是一个基于HTTP和TCP的客户端负载均衡工具
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/08/13/jvm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/jvm/" class="title">Java虚拟机学习笔记</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/08/13/javahigh1-Collection/" class="thumbnail">
     
     
@@ -729,26 +749,6 @@ RibbonSpring Cloud Ribbon是一个基于HTTP和TCP的客户端负载均衡工具
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
                             <p class="item-title"><a href="/2018/08/13/javahigh1-Collection/" class="title">Java深入学习-Java集合框架（一）Collection</a></p>
-                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/08/13/java-Q&A-1/" class="title">Java面试Q&amp;A(一)携程</a></p>
                             <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
                         </div>
                     </li>
