@@ -18,7 +18,7 @@
 <meta property="og:description" content="本文是分布式智能软件课程的笔记及心得记录 大纲JADE发展史1998年年底意大利通信公司Telecom发起第一个软件开发计划，最终发展成了JADE(Java Agent DEvelopment framework)平台JADE平台的主要优势是遵循FIPA规范，其基于JAVA语言实现了一个Agent抽象并提供友好的API JADE中的Agent抽象思想 Agent具有自主性：Agent不向其他Age">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://harviealwayshere.github.io/images/jade10.png">
-<meta property="og:updated_time" content="2018-05-15T13:16:05.031Z">
+<meta property="og:updated_time" content="2018-07-02T09:44:12.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式智能软件(二)JADE平台">
 <meta name="twitter:description" content="本文是分布式智能软件课程的笔记及心得记录 大纲JADE发展史1998年年底意大利通信公司Telecom发起第一个软件开发计划，最终发展成了JADE(Java Agent DEvelopment framework)平台JADE平台的主要优势是遵循FIPA规范，其基于JAVA语言实现了一个Agent抽象并提供友好的API JADE中的Agent抽象思想 Agent具有自主性：Agent不向其他Age">
@@ -241,6 +241,95 @@ var _hmt = _hmt || [];
 <li><strong>action()方法：</strong>行为类每次被调度时执行的操作</li>
 <li><strong>done()方法：</strong>行为类结束操作后执行，返回一个boolean型变量，若为true则将行为从Agent队列删除，否则行为轮换到Agent队列后</li>
 </ul>
+<h3 id="Agent行为-1"><a href="#Agent行为-1" class="headerlink" title="Agent行为"></a>Agent行为</h3><ul>
+<li><strong>普通行为Behaviour：</strong>包含最基本的action()和done()方法，还有一些行为的生命周期方法onStart(首次调用action()方法之前执行一次)/onEnd(调用done()方法返回true后执行一次)/block()/restart()</li>
+<li>简单行为(Simple Behaviour)<ul>
+<li><strong>单次行为OneShotBehaviour：</strong>action()方法仅执行一次，因为<strong>done()方法总是返回true</strong>，因此仅编写action()方法即可</li>
+<li><strong>循环行为CyclicBehaviour：</strong>action()方法不断被重复执行，因为<strong>done()方法总是返回false</strong>，仅编写action()方法即可</li>
+<li>一个特殊的<strong>单次行为WakerBehaviour(唤醒行为)</strong>需要在<strong>构造行为时通过参数指定时间</strong>，行为开始后到达指定时间后执行<strong>onWake()方法</strong>，执行一次后自动结束行为</li>
+<li>一个特殊的<strong>循环行为TickerBehaviour(周期行为)：</strong>需要在<strong>构造行为时通过参数指定周期</strong>，周期性(隔一段时间)执行一次<strong>onTick()方法</strong>，可通过<strong>移除行为、调用stop()方法</strong>结束行为</li>
+</ul>
+</li>
+<li>每个Agent行为都拥有一个<strong>myAgent成员变量表示执行行为的Agent</strong>，提供了一种行为访问Agent资源的方法</li>
+<li>每个调用行为的Agent都拥有一个<strong>removeBeahaviour()用于终止Agent行为队列中当前被调度执行的行为</strong></li>
+<li>JADE Behaviour的依赖类图：<img src="/images/jade27.png" alt=""></li>
+</ul>
+<h3 id="Agent通信"><a href="#Agent通信" class="headerlink" title="Agent通信"></a>Agent通信</h3><ul>
+<li><p><strong>Agent通信模式<em>：</em>基于</strong>异步消息传递<strong>，每个Agent有一个</strong>Agent消息队列用于接收消息**</p>
+</li>
+<li><p><strong>消息格式：</strong>遵循FIPA-ACL消息结构，包含如下字段</p>
+<ul>
+<li>消息发送者</li>
+<li>接受者列表</li>
+<li>通信行为(通信原语)，表示发送者希望通过发送消息达到的目的，如REQUEST表达请求执行特定动作，INFORM表示接收通知，CFP(Call for Proposal)表示发起一个协商</li>
+<li>通信内容</li>
+<li>内容语言，规定描述内容的语法</li>
+<li>本体，规定内容中使用的符号词汇表</li>
+<li>控制对话，如conversation-id,reply-with,in-reply-to字段等，接收回应超时设定reply-by字段等</li>
+</ul>
+</li>
+<li><p><strong>消息实例：</strong>消息均是作为<strong>jade.lang.acl.ACLMessage的对象实例</strong>，其中包含一些方法</p>
+<ul>
+<li>各种<strong>getter()/setter()来访问/设置消息的字段</strong></li>
+<li><strong>createReply()</strong>方法创建新的回复的ACLMessage对象</li>
+</ul>
+</li>
+<li><p><strong>发送消息：</strong></p>
+<ul>
+<li>1.通过通信原语创建消息：ACLMessage msg = new ACLMessage(ACLMessage.INFORM);</li>
+<li>2.设置收件Agent：msg.addReceiver(new AID(“Peter”,AID.ISLOCALNAME));</li>
+<li>3.设置内容：msg.setContent(“Today it’s raining”);</li>
+<li>4.发送：send(msg);</li>
+</ul>
+</li>
+<li><p><strong>接收消息：</strong></p>
+<ul>
+<li>1.从消息队列中取出消息：ACLMessage msg=receive();</li>
+<li>2.判断消息队列是否有消息：if(msg!=null){ // process the message};</li>
+</ul>
+</li>
+<li><p><strong>消息模板：</strong>通过对<strong>jade.lang.acl.MessageTemplate实例化对象设置模板</strong>，使用模板可<strong>仅接收和模板匹配的消息</strong>，类似消息过滤器，模板中的静态匹配方法包括匹配<strong>通信行为(MatchPerformative(performative))/发送者(MatchSender(AID))/会话ID(MatchConversationID(String))/本体(MatchOntolog(String))等</strong></p>
+<ul>
+<li>1.创建消息模板：</li>
+<li>创建匹配一种特性的模板，如MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);</li>
+<li>创建匹配多种特性的模板，使用<strong>and、or、not逻辑运算符</strong>，如MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM)，MessageTemplate.MatchSender(new AID(“Agent1”,AID.ISLOCALNAME)));</li>
+<li>2.使用消息模板接收消息：ACLMessage msg=receive(mt);</li>
+</ul>
+</li>
+<li><p><strong>阻塞行为：</strong>我们希望只有在<strong>新消息到达时才执行监听消息的行为action()</strong>，可以采用Behaviour的<strong>block()方法阻塞行为</strong>，有新消息插入消息队列时，所有阻塞的行为都会被激活执行action()方法</p>
+<ul>
+<li>ACLMessage msg=receive();if(msg!=null){// process the message}else{block();}</li>
+</ul>
+</li>
+</ul>
+<h3 id="黄页功能"><a href="#黄页功能" class="headerlink" title="黄页功能"></a>黄页功能</h3><ul>
+<li><p><strong>DFAgent提供黄页服务：</strong>每个遵从FIPA的平台都默认有一个DFAgent(Directory Facilitator目录服务器的Agent)提供黄页服务</p>
+</li>
+<li><p><strong>黄页功能设计的三个重要类：</strong></p>
+<ul>
+<li>DFService类(jade.domain.DFService)用于发布服务、搜索服务等</li>
+<li>DFAgentDescription类(jade. domain. FIPAAgentManagement)用于描述自身(如AID，可提供的服务描述列表等)</li>
+<li>ServiceDescription类用于描述每个发布的服务(服务种类、名称、语言、本体等)</li>
+</ul>
+</li>
+<li><p><strong>发布服务：</strong></p>
+<ul>
+<li>1.建立黄页描述：DFAgentDescription dfd=new DFAgentDescription();dfd.setName(getAID());</li>
+<li>2.建立服务描述：ServiceDescription sd=new ServiceDescription();sd.setType(“Book-selling”);sd.setName(getLocalName()+”-Book-selling-“);</li>
+<li>3.将服务描述添加到黄页描述中：dfd.addService(sd);</li>
+<li>4.发布服务：DFService.register(this,dfd);</li>
+<li>5.终止Agent时注销服务：DFService.deregister(this);</li>
+</ul>
+</li>
+<li><p><strong>搜索服务：</strong></p>
+<ul>
+<li>1.建立黄页描述:DFAgentDescription dfd=new DFAgentDescription();</li>
+<li>2.建立服务描述：ServiceDescription sd=new ServiceDescription();sd.setType(“Book-selling”);</li>
+<li>3.将服务描述添加到黄页描述中：dfd.addService(sd);</li>
+<li>4.搜索服务：DFAgentDescription[] result=DFService.search(myAgent,dfd);result[0].getName();</li>
+</ul>
+</li>
+</ul>
 
         </div>
         <footer class="article-footer">
@@ -376,10 +465,10 @@ var _hmt = _hmt || [];
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/31/swtest6/" class="thumbnail">
+                            <a href="/2018/08/23/javahigh3-Array/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/sw00.png)" alt="软件测试(七) 知识点总结" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（三）ArrayList" class="thumbnail-image"></span>
     
     
 </a>
@@ -388,18 +477,18 @@ var _hmt = _hmt || [];
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/05/31/swtest6/" class="title">软件测试(七) 知识点总结</a></p>
-                            <p class="item-date"><time datetime="2018-05-31T01:33:13.000Z" itemprop="datePublished">2018-05-31</time></p>
+                            <p class="item-title"><a href="/2018/08/23/javahigh3-Array/" class="title">Java深入学习-Java集合框架（三）ArrayList</a></p>
+                            <p class="item-date"><time datetime="2018-08-23T06:07:29.000Z" itemprop="datePublished">2018-08-23</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/30/swtest5/" class="thumbnail">
+                            <a href="/2018/08/13/jvm/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
     
     
 </a>
@@ -408,18 +497,18 @@ var _hmt = _hmt || [];
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/05/30/swtest5/" class="title">软件测试(六) 系统测试</a></p>
-                            <p class="item-date"><time datetime="2018-05-30T12:52:59.000Z" itemprop="datePublished">2018-05-30</time></p>
+                            <p class="item-title"><a href="/2018/08/13/jvm/" class="title">Java虚拟机学习笔记</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/30/swtest4/" class="thumbnail">
+                            <a href="/2018/08/13/javahigh2-AbstractCollection/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/sw40.png)" alt="软件测试(五) 单元测试与集成测试" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（二）AbstractCollection" class="thumbnail-image"></span>
     
     
 </a>
@@ -428,18 +517,18 @@ var _hmt = _hmt || [];
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/05/30/swtest4/" class="title">软件测试(五) 单元测试与集成测试</a></p>
-                            <p class="item-date"><time datetime="2018-05-30T04:56:08.000Z" itemprop="datePublished">2018-05-30</time></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh2-AbstractCollection/" class="title">Java深入学习-Java集合框架（二）AbstractCollection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/29/swtest3/" class="thumbnail">
+                            <a href="/2018/08/13/javahigh1-Collection/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(/images/jh1.jpg)" alt="Java深入学习-Java集合框架（一）Collection" class="thumbnail-image"></span>
     
     
 </a>
@@ -448,18 +537,18 @@ var _hmt = _hmt || [];
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/05/29/swtest3/" class="title">软件测试(四) 静态测试</a></p>
-                            <p class="item-date"><time datetime="2018-05-29T12:05:02.000Z" itemprop="datePublished">2018-05-29</time></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh1-Collection/" class="title">Java深入学习-Java集合框架（一）Collection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/05/28/swtest2/" class="thumbnail">
+                            <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
     
     
-        <span style="background-image:url(/images/swt21.png)" alt="软件测试(三) 白盒测试" class="thumbnail-image"></span>
+        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
     
     
 </a>
@@ -468,8 +557,8 @@ var _hmt = _hmt || [];
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
-                            <p class="item-title"><a href="/2018/05/28/swtest2/" class="title">软件测试(三) 白盒测试</a></p>
-                            <p class="item-date"><time datetime="2018-05-28T07:35:15.000Z" itemprop="datePublished">2018-05-28</time></p>
+                            <p class="item-title"><a href="/2018/08/13/java-Q&A-1/" class="title">Java面试Q&amp;A(一)携程</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
                         </div>
                     </li>
                 
@@ -482,7 +571,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">64</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">89</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -492,7 +581,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
         </div>
     </div>
 
@@ -502,7 +591,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JBDC/">JBDC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-DL/">Java-DL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaEE/">JavaEE</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/">JavaSE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java面试/">Java面试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Q-A/">Q&A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMvc/">SpringMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -512,7 +601,7 @@ var _hmt = _hmt || [];
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/C/" style="font-size: 11.43px;">C++</a> <a href="/tags/GithubPages/" style="font-size: 11.43px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.43px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JavaScript/" style="font-size: 14.29px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.43px;">Python</a> <a href="/tags/React/" style="font-size: 11.43px;">React</a> <a href="/tags/Redis/" style="font-size: 14.29px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.43px;">Scrapy爬虫</a> <a href="/tags/WEB安全/" style="font-size: 15.71px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 14.29px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 15.71px;">python</a> <a href="/tags/swoole/" style="font-size: 18.57px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.43px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.43px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 17.14px;">剑指Offer</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 15.71px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 14.29px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 14.29px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 15.71px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 14.29px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.86px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 17.14px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.43px;">黑盒测试</a>
+            <a href="/tags/C/" style="font-size: 11.11px;">C++</a> <a href="/tags/Collection/" style="font-size: 13.33px;">Collection</a> <a href="/tags/GithubPages/" style="font-size: 11.11px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.11px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JBDC/" style="font-size: 10px;">JBDC</a> <a href="/tags/Java-DL/" style="font-size: 13.33px;">Java-DL</a> <a href="/tags/JavaEE/" style="font-size: 18.89px;">JavaEE</a> <a href="/tags/JavaSE/" style="font-size: 11.11px;">JavaSE</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Java面试/" style="font-size: 10px;">Java面试</a> <a href="/tags/Linux/" style="font-size: 11.11px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.11px;">Python</a> <a href="/tags/Q-A/" style="font-size: 10px;">Q&A</a> <a href="/tags/React/" style="font-size: 11.11px;">React</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.11px;">Scrapy爬虫</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 14.44px;">SpringCloud</a> <a href="/tags/SpringMvc/" style="font-size: 10px;">SpringMvc</a> <a href="/tags/WEB安全/" style="font-size: 14.44px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 13.33px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 16.67px;">python</a> <a href="/tags/swoole/" style="font-size: 17.78px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.11px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 16.67px;">剑指Offer</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 14.44px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 15.56px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 14.44px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.22px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 16.67px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.11px;">黑盒测试</a>
         </div>
     </div>
 

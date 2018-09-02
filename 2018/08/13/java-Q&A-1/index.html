@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Java面试Q&amp;A(一)携程 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java面试,Q&amp;A" />
+    
+    <meta name="description" content="Java面试Q&amp;amp;A  线程安全 Java内存模型  主内存：硬件的内存，所有变量均存储在主内存 工作内存：保存了被该内存使用的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存的变量，线程间无法访问彼此的工作内存中的变量，线程间变量值的传递需要通过主内存来完成   线程安全 CPU读取数据的优先级：寄存器&amp;gt;高速缓存&amp;gt;工作内存 缓存：线程耗费C">
+<meta name="keywords" content="Java面试,Q&amp;A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java面试Q&amp;A(一)携程">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/08/13/java-Q&A-1/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="Java面试Q&amp;amp;A  线程安全 Java内存模型  主内存：硬件的内存，所有变量均存储在主内存 工作内存：保存了被该内存使用的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存的变量，线程间无法访问彼此的工作内存中的变量，线程间变量值的传递需要通过主内存来完成   线程安全 CPU读取数据的优先级：寄存器&amp;gt;高速缓存&amp;gt;工作内存 缓存：线程耗费C">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/Q&amp;A.jpg">
+<meta property="og:updated_time" content="2018-09-02T02:51:58.620Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java面试Q&amp;A(一)携程">
+<meta name="twitter:description" content="Java面试Q&amp;amp;A  线程安全 Java内存模型  主内存：硬件的内存，所有变量均存储在主内存 工作内存：保存了被该内存使用的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存的变量，线程间无法访问彼此的工作内存中的变量，线程间变量值的传递需要通过主内存来完成   线程安全 CPU读取数据的优先级：寄存器&amp;gt;高速缓存&amp;gt;工作内存 缓存：线程耗费C">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/Q&amp;A.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-java-Q&amp;A-1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Java面试Q&amp;A(一)携程
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/08/13/java-Q&A-1/" class="article-date">
+            <time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Java面试/">Java面试</a>, <a class="tag-link" href="/tags/Q-A/">Q&A</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Java面试Q-amp-A"><a href="#Java面试Q-amp-A" class="headerlink" title="Java面试Q&amp;A"></a>Java面试Q&amp;A</h1><p><img src="/images/Q&amp;A.jpg" alt=""></p>
+<ol>
+<li><h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><ol>
+<li><h4 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h4><p><img src="/images/qa1.jpg" alt=""></p>
+<ul>
+<li>主内存：硬件的内存，所有变量均存储在主内存</li>
+<li>工作内存：保存了被该内存使用的<strong>变量的主内存副本拷贝</strong>，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存的变量，线程间无法访问彼此的工作内存中的变量，线程间变量值的传递需要通过主内存来完成</li>
+</ul>
+</li>
+<li><h4 id="线程安全-1"><a href="#线程安全-1" class="headerlink" title="线程安全"></a>线程安全</h4><ul>
+<li>CPU读取数据的优先级：<strong>寄存器&gt;高速缓存&gt;工作内存</strong></li>
+<li>缓存：线程耗费CPU读取数据进行计算时，有些<strong>数据被频繁读取而存储在寄存器和高速缓存</strong>中，当计算完毕时需要将寄存器和高速缓存的数据写回工作内存中</li>
+<li>多线程造成的数据不一致：<strong>多线程同时读写某个拷贝主内存的工作内存数据</strong>时，由于线程之间的数据时不可见的，因此可能会产生<strong>寄存器-高速缓存-内存的数据同步</strong>问题，则可能产生<strong>数据不一致的线程安全</strong>问题</li>
+</ul>
+</li>
+<li><h4 id="线程安全问题原因"><a href="#线程安全问题原因" class="headerlink" title="线程安全问题原因"></a>线程安全问题原因</h4><p>造成线程安全问题主要是线程操作不满足三个特性：原子性、可见性、有序性</p>
+<ol>
+<li><h5 id="原子性（Atomicity）"><a href="#原子性（Atomicity）" class="headerlink" title="原子性（Atomicity）"></a>原子性（Atomicity）</h5><p>线程操作不能被线程调度机制中断，要么全部执行完毕，要么全部不执行</p>
+<p>Java内存模型确保基本数据的访问大都是原子操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x=<span class="number">10</span>;  <span class="comment">//原子操作，直接将主内存的拷贝数值10写入工作内存中</span></span><br><span class="line">y=x；  <span class="comment">//非原子操作，可拆分为两个指令：1.读取x指向的工作内存的值 2.将x的值写入工作内存y指向的内存中</span></span><br><span class="line">x++;  <span class="comment">//非原子操作，可拆分为三个指令： 1.读取x指向的工作内存的值 2.进行加1操作 3.写入x指向的工作内存中</span></span><br><span class="line">x=x+<span class="number">1</span>;  <span class="comment">//非原子操作，同上</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="可见性（Visibility）"><a href="#可见性（Visibility）" class="headerlink" title="可见性（Visibility）"></a>可见性（Visibility）</h5><p>线程对共享变量进行修改后，其他线程在读取变量前，从主内存同步别的线程的工作内存的共享变量的最新值，然后再将主内存中变量的最新值读取到自己的工作内存中</p>
+<p>Java提供了关键字<strong>volatile</strong>来保证变量的可见性，</p>
+<p>Java提供了关键字<strong>synchronized</strong>来保证变量的可见性，采用锁机制实现</p>
+</li>
+<li><h5 id="有序性（Ordering）"><a href="#有序性（Ordering）" class="headerlink" title="有序性（Ordering）"></a>有序性（Ordering）</h5><p>程序执行的顺序按照代码先后顺序执行</p>
+<p>编译器、处理器为了提高性能会将指令重新排序，指令重排不会影响到单线程程序执行结果，但会影响到多线程并发执行的程序的正确性</p>
+</li>
+</ol>
+</li>
+<li><h4 id="解决线程安全问题的方法"><a href="#解决线程安全问题的方法" class="headerlink" title="解决线程安全问题的方法"></a>解决线程安全问题的方法</h4><ol>
+<li><h5 id="关键字volatile"><a href="#关键字volatile" class="headerlink" title="关键字volatile"></a>关键字volatile</h5><p>volatile修饰的变量保证了<strong>可见性和有序性</strong>，轻量级多线程同步机制，不会引起上下文切换和线程调度， 用volatile修饰的变量，对其执行相关操作时，<strong>生成的汇编编码会多出一个lock前缀指令</strong>，lock前缀指令相当于一个<strong>内存屏障</strong>，可以保证以下特性</p>
+<p><strong>保证可见性：</strong>强制将对缓存修改的操作写入主内存中，可以保证修改的值会立即更新到主内存。如果是写操作，会导致其他CPU的缓存无效，其他线程读取变量会跳过CPU Cache去主内存中Load变量的最新值</p>
+<p><strong>保证有序性：</strong>可以确保前面的指令执行完毕才执行当前指令，也可以确保不会把后面的指令重排到当前指令前</p>
+</li>
+<li><h5 id="关键字synchronized"><a href="#关键字synchronized" class="headerlink" title="关键字synchronized"></a>关键字synchronized</h5><p>synchronized关键字一般修饰<strong>存在共享数据操作的方法或者代码块</strong>，当多个线程同时操作共享数据时，采取<strong>互斥</strong>的规则保证同一时刻有且只有一个线程在操作共享数据，阻塞其余线程，利用加锁实现线程安全，保证了<strong>原子性、可见性、有序性</strong>，一般有三种应用方式</p>
+<ul>
+<li>修饰实例(非静态)方法：给当前实例加锁，对同类不同实例的线程则无效，是实例锁</li>
+<li>修饰静态方法：给当前类加锁，对同类不同实例的线程有效，是类锁</li>
+<li>修饰代码块：指定加锁对象(如this)，给当前类对象加锁，对同类不同实例的线程有效，是类锁</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><h4 id="JVM中实例对象和Monitor"><a href="#JVM中实例对象和Monitor" class="headerlink" title="JVM中实例对象和Monitor"></a>JVM中实例对象和Monitor</h4><p>对象被存储在堆内存中，由以下形式存储</p>
+<ul>
+<li><p><strong>对象头：</strong>占有2个机器码（数组对象为3个字节码）</p>
+<ul>
+<li>第一个机器码-<strong>Mark Word</strong>：非固定的数据结构，存储<strong>对象自身运行的数据</strong>，如HashCode、GC分代年龄、锁状态标识、锁标志位、偏向线程ID等</li>
+<li>第二个机器码-<strong>类型指针</strong>：指向对象的类的原数据，JVM通过这个指针确定对象是哪个类的实例</li>
+<li>(第三个机器码-<strong>数组长度：</strong>记录数组长度)</li>
+</ul>
+</li>
+<li><p><strong>实例数据：</strong>存放类的属性数据信息</p>
+</li>
+<li><strong>对齐填充：</strong>JVM要求对象起始地址必须为8字节整数倍，用于填充多余空间字段</li>
+</ul>
+<p>了解了对象存储形式后，我们来看synchronized锁是如何实现的，锁在对象中是以<strong>锁记录+对象头的引用指针</strong>，<strong>synchronized锁</strong>在对象头的MarkWord的<strong>锁标志位为10+对象头的引用指针指向monitor(管程)</strong>，<strong>每个对象均有唯一的monitor与它相关</strong>，因此线程就是通过<strong>获取对象的monitor来锁定对象</strong>，从而阻塞其余线程对对象的操作，达到线程安全</p>
+</li>
+<li><h4 id="锁状态"><a href="#锁状态" class="headerlink" title="锁状态"></a>锁状态</h4><p>共有四种(2bit)，<strong>无状态锁-偏向锁-轻量级锁-重量级锁</strong></p>
+<p>偏向锁：用于无锁竞争环境，减少同一线程获取锁的代价，同一线程频繁获取锁无需做任何同步操作、锁申请操作即可获取锁，提高性能</p>
+<p>轻量级锁：用于线程交替执行同步块环境，若存在线程并发同时访问同一锁则升级为重量级锁</p>
+<p>(自旋锁)：介于轻量级锁与重量级锁之间，线程获取轻量级锁失败后不会立即挂起，而是进行自旋锁，让其进行几个空循环再获取一次锁，若得到锁则进入临界区操作共享数据，若还不能得到锁则只能挂起</p>
+<p>重量级锁：如synchronized锁，保证同一时间有且只有一个线程能对共享内存进行操作</p>
+</li>
+</ol>
+</li>
+<li><h3 id="数据库索引"><a href="#数据库索引" class="headerlink" title="数据库索引"></a>数据库索引</h3><ul>
+<li><p><strong>索引定义（MySQL）</strong>：索引(Index)是<strong>帮助MySQL高效获取数据的数据结构</strong> </p>
+</li>
+<li><p><strong>为何需要索引：</strong>数据库查询速度是衡量数据库效率的一个标准，因此数据库数据库系统设计者会从查询的角度优化数据库，这无非有两种方向，<strong>算法和数据结构</strong>，查询算法如顺序查找（数据有序 且O(n)）、二分查找（数据有序且O(log2n)）、二叉树查找（依托于树的数据结构），均依托于特殊的数据结构，但是数据库中的数据存储肯定是以空间效率高的形式存储，不可能因为查找方便而改变数据存储结构，因此<strong>数据库系统还维护着满足特定查找算法的数据结构——索引</strong>，索引以某种方式引用（关联）数据，在索引上<strong>使用高级查找算法提高查询数据的效率</strong></p>
+</li>
+<li><p><strong>索引数据结构：</strong>考虑到树的查询效率高并且可以保持有序，数据库索引采取树结构是十分合适的，<strong>二叉查找树查询的时间复杂度为O(log2n)，查询速度和比较次数是最优的</strong>，但是由于数据库索引是存储在磁盘上的，设计到<strong>磁盘IO读写问题</strong>，而大数据的索引十分大不能全部加载到磁盘中，只能通过逐一加载磁盘页来加载索引的树节点，由于<strong>索引树的高度就是磁盘IO次数（B+树，B树由于中间节点有数据因此磁盘IO次数处于[0-树的高度]）</strong>，二叉查找树高度过高（每个节点只有一条数据），因此我们需要一种<strong>高度较低的树作为索引的数据结构以减少磁盘IO次数</strong>，B树这种<strong>多路平衡查找树</strong>满足我们的要求</p>
+</li>
+<li><p><strong>B-树：</strong>是一种<strong>多路平衡查找树</strong>，它的<strong>节点最多包含（关联）M个字节点</strong>，M也称为<strong>B-树的阶（度）</strong>，M的大小取决于<strong>磁盘页的大小</strong></p>
+<p><img src="/images/jvm14.jpg" alt=""></p>
+<ul>
+<li><strong>B-树的规则：</strong>B-树的节点需要满足一定的规则，才能保证其平衡的特性<ul>
+<li>节点由元素和子节点指针交替排序而成，即指针数=元素数+1</li>
+<li>根节点至少有两个子节点</li>
+<li>中间节点都包含K-1个元素和K个子节点，满足M/2&lt;=K&lt;=M</li>
+<li>叶子节点都包含K-1个元素，满足M/2&lt;=K&lt;=M</li>
+<li>所有叶子节点处于同一深度</li>
+<li>所有节点元素从小到大排列</li>
+<li><strong>查找规则：</strong>在<strong>节点中查找关键字</strong>，若无则根据大小规则<strong>查找子节点指针</strong>，在子节点中重复查找关键字，直到查找到叶子节点</li>
+<li><strong>插入规则：</strong>将节点根据大小规则插入到子节点中，若子节点元素数量为M，则节点分裂，分裂规则为：以M/2向下取整为基准元素，[0，(M/2)-1]的元素留在原子节点，[(M/2)+1，M-1]的元素分裂成新的子节点，M/2的基准元素插入到父节点中</li>
+<li><strong>删除规则：</strong><ul>
+<li>非叶子结点删除第i个节点，则将节点的第i个子树中的最小值上移至删除元素的位置。</li>
+<li>叶子节点删除元素，若删除后节点数量仍大于M/2，则直接删除</li>
+<li>叶子节点删除元素，若删除后节点数量为(M/2)-1，则将兄弟节点中最近的节点上移至父节点，父节点中最接近叶子结点的元素下移至叶子节点，若兄弟节点元素由于上移节点数量为(M/2)-1，则将叶子结点和父节点中最接近叶子结点的元素均移动到兄弟节点</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>B+树：</strong>是B-树变种的平衡多路查找树，但<strong>B+树的查询性能比B-树更高</strong>，MySql数据库系统使用的索引就是B+树</p>
+<p><img src="/images/jvm15.jpg" alt=""></p>
+<ul>
+<li><strong>M阶B+树的规则：</strong><ul>
+<li>中间节点由元素和子节点指针一对一组成，即(M/2)-1&lt;=指针数=元素数&lt;=M-1</li>
+<li>中间节点不包含数据，<strong>所有数据出现在叶子节点</strong>中，因此中间节点的元素对应的指针<strong>指向关键字大于等于自身的子节点</strong></li>
+<li>所有叶子节点多了<strong>链指针</strong>，因此可以<strong>区域查询</strong></li>
+<li>插入与删除与B-树大同小异</li>
+<li>优点：相对于B-树，B+树更适合文件系统和数据库系统：<ol>
+<li>中间节点不存储数据只是索引，因此可以存储更多索引，磁盘IO次数减少  </li>
+<li>查询性能稳定（磁盘IO次数均为树的高度） </li>
+<li>范围查询简便</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>哈希索引：</strong>采用一定的<strong>哈希算法</strong>，把键值换算成新的哈希值 ，检索时只需一次哈希算法即可定位到数据位置</p>
+<p><img src="/images/jvm17.jpg" alt=""></p>
+<ul>
+<li><strong>哈希索引的不足：</strong>无法通过索引进行<strong>排序</strong>，重复键造成<strong>检索效率降低（哈希碰撞）</strong>，<strong>不支持范围查询（仅仅能满足“=”，“IN”，“&lt;=&gt;”查询 ）</strong>，不能利用<strong>联合索引键查询</strong></li>
+</ul>
+</li>
+<li><p><strong>MySQL索引实现：</strong>MySQL中常用的索引引擎是MyISAM和InnoDB，使用的索引数据结构均是B+树，但是实际实现方式有所不同</p>
+<p><img src="/images/jvm16.png" alt=""></p>
+<ul>
+<li><strong>InnoDB：</strong>使用的是<strong>聚簇索引</strong>，数据引擎本身就是索引文件，<strong>主键索引的叶子节点直接存储数据</strong>，<strong>辅助键索引的叶子节点存储主键索引值</strong>，因此使用辅助键查询数据需要先查询辅助键索引获取主键再查询主键索引获取数据，查询性能没有MyISAM引擎高</li>
+<li><strong>MyISAM：</strong>使用的是<strong>非聚簇索引</strong> ，即无论是主键索引还是辅助键索引的叶子节点均是<strong>存储数据所在的地址值</strong>，因此<strong>查询性能高</strong>，由于辅助键索引不依赖于主键索引，辅助键索引可以直接获取查询数据</li>
+<li><strong>使用场景：</strong>MyISAM适合<strong>不需要事务支持、高性能</strong>的场景，InnoDB适合<strong>需要事务支持、高并发（支持行锁）</strong>的场景</li>
+<li><strong>MEMORY:</strong>值得注意的是，MySQL中还有一种引擎MEMORY，它默认使用<strong>哈希索引</strong>，而且<strong>数据存在内存中</strong>，因此数据<strong>读写性能十分高</strong>，但是<strong>安全性较低</strong>，只应用在小规模数据库中</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h3 id="Http长连接-短连接"><a href="#Http长连接-短连接" class="headerlink" title="Http长连接/短连接"></a>Http长连接/短连接</h3></li>
+<li><h3 id="异步-同步和阻塞-非阻塞"><a href="#异步-同步和阻塞-非阻塞" class="headerlink" title="异步/同步和阻塞/非阻塞"></a>异步/同步和阻塞/非阻塞</h3><p>异步、同步、阻塞、非阻塞都是<strong>IO（输入输出）</strong>有关的概念</p>
+<ul>
+<li><h5 id="同步-异步"><a href="#同步-异步" class="headerlink" title="同步/异步"></a>同步/异步</h5><p>同步和异步指的是<strong>被调用方的执行方式和返回方式</strong></p>
+<ul>
+<li><strong>同步请求：</strong>A调用B，B的执行是同步的，B在<strong>执行完毕前不会通知A</strong>，B执行完毕后才通知A</li>
+<li><strong>异步请求：</strong>A调用B，B的执行时异步的，B在<strong>接收到请求时就会先通知A已经接收到请求</strong>，然后异步执行，B在<strong>执行完毕后通过回调等方式通知A</strong></li>
+</ul>
+</li>
+<li><h5 id="阻塞-非阻塞"><a href="#阻塞-非阻塞" class="headerlink" title="阻塞/非阻塞"></a>阻塞/非阻塞</h5><p>阻塞和非阻塞指的是<strong>调用方发送请求后是否等待请求返回结果</strong></p>
+<ul>
+<li><strong>阻塞请求：</strong>A调用B，<strong>A在B执行完毕返回结果前一直等待</strong>，不会继续执行别的操作</li>
+<li><strong>非阻塞请求：</strong>A调用B，<strong>A在B执行完毕返回结果前先执行别的操作</strong></li>
+</ul>
+</li>
+<li><p><strong>Java语言</strong>中的三种<strong>IO模型</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><h3 id="Java的HashMap实现"><a href="#Java的HashMap实现" class="headerlink" title="Java的HashMap实现"></a>Java的HashMap实现</h3></li>
+<li><h3 id="并发与并行"><a href="#并发与并行" class="headerlink" title="并发与并行"></a>并发与并行</h3><ul>
+<li><strong>并行：</strong>多核CPU上，多个任务在不同CPU核上同时执行</li>
+<li><strong>并发：</strong>通过时间片轮转，在一个时间段内不断切换进程（线程），达到多个任务同时执行的效果，实际是交替执行</li>
+</ul>
+</li>
+<li></li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/13/javahigh1-Collection/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Java深入学习-Java集合框架（一）Collection
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/08/06/sc5/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">SpringCloud学习(五)API网关</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/23/javahigh3-Array/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（三）ArrayList" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/23/javahigh3-Array/" class="title">Java深入学习-Java集合框架（三）ArrayList</a></p>
+                            <p class="item-date"><time datetime="2018-08-23T06:07:29.000Z" itemprop="datePublished">2018-08-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/jvm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/jvm/" class="title">Java虚拟机学习笔记</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh2-AbstractCollection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（二）AbstractCollection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh2-AbstractCollection/" class="title">Java深入学习-Java集合框架（二）AbstractCollection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh1-Collection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh1.jpg)" alt="Java深入学习-Java集合框架（一）Collection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh1-Collection/" class="title">Java深入学习-Java集合框架（一）Collection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/java-Q&A-1/" class="title">Java面试Q&amp;A(一)携程</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">89</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JBDC/">JBDC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-DL/">Java-DL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaEE/">JavaEE</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/">JavaSE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java面试/">Java面试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Q-A/">Q&A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMvc/">SpringMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.11px;">C++</a> <a href="/tags/Collection/" style="font-size: 13.33px;">Collection</a> <a href="/tags/GithubPages/" style="font-size: 11.11px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.11px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JBDC/" style="font-size: 10px;">JBDC</a> <a href="/tags/Java-DL/" style="font-size: 13.33px;">Java-DL</a> <a href="/tags/JavaEE/" style="font-size: 18.89px;">JavaEE</a> <a href="/tags/JavaSE/" style="font-size: 11.11px;">JavaSE</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Java面试/" style="font-size: 10px;">Java面试</a> <a href="/tags/Linux/" style="font-size: 11.11px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.11px;">Python</a> <a href="/tags/Q-A/" style="font-size: 10px;">Q&A</a> <a href="/tags/React/" style="font-size: 11.11px;">React</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.11px;">Scrapy爬虫</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 14.44px;">SpringCloud</a> <a href="/tags/SpringMvc/" style="font-size: 10px;">SpringMvc</a> <a href="/tags/WEB安全/" style="font-size: 14.44px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 13.33px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 16.67px;">python</a> <a href="/tags/swoole/" style="font-size: 17.78px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.11px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 16.67px;">剑指Offer</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 14.44px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 15.56px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 14.44px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.22px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 16.67px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.11px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/08/13/java-Q&amp;A-1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

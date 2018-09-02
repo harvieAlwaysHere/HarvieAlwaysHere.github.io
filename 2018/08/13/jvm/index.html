@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Java虚拟机学习笔记 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java-DL,Collection" />
+    
+    <meta name="description" content="Java虚拟机学习笔记 走进Java Java技术体系结构Sun官方规定Java体系结构如下组成：  Java程序设计语言 各硬件平台上的Java虚拟机 Class文件格式 Java API类库 第三方Java类库  我们将124统称为JDK(Java Development Kit)，是支持Java程序开发的最小环境 我们将Java API类库中的Java SE API子集和Java 虚拟机称为">
+<meta name="keywords" content="Java-DL,Collection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java虚拟机学习笔记">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/08/13/jvm/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="Java虚拟机学习笔记 走进Java Java技术体系结构Sun官方规定Java体系结构如下组成：  Java程序设计语言 各硬件平台上的Java虚拟机 Class文件格式 Java API类库 第三方Java类库  我们将124统称为JDK(Java Development Kit)，是支持Java程序开发的最小环境 我们将Java API类库中的Java SE API子集和Java 虚拟机称为">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/jvm1.png">
+<meta property="og:updated_time" content="2018-09-02T01:56:33.485Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java虚拟机学习笔记">
+<meta name="twitter:description" content="Java虚拟机学习笔记 走进Java Java技术体系结构Sun官方规定Java体系结构如下组成：  Java程序设计语言 各硬件平台上的Java虚拟机 Class文件格式 Java API类库 第三方Java类库  我们将124统称为JDK(Java Development Kit)，是支持Java程序开发的最小环境 我们将Java API类库中的Java SE API子集和Java 虚拟机称为">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/jvm1.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-jvm" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Java虚拟机学习笔记
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/08/13/jvm/" class="article-date">
+            <time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Collection/">Collection</a>, <a class="tag-link" href="/tags/Java-DL/">Java-DL</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Java虚拟机学习笔记"><a href="#Java虚拟机学习笔记" class="headerlink" title="Java虚拟机学习笔记"></a>Java虚拟机学习笔记</h1><ol>
+<li><h3 id="走进Java"><a href="#走进Java" class="headerlink" title="走进Java"></a>走进Java</h3><ul>
+<li><h4 id="Java技术体系结构"><a href="#Java技术体系结构" class="headerlink" title="Java技术体系结构"></a>Java技术体系结构</h4><p>Sun官方规定Java体系结构如下组成：</p>
+<ol>
+<li>Java程序设计语言</li>
+<li>各硬件平台上的Java虚拟机</li>
+<li>Class文件格式</li>
+<li>Java API类库</li>
+<li>第三方Java类库</li>
+</ol>
+<p>我们将124统称为<strong>JDK(Java Development Kit)</strong>，是支持Java程序开发的最小环境</p>
+<p>我们将<strong>Java API类库中的Java SE API子集和Java 虚拟机称为JRE(Java Runtime Environment)</strong>，是支持Java程序运行的标准环境</p>
+<p>JDK和JRE与Java体系结构的关系如下（基于JDK 1.8）</p>
+<p><img src="/images/jvm1.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><h3 id="自动内存管理机制"><a href="#自动内存管理机制" class="headerlink" title="自动内存管理机制"></a>自动内存管理机制</h3><p>在Java虚拟机自动内存管理机制的帮助下，Java程序运行不容易出现内存泄漏和内存溢出问题，但是一旦出现问题，如果不了解Java虚拟机的自动内存管理机制，排查错误将会很艰难</p>
+<ul>
+<li><h4 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h4><p>Java虚拟机在执行Java程序会将所管理的内存划分成若干个不同的数据区域</p>
+<p><img src="/images/jvm2.jpg" alt=""></p>
+<ul>
+<li><strong>程序计数器：</strong>线程私有的内存，看作<strong>当前线程所执行的字节码的行号指示器</strong>，用于选取下一条需要执行的字节码指令，每个线程有独立的程序计数器用于线程切换后能恢复到正确的执行位置</li>
+<li><strong>Java虚拟机栈：</strong>线程私有，生命周期与线程相同。<strong>存储Java方法执行的内存模型</strong>，每个Java方法执行的同时会创建一个栈帧(Stack Frame)用于存储方法的局部变量表、操作数栈、动态链接、方法出口等信息。<strong>局部变量区</strong>存储了各种基本数据类型、对象引用(reference)和returnAddress类型。这个区域有两个异常，<strong>StackOverflowError异常：</strong>线程请求的栈深度大于虚拟机运行的深度，<strong>OutOfMemoryError异常：</strong>虚拟机栈动态拓展无法申请到足够内存</li>
+<li><strong>本地方法栈：</strong>线程私有，与虚拟机栈类似，只是执行的方法类别不同，<strong>虚拟机栈执行Java方法服务</strong>，<strong>本地方法栈执行Native方法服务</strong>，Native方法对编程语言、使用方法、数据结构没有规定，抛出异常与虚拟机栈相同</li>
+<li><strong>Java堆：</strong>所有线程共享的大内存，<strong>所有对象实例以及数组都要在堆上分配内存存储</strong>。Java堆也称作<strong>GC堆(Garbage Collected Heap)</strong>，用于管理垃圾收集器。若堆中<strong>内存没有完成实例分配且堆无法扩展</strong>，则会抛出<strong>OutOfMemoryError异常</strong></li>
+<li><strong>方法区：</strong>所有线程共享的内存区域，用于存储被虚拟机加载的<strong>类信息、常量、静态变量等数据</strong>，也称作<strong>“永久代”</strong>，区域的垃圾收集机制较为宽松。方法区<strong>无法满足内存分配需求</strong>时将抛出OutOfMemoryError异常<ul>
+<li><strong>运行时常量池：</strong>方法区的一部分，用于存放<strong>Class文件编译期生成的各种字面量和符号引用</strong></li>
+</ul>
+</li>
+</ul>
+<p>具体每个数据区的作用可总结如下：</p>
+<p><img src="/images/jvm3.png" alt=""></p>
+</li>
+<li><h4 id="Java对象创建"><a href="#Java对象创建" class="headerlink" title="Java对象创建"></a>Java对象创建</h4><p>以HotSpot虚拟机在Java堆中对象分配、布局、访问为例</p>
+<ol>
+<li><strong>检查类加载：</strong>虚拟机遇到new指令，首先检查这个指令的参数<strong>是否能在常量池中定位到一个类的符号引用</strong>，并且检查这个<strong>符号引用代表的类是否已被加载，解析和初始化过</strong>，如果没有则必须执行相应的<strong>类加载过程</strong>  </li>
+<li><strong>分配内存：</strong>类加载检查后，虚拟机为新生对象分配内存，即<strong>从Java堆中将一块确定大小的内存划分</strong>出来存储对象，划分的方法有指针碰撞（Java堆内存规整）和空闲列表（Java堆内存已使用与空闲内存交错）</li>
+<li><strong>初始化零值：</strong>虚拟机将分配到的内存空间均初始化为零值</li>
+<li><strong>设置对象：</strong>主要对对象的对象头（Object Header）进行相应设置</li>
+<li><strong>初始化对象：</strong>执行对象的init方法进行初始化对象，让对象可用</li>
+</ol>
+</li>
+<li><h4 id="Java对象模型"><a href="#Java对象模型" class="headerlink" title="Java对象模型"></a>Java对象模型</h4><p>对象被存储在堆内存中，由以下形式存储</p>
+<ul>
+<li><p><strong>对象头：</strong>占有2个机器码（数组对象为3个字节码）</p>
+<ul>
+<li>第一个机器码-<strong>Mark Word</strong>：非固定的数据结构，存储<strong>对象自身运行的数据</strong>，如HashCode、GC分代年龄、锁状态标识、锁标志位、偏向线程ID等</li>
+<li>第二个机器码-<strong>类型指针</strong>：指向<strong>存储在方法区的对象类型数据</strong>，JVM通过这个指针确定对象是哪个类的实例</li>
+<li>(第三个机器码-<strong>数组长度：</strong>记录数组长度)</li>
+</ul>
+</li>
+<li><p><strong>实例数据：</strong>存放<strong>类的属性数据信息</strong>，即程序代码中定义的各种类型的字段内容</p>
+</li>
+<li><strong>对齐填充：</strong>JVM要求对象起始地址必须为8字节整数倍，用于填充多余空间字段</li>
+</ul>
+</li>
+<li><h4 id="Java对象的访问定位"><a href="#Java对象的访问定位" class="headerlink" title="Java对象的访问定位"></a>Java对象的访问定位</h4><p>Java程序需要通过<strong>栈上的reference数据来操作堆上的具体对象</strong>，引用访问对象的方式主流有两种</p>
+<ul>
+<li><p><strong>句柄访问：</strong>Java堆中分配出一部分内存作为句柄池，<strong>reference指向对象的句柄地址</strong>，<strong>句柄中包含了对象实例数据（Java堆）与类型数据（方法区）</strong>各自的地址</p>
+<p><img src="/images/jvm4.jpg" alt=""></p>
+</li>
+<li><p><strong>直接指针访问：</strong>reference直接存储对象实例地址，对象实例中存放对象类型数据地址</p>
+<p><img src="/images/jvm5.jpg" alt=""></p>
+</li>
+</ul>
+<p><strong>两种访问方式优点：</strong></p>
+<ul>
+<li>句柄访问对象被移动时（如垃圾收集）只需要改变句柄中的实例数据指针，而栈的本地变量的reference本身不需要改变</li>
+<li>直接指针访问优点是访问速度快，节省了一次指针定位时间开销</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h3 id="垃圾回收与内存分配策略"><a href="#垃圾回收与内存分配策略" class="headerlink" title="垃圾回收与内存分配策略"></a>垃圾回收与内存分配策略</h3><ul>
+<li><h4 id="GC与内存分配概述"><a href="#GC与内存分配概述" class="headerlink" title="GC与内存分配概述"></a>GC与内存分配概述</h4><p><strong>为何需要学习？：</strong>当需要排查<strong>内存溢出、内存泄漏</strong>问题，当<strong>GC成为系统达到更高并发量的瓶颈</strong>时，我们需要对GC与内存分配进行<strong>监控和调节</strong></p>
+<p><strong>哪些内存需要回收？：Java堆和方法区的内存分配与回收是动态的（由程序运行过程决定）</strong>，因此需要回收。而<strong>程序计数器、虚拟机栈、本地方法栈中的内存随着方法或者线程结束会自己回收</strong>，不需要过多考虑内存动态回收。</p>
+</li>
+<li><h4 id="判断对象是否还在使用"><a href="#判断对象是否还在使用" class="headerlink" title="判断对象是否还在使用"></a>判断对象是否还在使用</h4><p>垃圾收集器在对堆内存进行回收时，需要先<strong>判断堆内的对象是否还在使用</strong>（有途径引用对象），有以下算法：</p>
+<ul>
+<li><p><strong>引用计数算法：</strong>给堆内对象添加引用计数器，若有引用指向它就加1，否则减1，为0则回收，但是<strong>Java虚拟机中没有选择此算法管理内存</strong>，原因它<strong>不能解决对象之间相互循环引用</strong>的问题</p>
+<p><img src="/images/jvm7.jpg" alt=""></p>
+</li>
+<li><p><strong>可达性分析算法：</strong>通过图论的观点，<strong>GC Roots对象作为起点，路径表示引用链，堆内对象为节点</strong>，当<strong>一个对象到GC Roots对象间无法通过引用链相连</strong>，即为不可达状态，则表示<strong>这个对象不可用</strong>，GC会判定这个对象可回收</p>
+<p><img src="/images/jvm6.jpg" alt=""></p>
+<p>可作为<strong>GC Roots对象</strong>包括</p>
+<ul>
+<li>虚拟机栈（栈帧中的本地变量表）的引用指向的对象</li>
+<li>方法区中类静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>本地方法栈中JNI（即Native方法）引用的对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h4><p>根据引用强度和垃圾回收力度，存在四种引用强度逐渐降低、垃圾回收力度逐渐增大的引用类型</p>
+<ul>
+<li><strong>强引用：</strong>程序员直接申明的、类似”Object obj=new Object()”的引用，垃圾收集器永远不会回收强引用对象</li>
+<li><strong>软引用：</strong>SoftReference类实现，在系统将要发生内存溢出会回收软引用关联的对象</li>
+<li><strong>弱引用：</strong>WeakReference类实现，下一次垃圾收集发生时，无论内存是否足够都会回收只被弱引用关联的对象</li>
+<li><strong>虚引用：</strong>PhantomReference类实现，不影响关联对象的垃圾回收，无法通过虚引用取得关联对象的实例，主要目的用于关联对象被回收时收到一个系统通知</li>
+</ul>
+</li>
+<li><h4 id="方法区判断对象是否可用"><a href="#方法区判断对象是否可用" class="headerlink" title="方法区判断对象是否可用"></a>方法区判断对象是否可用</h4><p>方法区的垃圾回收机制性价比较低，永久代的垃圾回收主要涉及两部分，<strong>废弃常量和无用的类</strong></p>
+<p><strong>废弃常量：</strong>栈中<strong>没有任何引用关</strong>联常量池中的常量即为废弃常量</p>
+<p><strong>无用的类：</strong>即无用的<strong>对象类型数据</strong>，需要同时满足三个条件</p>
+<ul>
+<li>Java堆中不存在该类的任何实例，即类的所有实例已被回收</li>
+<li>加载该类的ClassLoader已被回收</li>
+<li>该类对应的java.lang.Class对象没有在任何地方被引用，即无法通过反射访问该类方法</li>
+</ul>
+</li>
+<li><h4 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h4><ul>
+<li><p><strong>标记-清除法：</strong>分为标记和清除两个阶段，首先从内存的根集合进行扫描，对需要回收的对象进行标记，在标记完成后统一回收所有标记对象</p>
+<p><img src="/images/jvm8.jpg" alt=""></p>
+<p><strong>算法不足点有两种：</strong></p>
+<ul>
+<li>效率问题：标记和清除的效率均不高</li>
+<li>空间问题：不需要进行对象的移动，仅对需要回收的对象进行处理，导致产生大量不连续的内存碎片</li>
+</ul>
+</li>
+<li><p><strong>复制算法：</strong>将内存划分成容量大小相等的两块（也许是容量不等的多块），每次只使用其中的一块（也许使用多块，保留多块），可称为使用块与保留块，当使用块内存用完后，扫描内存块将还在使用的对象按次序复制到保留块上，再把使用块内存清空</p>
+<p><img src="/images/jvm9.jpg" alt=""></p>
+<p><strong>优点：</strong>内存分配完整，只要移动堆顶指针按顺序分配内存即可，效率高，实现简单</p>
+<p><strong>不足：</strong>内存缩小</p>
+<p><strong>适用环境：对象存活率较低</strong>的内存环境，这样复制时效率高，如<strong>新生代</strong>中</p>
+</li>
+<li><p><strong>标记-整理算法：</strong>与标记-清除算法相似，不过后续步骤不是对标记的可回收对象进行清理，而是让所有可使用的对象都向一端移动，形成连续的内存</p>
+<p><img src="/images/jvm10.jpg" alt=""></p>
+</li>
+<li><p><strong>分代收集算法：</strong>一般根据对象的存货周期的不同将内存划分为几块，如将<strong>Java堆内存分为新生代和老年代</strong>，这样可以根据年代的特点选择合适的收集算法</p>
+<p><strong>新生代对象存活率低</strong>，选择<strong>复制算法</strong>，只需付出少量复制成本就可以完成垃圾回收</p>
+<p><strong>老年代对象存活率高</strong>，则使用<strong>标记-清除或者标记-整理算法</strong></p>
+<p><img src="/images/jvm11.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><h4 id="发起回收"><a href="#发起回收" class="headerlink" title="发起回收"></a>发起回收</h4><ol>
+<li><strong>枚举GC Roots根节点：</strong>使用<strong>准确式GC</strong>，即当执行系统停顿时，并不需要遍历所有执行上下文和全局的引用位置，而是通过一组称为<strong>OopMap的数据结构</strong>在类加载完成、JFT编译时，会记录下<strong>栈和寄存器中哪些位置是引用</strong>，这样GC扫描时<strong>这些引用关联的对象就是GC Roots根节点</strong></li>
+<li><strong>安全点(Safepoint)：</strong>为每条指令均生成OopMap空间成本太高，一般是<strong>在安全点生成</strong>，安全点即是<strong>能让程序长时间执行的指令块</strong>（指令序列复用），如<strong>方法调用、循环跳转、异常跳转等</strong>，均可以产生安全点</li>
+<li><strong>多线程安全点：</strong>一般采用<strong>主动式中断</strong>，即发生GC时，不直接对线程进行操作，而是设置一个标志，让所有线程去轮询标志，若<strong>轮询到标志为真时就会触发线程中断</strong></li>
+<li><strong>安全区域(Safe Region)：</strong>对于不执行的程序，如处于Seep状态和Blocked状态的线程，是无法轮询无法响应JVM的中断请求的，对于这种情况需要使用安全区域解决。<strong>安全区域保证代码片段中引用关系不会变化</strong>，因此在安全区域中任何地方开始GC都是安全的</li>
+</ol>
+</li>
+<li><h4 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h4><p>垃圾收集器是内存回收算法的具体实现，我们通过JDK 1.7的HotSpot虚拟机的垃圾回收器感受一下</p>
+<p><img src="/images/jvm12.jpg" alt=""></p>
+<p>共有七种垃圾收集器，3种用于新生代，3中用于老年代，G1用于整个Java堆，连线表示可以搭配使用，我们简单介绍其中5种，重点分析CMS和G1</p>
+<ul>
+<li><h5 id="新生代垃圾收集器（复制算法）"><a href="#新生代垃圾收集器（复制算法）" class="headerlink" title="新生代垃圾收集器（复制算法）"></a>新生代垃圾收集器（复制算法）</h5><ul>
+<li><strong>Serial收集器</strong>：单线程，GC时会暂停其他工作线程，简单高效，Client模式虚拟机首选的新生代收集器</li>
+<li><strong>ParNew收集器</strong>：并行(Parallel)多线程收集器，是Serial收集器的多线程版本，在多核CPU环境下GC有更好表现，Server模式虚拟机首选的新生代收集器</li>
+<li><strong>Parallel Scavenge收集器</strong>：并行多线程收集器，侧重点<strong>不在缩短GC时用户线程停顿时间，而在提高吞吐量（运行用户代码时间/(运行用户代码时间+GC时间)）</strong>，追求高效率利用CPU时间，尽快完成运算任务，适合在后台运算而不需太多交互的任务</li>
+</ul>
+</li>
+<li><h5 id="老年代垃圾收集器"><a href="#老年代垃圾收集器" class="headerlink" title="老年代垃圾收集器"></a>老年代垃圾收集器</h5><ul>
+<li><p><strong>Serial Old收集器（标记-整理算法）：</strong>单线程，Serial的老年代版本，Client模式虚拟机首选</p>
+</li>
+<li><p><strong>Parallel Old收集器（标记-整理算法）：</strong>多线程，Parallel Scavenge收集器的老年代版本，与其组合，<strong>使用在注重吞吐量及CPU资源敏感的场合</strong></p>
+</li>
+<li><p><strong>CMS（Concurrent Mark Sweep）（标记-清除算法）：</strong>并行多线程收集器，主要用于Java Web服务端，以<strong>获取最短回收停顿时间</strong>为目标 ，具有高并发、低停顿的特点</p>
+<p><img src="/images/jvm13.jpg" alt=""></p>
+<p>CMS的GC过程主要有四阶段</p>
+<ul>
+<li>初始标记：中断其他线程，标记GC Roots能直接关联的对象</li>
+<li>并发标记：并行其他线程，对初始标记的对象进行Tracing</li>
+<li>重新标记：中断其他线程，修正并发标记期间程序运作导致标记产生变动的标记</li>
+<li>并发清理：并行其他线程，对没有标记的对象进行回收</li>
+</ul>
+<p>CMS有明显三个不足：</p>
+<ul>
+<li>CPU资源敏感：并发阶段因为占用一部分线程（CPU资源）导致应用程序变慢，吞吐量降低</li>
+<li>无法处理浮动垃圾：并发清理阶段并行的其他用户线程产生的垃圾CMS无法处理</li>
+<li>空间碎片多：由于CMS采取标记-清除算法，会有大量空间碎片产生</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h5 id="Java堆垃圾收集器"><a href="#Java堆垃圾收集器" class="headerlink" title="Java堆垃圾收集器"></a>Java堆垃圾收集器</h5><ul>
+<li><strong>G1收集器：</strong>并行收集器，主要面向服务端应用，主要有以下特点<ul>
+<li>采用标记-整理算法，避免产生碎片</li>
+<li>可预测的停顿：让使用者通过指定一个参数来控制在一个长度为M的时间片内垃圾回收的时间不超过N</li>
+<li>独立区域收集：避免全区域、新生代、老年代的GC，G1将整个Java堆划分成多个大小相等的独立区域，进行根据优先级的分批次的独立区域GC，因此可以做到基本不牺牲吞吐量完成GC</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="GC日志格式"><a href="#GC日志格式" class="headerlink" title="GC日志格式"></a>GC日志格式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">33.125: [Full GC [DefNew: 3324K-&gt;152K(3712K),0.0149142 secs ] 3324K-&gt;152K(3712K), 0.0031680 secs]</span><br></pre></td></tr></table></figure>
+<p>33.125：GC发生时间，从Java虚拟机启动以来经历的秒数</p>
+<p>Full GC：垃圾收集停顿类型，Full表示Stop-The-World</p>
+<p>DefNew：GC发生的区域，Serial收集器收集新生代为DefNew，ParNew收集器收集新生代为ParNew</p>
+<p>3324K-&gt;152K(3712K)：GC前区域使用容量-&gt;GC后区域使用容量(区域总容量)</p>
+<p>0.0149142 secs：GC此区域所占用时间</p>
+<p>] 3324K-&gt;152K(3712K)：括号外表示整个Java堆的情况</p>
+<p>0.0031680 secs：整个Java堆的GC占用时间</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/23/javahigh3-Array/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Java深入学习-Java集合框架（三）ArrayList
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/08/13/javahigh2-AbstractCollection/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Java深入学习-Java集合框架（二）AbstractCollection</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/23/javahigh3-Array/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（三）ArrayList" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/23/javahigh3-Array/" class="title">Java深入学习-Java集合框架（三）ArrayList</a></p>
+                            <p class="item-date"><time datetime="2018-08-23T06:07:29.000Z" itemprop="datePublished">2018-08-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/jvm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/jvm/" class="title">Java虚拟机学习笔记</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh2-AbstractCollection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（二）AbstractCollection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh2-AbstractCollection/" class="title">Java深入学习-Java集合框架（二）AbstractCollection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh1-Collection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh1.jpg)" alt="Java深入学习-Java集合框架（一）Collection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh1-Collection/" class="title">Java深入学习-Java集合框架（一）Collection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/java-Q&A-1/" class="title">Java面试Q&amp;A(一)携程</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">89</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JBDC/">JBDC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-DL/">Java-DL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaEE/">JavaEE</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/">JavaSE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java面试/">Java面试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Q-A/">Q&A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMvc/">SpringMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.11px;">C++</a> <a href="/tags/Collection/" style="font-size: 13.33px;">Collection</a> <a href="/tags/GithubPages/" style="font-size: 11.11px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.11px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JBDC/" style="font-size: 10px;">JBDC</a> <a href="/tags/Java-DL/" style="font-size: 13.33px;">Java-DL</a> <a href="/tags/JavaEE/" style="font-size: 18.89px;">JavaEE</a> <a href="/tags/JavaSE/" style="font-size: 11.11px;">JavaSE</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Java面试/" style="font-size: 10px;">Java面试</a> <a href="/tags/Linux/" style="font-size: 11.11px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.11px;">Python</a> <a href="/tags/Q-A/" style="font-size: 10px;">Q&A</a> <a href="/tags/React/" style="font-size: 11.11px;">React</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.11px;">Scrapy爬虫</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 14.44px;">SpringCloud</a> <a href="/tags/SpringMvc/" style="font-size: 10px;">SpringMvc</a> <a href="/tags/WEB安全/" style="font-size: 14.44px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 13.33px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 16.67px;">python</a> <a href="/tags/swoole/" style="font-size: 17.78px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.11px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 16.67px;">剑指Offer</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 14.44px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 15.56px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 14.44px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.22px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 16.67px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.11px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/08/13/jvm/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JavaEE学习(一)Java基本语法 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaSE,JavaEE" />
+    
+    <meta name="description" content="本文是学习JavaEE开发的记录笔记 大纲Java基础语法HelloWorld.java12345public class HelloWorld &amp;#123;    public static void main(String []args) &amp;#123;        System.out.println(&quot;Hello World&quot;); // 打印 Hello World    &amp;#125;&amp;#">
+<meta name="keywords" content="JavaSE,JavaEE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaEE学习(一)Java基本语法">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/06/11/javaee1/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文是学习JavaEE开发的记录笔记 大纲Java基础语法HelloWorld.java12345public class HelloWorld &amp;#123;    public static void main(String []args) &amp;#123;        System.out.println(&quot;Hello World&quot;); // 打印 Hello World    &amp;#125;&amp;#">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/javaee.png">
+<meta property="og:updated_time" content="2018-06-12T08:56:22.353Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaEE学习(一)Java基本语法">
+<meta name="twitter:description" content="本文是学习JavaEE开发的记录笔记 大纲Java基础语法HelloWorld.java12345public class HelloWorld &amp;#123;    public static void main(String []args) &amp;#123;        System.out.println(&quot;Hello World&quot;); // 打印 Hello World    &amp;#125;&amp;#">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/javaee.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-javaee1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JavaEE学习(一)Java基本语法
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/06/11/javaee1/" class="article-date">
+            <time datetime="2018-06-11T11:24:55.000Z" itemprop="datePublished">2018-06-11</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaEE/">JavaEE</a>, <a class="tag-link" href="/tags/JavaSE/">JavaSE</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文是学习JavaEE开发的记录笔记"><a href="#本文是学习JavaEE开发的记录笔记" class="headerlink" title="本文是学习JavaEE开发的记录笔记"></a>本文是学习JavaEE开发的记录笔记</h3><p><img src="/images/javaee.png" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="Java基础语法"><a href="#Java基础语法" class="headerlink" title="Java基础语法"></a>Java基础语法</h3><figure class="highlight java"><figcaption><span>HelloWorld.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello World"</span>); <span class="comment">// 打印 Hello World</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过上述程序，可以观察到JAVA的基础语法：</p>
+<ul>
+<li><strong>主方法入口：</strong>所有Java程序都是由<strong>public static void main(String[] args)</strong>开始执行</li>
+<li><strong>主类名：</strong>.java文件需要有一个且<strong>仅有一个与文件名相同的public类</strong></li>
+</ul>
+<h3 id="Java类"><a href="#Java类" class="headerlink" title="Java类"></a>Java类</h3><p><strong>类的变量类型：</strong></p>
+<ol>
+<li><strong>局部变量：</strong>在<strong>类的方法中</strong>声明和初始化的变量，在方法结束后变量会自动销毁</li>
+<li><strong>成员变量：</strong>在<strong>类中但在类的方法外</strong>声明和初始化的变量，这种变量在<strong>类创建对象的时候实例化</strong>，成员变量可以被类的方法访问</li>
+<li><strong>类变量：</strong>在<strong>类中但在类的方法外被static修饰</strong>的变量，这种变量是所有类的实例化对象所共享的一个变量</li>
+</ol>
+<p><strong>类的构造方法：</strong>类的构造方法<strong>与类同名</strong>，一个类可以有多个构造方法(参数不同)</p>
+<p><strong>类的实例化和访问：</strong>通过<strong>声明+实例化(type name=new type())</strong>实例化对象，通过<strong>对象名+点运算符(name.var/name.method())</strong>访问对象变量或者方法</p>
+<p><strong>源文件声明规则：</strong></p>
+<ol>
+<li><strong>源文件只能有一个和文件名相同的public主类</strong></li>
+<li><strong>若类定义在某个包中，package语句放在源文件首行</strong></li>
+<li><strong>导入类文件，import语句放在package和类定义之间</strong></li>
+</ol>
+<h3 id="Java数据类型-内置-引用-常量"><a href="#Java数据类型-内置-引用-常量" class="headerlink" title="Java数据类型(内置+引用+常量)"></a>Java数据类型(内置+引用+常量)</h3><p><strong>内置数据类型：</strong>八种，6数字+2浮点+字符+布尔</p>
+<ul>
+<li><strong>6数字：</strong>byte(8位)，short(16位)，int(32位)，long(64位)</li>
+<li><strong>2浮点：</strong>float(32位单精度)，double(64位双精度)</li>
+<li><strong>字符：</strong>char(16位Unicode字符)</li>
+<li><strong>布尔：</strong>boolean(true/false)</li>
+<li><strong>包装类：</strong>数值取值以常量的形式定义在<strong>包装类(java.lang)</strong>中，如Byte、Integer、Float、Double、Character</li>
+</ul>
+<p><strong>引用数据类型：</strong>类似C++的指针，引用类型<strong>指向一个对象</strong>，变量一旦声明后类型就不能改变，如<strong>对象、数据都是引用类型</strong>，引用类型默认值为null</p>
+<p><strong>常量：</strong>在程序运行时不能修改的变量，使用<strong>final关键字修饰变量</strong></p>
+<p><strong>类型转换：</strong></p>
+<ul>
+<li><strong>自动类型转换：</strong>满足转换后的数据类型位数增大的规则，转换过程中可能导致<strong>溢出或损失精度</strong>，如浮点数到整数转换是<strong>舍弃小数而不是四舍五入</strong></li>
+<li><strong>强制类型转换：</strong>使用格式(type)value进行转换</li>
+</ul>
+<h3 id="Java修饰符-访问控制-非访问控制"><a href="#Java修饰符-访问控制-非访问控制" class="headerlink" title="Java修饰符(访问控制+非访问控制)"></a>Java修饰符(访问控制+非访问控制)</h3><p><strong>访问控制修饰符：</strong>用来保护对<strong>类、接口、变量、方法</strong>的访问，default、public、private(不修饰类、接口)、protected(不修饰类、接口)<br><strong>非访问控制修饰符：</strong></p>
+<ul>
+<li><strong>static：</strong>修饰类方法和类变量(静态)</li>
+<li><strong>final：</strong>修饰类(不能继承)、方法(不能被集成类重新定义)、变量(常量不能修改)</li>
+<li><strong>abstract：</strong>修饰抽象类和抽象方法</li>
+<li><strong>synchronized：</strong>修饰方法在同一时间只能被一个线程访问</li>
+<li><strong>transient：</strong>预处理类和变量，修饰的变量会被JVM跳过，不持久化</li>
+<li><strong>volatile：</strong>修饰的变量被线程访问时都强制从共享内存中重新读取变量值，而且修饰的变量发生变化会强制线程将变化值写入共享内存</li>
+</ul>
+<h3 id="Java流程语句"><a href="#Java流程语句" class="headerlink" title="Java流程语句"></a>Java流程语句</h3><p><strong>循环结构：</strong>while(){}，do{}while();，for(;;){}，数组循环for(type item:arrayName){}<br><strong>控制结构：</strong>break，continue<br><strong>判断结构：</strong>if(){}else if(){}else{}，switch(){case value:break;default:}</p>
+<h3 id="Number类"><a href="#Number类" class="headerlink" title="Number类"></a>Number类</h3><p>Java为每一个内置数据类型提供了对应<strong>包装类对象</strong>，所有包装类都是<strong>抽象类Number的子类</strong>，Number类属于<strong>java.lang包</strong><br><img src="/images/je10.png" alt=""><br><strong>Java中的自动装箱与拆箱：</strong></p>
+<ul>
+<li>当内置数据类型被当做对象使用的时候，Java编译器会自动<strong>将基本数据类型转换为包装器类型</strong>，这就是<strong>自动装箱</strong>。</li>
+<li>当对象被当做内置数据类型使用的时候，Java编译器会自动<strong>将包装器类型转换为基本数据类型</strong>，这就是<strong>自动拆箱</strong><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer i1 = <span class="number">128</span>;  <span class="comment">// 装箱，相当于 Integer.valueOf(128);</span></span><br><span class="line"><span class="keyword">int</span> t = i1; <span class="comment">//拆箱，相当于 i1.intValue() 拆箱</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Math类"><a href="#Math类" class="headerlink" title="Math类"></a>Math类</h3><p>Math类包含了用于执行基本数学运算的属性和方法，如初等指数、对数、平方根、三角函数等，Math的方法都被定义为<strong>static形式</strong>，通过Math类可以在主函数中<strong>直接调用</strong><br><strong>常用方法：</strong></p>
+<ul>
+<li>ceil()向上取整，</li>
+<li>floor()向下取整，</li>
+<li>round()四舍五入，</li>
+<li>min()/max()返回最小/大值，</li>
+<li>exp(n)返回e^n，</li>
+<li>log(n)返回ln(n)，</li>
+<li>pow(a,b)返回a^b，</li>
+<li>sqrt(n)返回根号n，</li>
+<li>random()返回[0.0,1.0]随机数</li>
+</ul>
+<h3 id="Character类"><a href="#Character类" class="headerlink" title="Character类"></a>Character类</h3><p>Character类是内置数据类型char的包装类，可通过装箱的形式创建。<br><strong>常用方法：</strong></p>
+<ul>
+<li>isLetter()/isDigit()/isWhitespace()/isUpperCase()/isLowerCase()判断字母/数字字符/空格/大写字母/小写字母，</li>
+<li>toUpperCase()/toLowerCase()/toString()转换字母大写/小写/字符串形式</li>
+</ul>
+<h3 id="String-amp-StringBuffer-amp-StringBuilder类"><a href="#String-amp-StringBuffer-amp-StringBuilder类" class="headerlink" title="String&amp;StringBuffer&amp;StringBuilder类"></a>String&amp;StringBuffer&amp;StringBuilder类</h3><p>String字符串对象初始化之后是<strong>不可改变的</strong>，若需要修改则会创建新的String字符串对象，因此对于需要修改的字符串应该选用StringBuffer和StringBuilder类，StringBuilder是<strong>非线程安全但速度快</strong>，StringBuffer是<strong>线程安全但速度慢</strong><br><strong>String类常用方法：</strong></p>
+<ul>
+<li>str.length()获取长度，</li>
+<li>str.concat(str)连接字符串，</li>
+<li>str.charAt(index)返回index处字符，</li>
+<li>str.replace(a,b)用字符b替换str中所有a字符，</li>
+<li>str.replaceAll(regex,b)用字符串b替换str中满足正则regex的字符串，</li>
+<li>str.split(regex,[limit])根据regex规则分割str成[limit]个字符串，</li>
+<li>str.toLowerCase()/toUpperCase()所有字符转换为小写/大写，</li>
+<li>str.trim()返回忽略前后空白的字符串副本</li>
+</ul>
+<p><strong>StringBuffer/StringBuilder类常用方法：</strong></p>
+<ul>
+<li>str.append(s)将s追加到字符串str的结尾</li>
+<li>str.reverse()返回str反转形式</li>
+<li>str.delete(start,end)删除start下标到end下标中的字符</li>
+<li>str.insert(offset,s)将s插入到offset索引字符前边</li>
+<li>str.capacity()返回字符串容量(预处理预留容量会比length大)</li>
+</ul>
+<h3 id="Java数组与Arrays类-java-util-Arrays"><a href="#Java数组与Arrays类-java-util-Arrays" class="headerlink" title="Java数组与Arrays类(java.util.Arrays)"></a>Java数组与Arrays类(java.util.Arrays)</h3><p><strong>声明与创建数组：</strong></p>
+<ul>
+<li>dataType[] arrayRefVar = new dataType[arraySize];</li>
+<li>dataType[] arrayRefVar = {value0, value1, …, valuek};</li>
+</ul>
+<p><strong>遍历数组：</strong>for(dataType value:arrayRefVar){//处理value}<br><strong>Arrays类常用方法：</strong></p>
+<ul>
+<li>fill(array,val)用val值填充数组array</li>
+<li>sort(array)对数组升序排序</li>
+<li>equals(array1,array2)比较数组12是否相等</li>
+<li>binarySearch(array,val)返回val在数组array中的位置</li>
+</ul>
+<h3 id="Date类和SimpleDateFormat类-java-util"><a href="#Date类和SimpleDateFormat类-java-util" class="headerlink" title="Date类和SimpleDateFormat类(java.util)"></a>Date类和SimpleDateFormat类(java.util)</h3><p>Java提供Data类封装时间和日期<br><strong>创建和初始化Date对象：</strong></p>
+<ul>
+<li>Date date = new Date();  //当前日期和时间初始化</li>
+<li>Date date = new Date(long millisec);  //时间戳初始化</li>
+</ul>
+<p><strong>Date对象常用方法：</strong></p>
+<ul>
+<li>date.getTime()返回date对象的时间戳</li>
+<li>date.setTime(long time)返回时间戳表示的date对象</li>
+<li>date.toString()返回date的字符串表示</li>
+</ul>
+<p><strong>SimpleDateFormat类：</strong></p>
+<ol>
+<li><strong>将date对象转换成指定格式的string：</strong>如SimpleDateFormat ft = new SimpleDateFormat (“E yyyy.MM.dd hh:mm:ss a zzz”);</li>
+<li><strong>使用parse()将string根据指定格式解析成日期：</strong>如SimpleDateFormat ft = new SimpleDateFormat (“yyyy-MM-dd”);date=ft.parse(“1818-11-11”);System.out.println(t);</li>
+</ol>
+<p><strong>Thread.sleep(millisec):</strong>使当前线程进入阻塞状态millisec毫秒</p>
+<h3 id="Pattern类-amp-Matcher类-java-util-regex"><a href="#Pattern类-amp-Matcher类-java-util-regex" class="headerlink" title="Pattern类&amp;Matcher类(java.util.regex)"></a>Pattern类&amp;Matcher类(java.util.regex)</h3><p><strong>正则表达式实例：</strong></p>
+<ul>
+<li>字符串匹配对应的字符串</li>
+<li>.(点号)匹配除”\r\n”之外的任何单个字符</li>
+<li>[\s\S]匹配任意字符</li>
+<li>^定义开头</li>
+<li>$定义结尾</li>
+<li>+匹配前面字符一次或者多次</li>
+<li>*匹配前面字符零次或者多次</li>
+<li>?匹配前面字符零次或者一次</li>
+<li>\d匹配数字，等效于[0-9]</li>
+<li>\s匹配空格</li>
+<li>\w匹配字类字符，等效于[A-Za-z0-9_]</li>
+<li>\b匹配字边界，即字与空格的位置</li>
+</ul>
+<p><strong>String中使用正则：</strong></p>
+<ul>
+<li><strong>匹配：</strong>Str.matches(regex)返回str中是否有regex匹配的结果即true/false</li>
+<li><strong>替换：</strong>Str.replaceAll(regex,n)将str中的符合regex匹配的字符串替换成n</li>
+<li><strong>切割：</strong>Str.split(regex)返回Str以regex匹配到的字符分割的string数组</li>
+</ul>
+<p><strong>Pattern与Matcher对象：</strong></p>
+<ul>
+<li><strong>Pattern对象：</strong>是正则表达式的编译表示，调用公共静态编译方法<strong>(Pattern.compile)</strong>得到，如Pattern pt = Pattern.compile(regexStr);</li>
+<li><strong>Matcher对象：</strong>是对输入字符串进行解释与匹配操作的引擎，调用<strong>Pattern对象的matcher方法</strong>得到，如Matcher match = pt.matcher(Str);</li>
+</ul>
+<p><strong>Match对象常用方法：</strong></p>
+<ul>
+<li>matcher.find()返回下一个匹配对象</li>
+<li><strong>匹配组：</strong>将多个匹配规则以开括号形式写出，匹配时会自动对应分组</li>
+<li>matcher.group(int groupCount)返回对应匹配组的匹配结果</li>
+<li>matcher.groupCount()返回匹配组数量</li>
+<li>matcher.toMatchResult()将匹配结果以MatchResult形式返回</li>
+</ul>
+<h3 id="Java继承"><a href="#Java继承" class="headerlink" title="Java继承"></a>Java继承</h3><p>使用关键字<strong>extends申明所继承的父类</strong>，子类拥有父类<strong>非private属性、方法</strong>，子类可以<strong>重写父类方法</strong>，Java的继承是<strong>单继承</strong><br><strong>接口：</strong>Java使用关键字<strong>implements继承接口</strong>，接口的继承可以是<strong>多继承</strong><br><strong>super：</strong>super关键字可以实现对父类成员的访问，用来引用当前对象的父类<br><strong>this：</strong>this关键字是指向自己的引用<br><strong>final：</strong>final类修饰的类不能被集成，final修饰的方法不能被子类重写<br><strong>重写(Override)：</strong>是子类对父类允许访问的方法进行重新编写，<strong>返回值和形参不能改变</strong><br><strong>重载(Overload)：</strong>重载是在一个类中<strong>方法名相同，参数不同的方法</strong>，主要用于<strong>构造器的重载</strong></p>
+<h3 id="Java多态"><a href="#Java多态" class="headerlink" title="Java多态"></a>Java多态</h3><p><strong>多态应用条件：</strong>子类继承父类+子类重写父类方法+父类引用指向子类对象<br><strong>多态调用机制：</strong>多态调用一个类对象的方法时，首先<strong>检查父类中是否有该方法</strong>，若没有则编译错误(没有重写)，若有则<strong>调用子类同名方法</strong>，若想调用父类中被重写的方法则需使用关键字super<br><strong>虚方法：</strong>当父类引用指向子类对象，调用此引用的方法时，调用的是<strong>子类对象重写的方法</strong></p>
+<h3 id="Java抽象类"><a href="#Java抽象类" class="headerlink" title="Java抽象类"></a>Java抽象类</h3><p>使用关键字<strong>abstract</strong>定义抽象类，抽象类变量不能初始化值，抽象类方法只包含方法声明(修饰符+abstract+返回值+方法名+参数列表)，<strong>继承的子类必须重写父抽象类所有抽象方法</strong>，否则该子类也必须声明为抽象类，不能实例化对象</p>
+<h3 id="Java接口"><a href="#Java接口" class="headerlink" title="Java接口"></a>Java接口</h3><p>接口是一个抽象类型，是<strong>抽象方法的集合</strong>，通过关键字<strong>interface</strong>声明，类通过<strong>implements</strong>实现接口<br><strong>接口与类不同：</strong></p>
+<ul>
+<li>接口不能实例化对象</li>
+<li>接口没有构造方法</li>
+<li>接口中<strong>所有方法都是抽象方法</strong></li>
+<li>接口中<strong>没有除了static/final外的成员变量</strong></li>
+<li>接口不被类继承(extends)，而是被类实现(implements)，<strong>实现接口的类要实现接口所有方法</strong></li>
+<li>接口支持<strong>多继承</strong><br><img src="/images/je12.png" alt=""></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/06/12/javaee2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            JavaEE学习(二)Java高级特性
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/06/04/dl03/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Sklearn机器学习(二) 完整的机器学习项目</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/23/javahigh3-Array/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（三）ArrayList" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/23/javahigh3-Array/" class="title">Java深入学习-Java集合框架（三）ArrayList</a></p>
+                            <p class="item-date"><time datetime="2018-08-23T06:07:29.000Z" itemprop="datePublished">2018-08-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/jvm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/jvm/" class="title">Java虚拟机学习笔记</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh2-AbstractCollection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（二）AbstractCollection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh2-AbstractCollection/" class="title">Java深入学习-Java集合框架（二）AbstractCollection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh1-Collection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh1.jpg)" alt="Java深入学习-Java集合框架（一）Collection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh1-Collection/" class="title">Java深入学习-Java集合框架（一）Collection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/java-Q&A-1/" class="title">Java面试Q&amp;A(一)携程</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">89</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JBDC/">JBDC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-DL/">Java-DL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaEE/">JavaEE</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/">JavaSE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java面试/">Java面试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Q-A/">Q&A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMvc/">SpringMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.11px;">C++</a> <a href="/tags/Collection/" style="font-size: 13.33px;">Collection</a> <a href="/tags/GithubPages/" style="font-size: 11.11px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.11px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JBDC/" style="font-size: 10px;">JBDC</a> <a href="/tags/Java-DL/" style="font-size: 13.33px;">Java-DL</a> <a href="/tags/JavaEE/" style="font-size: 18.89px;">JavaEE</a> <a href="/tags/JavaSE/" style="font-size: 11.11px;">JavaSE</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Java面试/" style="font-size: 10px;">Java面试</a> <a href="/tags/Linux/" style="font-size: 11.11px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.11px;">Python</a> <a href="/tags/Q-A/" style="font-size: 10px;">Q&A</a> <a href="/tags/React/" style="font-size: 11.11px;">React</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.11px;">Scrapy爬虫</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 14.44px;">SpringCloud</a> <a href="/tags/SpringMvc/" style="font-size: 10px;">SpringMvc</a> <a href="/tags/WEB安全/" style="font-size: 14.44px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 13.33px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 16.67px;">python</a> <a href="/tags/swoole/" style="font-size: 17.78px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.11px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 16.67px;">剑指Offer</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 14.44px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 15.56px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 14.44px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.22px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 16.67px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.11px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/06/11/javaee1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

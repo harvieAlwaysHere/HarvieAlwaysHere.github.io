@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JavaEE学习(三)JBDC | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaEE,JBDC" />
+    
+    <meta name="description" content="本文是学习JavaEE开发的记录笔记 大纲JDBC安装 进入官方网站选择平台独立版下载 下载后解压缩可以看到.jar包mysql-connector-java-5.1.46-bin.jar，将其放在JDK目录下的lib目录下 配置classpath至此就完成了mysql数据库的JDBC包的安装，在所有java文件中都可以通过import java.sql.*导入mysql的JDBC包了  JDBC">
+<meta name="keywords" content="JavaEE,JBDC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaEE学习(三)JBDC">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/06/14/javaee3/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="本文是学习JavaEE开发的记录笔记 大纲JDBC安装 进入官方网站选择平台独立版下载 下载后解压缩可以看到.jar包mysql-connector-java-5.1.46-bin.jar，将其放在JDK目录下的lib目录下 配置classpath至此就完成了mysql数据库的JDBC包的安装，在所有java文件中都可以通过import java.sql.*导入mysql的JDBC包了  JDBC">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/javaee.png">
+<meta property="og:updated_time" content="2018-06-15T03:34:56.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaEE学习(三)JBDC">
+<meta name="twitter:description" content="本文是学习JavaEE开发的记录笔记 大纲JDBC安装 进入官方网站选择平台独立版下载 下载后解压缩可以看到.jar包mysql-connector-java-5.1.46-bin.jar，将其放在JDK目录下的lib目录下 配置classpath至此就完成了mysql数据库的JDBC包的安装，在所有java文件中都可以通过import java.sql.*导入mysql的JDBC包了  JDBC">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/javaee.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-javaee3" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JavaEE学习(三)JBDC
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/06/14/javaee3/" class="article-date">
+            <time datetime="2018-06-14T01:55:31.000Z" itemprop="datePublished">2018-06-14</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JBDC/">JBDC</a>, <a class="tag-link" href="/tags/JavaEE/">JavaEE</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="本文是学习JavaEE开发的记录笔记"><a href="#本文是学习JavaEE开发的记录笔记" class="headerlink" title="本文是学习JavaEE开发的记录笔记"></a>本文是学习JavaEE开发的记录笔记</h3><p><img src="/images/javaee.png" alt=""></p>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h3 id="JDBC安装"><a href="#JDBC安装" class="headerlink" title="JDBC安装"></a>JDBC安装</h3><ol>
+<li>进入<a href="https://dev.mysql.com/downloads/connector/j/" target="_blank" rel="noopener">官方网站</a>选择平台独立版下载<br><img src="/images/je30.png" alt=""></li>
+<li>下载后解压缩可以看到.jar包<strong>mysql-connector-java-5.1.46-bin.jar</strong>，将其放在<strong>JDK目录下的lib目录下</strong></li>
+<li><strong>配置classpath</strong><br><img src="/images/je31.png" alt=""><br>至此就完成了mysql数据库的JDBC包的安装，在所有java文件中都可以通过<strong>import java.sql.*</strong>导入mysql的JDBC包了</li>
+</ol>
+<h3 id="JDBC简单演示"><a href="#JDBC简单演示" class="headerlink" title="JDBC简单演示"></a>JDBC简单演示</h3><p>JDBC进行数据库操作主要有六步：</p>
+<ul>
+<li><strong>1.导入包：</strong>import java.sql.*;</li>
+<li><strong>2.注册JDBC驱动程序：</strong>Class.forName(DriverName);</li>
+<li><strong>3.创建数据库连接：</strong>Connection conn=DriverManager.getConnection(DB_URL,USER,PASS);</li>
+<li><strong>4.执行数据库语句操作 ：</strong>Statement stmt = conn.createStatement();ResultSet rs = stmt.executeQuery(sql);</li>
+<li><strong>5.从结果集提取数据：</strong>rs.getType(valueName);</li>
+<li><strong>6.关闭连接：</strong>ResultSet/Statement/Connection.close();<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.导入包</span></span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">sqlTest</span> </span>&#123;</span><br><span class="line">   <span class="comment">//一些静态数据</span></span><br><span class="line">   <span class="comment">//JDBC驱动类型 以下为mysql驱动</span></span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">final</span> String JDBC_DRIVER = <span class="string">"com.mysql.jdbc.Driver"</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//JDBC驱动类型对应的数据库URL 以下为mysqlURL格式jdbc:mysql://hostname/databaseName</span></span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">final</span> String DB_URL = <span class="string">"jdbc:mysql://localhost/mt?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//数据库账号密码</span></span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">final</span> String USER = <span class="string">"root"</span>;</span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">final</span> String PASS = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">     <span class="comment">//数据库连接实例</span></span><br><span class="line">     Connection conn = <span class="keyword">null</span>;</span><br><span class="line">     <span class="comment">//执行语句实例</span></span><br><span class="line">     Statement stmt = <span class="keyword">null</span>;</span><br><span class="line">     <span class="keyword">try</span>&#123;</span><br><span class="line">       <span class="comment">//2.注册JDBC驱动程序</span></span><br><span class="line">       Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//3.创建一个数据库物理连接Connection</span></span><br><span class="line">       conn = DriverManager.getConnection(DB_URL,USER,PASS);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//4.执行数据库语句操作Statement </span></span><br><span class="line">       stmt = conn.createStatement();</span><br><span class="line">       <span class="comment">//读操作使用stmt.executeQuery()执行</span></span><br><span class="line">       String sql;</span><br><span class="line">       sql = <span class="string">"SELECT id,sid,name,description FROM mt_product"</span>;</span><br><span class="line">       ResultSet rs = stmt.executeQuery(sql);</span><br><span class="line">       <span class="comment">//写操作使用stmt.executeUpdate()执行 如UPDATE/INSERT/DELETE</span></span><br><span class="line"></span><br><span class="line">       <span class="comment">//5.从结果集提取数据</span></span><br><span class="line">       <span class="keyword">while</span>(rs.next())&#123;</span><br><span class="line">         <span class="keyword">int</span> id  = rs.getInt(<span class="string">"id"</span>);</span><br><span class="line">         <span class="keyword">int</span> sid = rs.getInt(<span class="string">"sid"</span>);</span><br><span class="line">         String name = rs.getString(<span class="string">"name"</span>);</span><br><span class="line">         String description = rs.getString(<span class="string">"description"</span>);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//6.依次关闭数据库连接</span></span><br><span class="line">       rs.close();</span><br><span class="line">       stmt.close();</span><br><span class="line">       conn.close();</span><br><span class="line"></span><br><span class="line">     &#125;<span class="keyword">catch</span>(SQLException se)&#123;</span><br><span class="line">       <span class="comment">//处理JDBC操作数据库出错</span></span><br><span class="line">       se.printStackTrace();</span><br><span class="line">     &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">       <span class="comment">//处理Class.forName即JDBC驱动程序出错</span></span><br><span class="line">       e.printStackTrace();</span><br><span class="line">     &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">       <span class="comment">//使用finally关闭数据库连接</span></span><br><span class="line">       <span class="keyword">try</span>&#123;</span><br><span class="line">         <span class="keyword">if</span>(stmt!=<span class="keyword">null</span>) stmt.close();</span><br><span class="line">       &#125;<span class="keyword">catch</span>(SQLException se2)&#123;</span><br><span class="line">         <span class="comment">//不做任何事情</span></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">try</span>&#123;</span><br><span class="line">         <span class="keyword">if</span>(conn!=<span class="keyword">null</span>) conn.close();</span><br><span class="line">       &#125;<span class="keyword">catch</span>(SQLException se)&#123;</span><br><span class="line">         se.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="JDBC架构与组件"><a href="#JDBC架构与组件" class="headerlink" title="JDBC架构与组件"></a>JDBC架构与组件</h3><p>JDBC体系架构由<strong>两层组成：</strong></p>
+<ul>
+<li>JDBC API：连接<strong>应用程序(Java Application)到JDBC驱动管理器(JDBC Driver Manager)</strong></li>
+<li>JDBC 驱动程序API：连接<strong>JDBC驱动管理器(JDBC Driver Manager)到驱动程序(JDBC Driver)</strong></li>
+</ul>
+<p><strong>JDBC驱动管理器：</strong>确保程序使用<strong>正确驱动访问数据源</strong>，支持连接到多个<strong>异构数据库</strong>的多个<strong>并发驱动程序</strong><br><img src="/images/je33.png" alt=""></p>
+<p><strong>JDBC API提供的接口和类：</strong></p>
+<ul>
+<li><strong>DriverManager：</strong>管理数据库驱动程序列表，使用其<strong>DriverManager.getConnection();</strong>方法建立数据库连接</li>
+<li><strong>Driver：</strong>处理与数据库服务器的通信，我们很少直接与Driver交互，而是<strong>通过DriverManager管理Driver</strong></li>
+<li><strong>Connection：</strong>与数据库所有通信方法的联系来源，如<strong>Connection.createStatement()创建语句对象</strong></li>
+<li><strong>Statement：</strong>语句对象，用于将SQL语句提交到数据库，如<strong>Statement.executeQuery(读语句)/Statement.executeUpdate(写语句)</strong></li>
+<li><strong>ResultSet:</strong>数据库返回的查询结果集</li>
+<li><strong>SQLException：</strong>数据库应用程序中发生的任何错误</li>
+</ul>
+<h3 id="JDBC驱动类型"><a href="#JDBC驱动类型" class="headerlink" title="JDBC驱动类型"></a>JDBC驱动类型</h3><p><strong>JDBC驱动程序：</strong>JDK附带的java.sql中包含各种类的定义，<strong>JDBC驱动程序则实现其中的java.sql.Driver接口</strong>使得Java应用可以与数据库服务器进行交互</p>
+<p><strong>JDBC驱动程序类型：</strong>Sun公司根据其架构可分为四类</p>
+<ul>
+<li>JDBC-ODBC桥驱动程序</li>
+<li>JDBC本地API</li>
+<li>JDBC-Net纯Java</li>
+<li>100%纯Java</li>
+</ul>
+<p><strong>100%纯Java驱动类型：</strong>MySQL Connector/J使用，基于纯Java的驱动程序通过<strong>套接字连接与供应商的数据库直接通信</strong>，是数据库最高性能的驱动程序，不需要在客户端或服务器安装特殊软件<br><img src="/images/je32.png" alt=""></p>
+<h3 id="注册JDBC驱动程序"><a href="#注册JDBC驱动程序" class="headerlink" title="注册JDBC驱动程序"></a>注册JDBC驱动程序</h3><p>注册驱动程序是使<strong>JVM将Oracle驱动程序的类文件加载到内存中</strong>的过程，因此可以将其用作JDBC接口的实现，只需在程序中注册一次就可以</p>
+<p><strong>注册驱动程序方法：</strong></p>
+<ol>
+<li><strong>Class.forName()：</strong>将驱动程序的类文件动态加载到内存中，并将其自动注册<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(ClassNotFoundException ex) &#123;</span><br><span class="line">   System.out.println(<span class="string">"Error: unable to load driver class!"</span>);</span><br><span class="line">   System.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>DriverManager.registerDriver()：</strong><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   Driver myDriver = <span class="keyword">new</span> com.mysql.jdbc.Driver();</span><br><span class="line">   DriverManager.registerDriver( myDriver );</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(ClassNotFoundException ex) &#123;</span><br><span class="line">   System.out.println(<span class="string">"Error: unable to load driver class!"</span>);</span><br><span class="line">   System.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Connection对象：数据库URL配置"><a href="#Connection对象：数据库URL配置" class="headerlink" title="Connection对象：数据库URL配置"></a>Connection对象：数据库URL配置</h3><p>注册驱动程序后，使用<strong>DriverManager.getConnection()根据对应驱动程序的数据库URL建立连接获取Connectiond对象</strong><br><strong>JDBC驱动程序与对应数据库URL：</strong><br><img src="/images/je34.png" alt=""><br><strong>常用的getConnection()构造方法：</strong>使用数据库URL+数据库账号+数据库密码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String URL = <span class="string">"jdbc:mysql://hostname/databaseName"</span>;</span><br><span class="line">String USER = <span class="string">"username"</span>;</span><br><span class="line">String PASS = <span class="string">"password"</span></span><br><span class="line">Connection conn = DriverManager.getConnection(URL, USER, PASS);</span><br></pre></td></tr></table></figure></p>
+<h3 id="数据库交互"><a href="#数据库交互" class="headerlink" title="数据库交互"></a>数据库交互</h3><p>数据库连接后进行<strong>数据库交互的对象</strong>有<br><img src="/images/je35.png" alt=""></p>
+<p><strong>Statement对象：</strong>通过<strong>Statement stmt=Connection.createStatement()</strong>获得，对象方法有<br><img src="/images/je36.png" alt=""></p>
+<p><strong>PreparedStatement对象：</strong>通过<strong>在SQL语句中使用占位符</strong>，使用<strong>SetXXX()方法绑定参数</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);</span><br><span class="line"><span class="comment">//SQL语句中使用占位符</span></span><br><span class="line">String sql = <span class="string">"UPDATE Employees set age=? WHERE id=?"</span>;</span><br><span class="line">PreparedStatement pstmt = conn.prepareStatement(sql);</span><br><span class="line"><span class="comment">//设置占位符值</span></span><br><span class="line">stmt.setInt(<span class="number">1</span>, <span class="number">35</span>);</span><br><span class="line">stmt.setInt(<span class="number">2</span>, <span class="number">102</span>);</span><br><span class="line"><span class="comment">//执行语句</span></span><br><span class="line"><span class="keyword">int</span> rows = stmt.executeUpdate();</span><br></pre></td></tr></table></figure></p>
+<p><strong>CallableStatement对象：</strong>比PreparedStatement对象更强大的是不仅提供了SetXXX()方法绑定输入参数，还提供<strong>getXXX()绑定SQL语句返回的参数值</strong></p>
+<h3 id="ResultSet类：结果集"><a href="#ResultSet类：结果集" class="headerlink" title="ResultSet类：结果集"></a>ResultSet类：结果集</h3><p>ResultSet对象实现了<strong>java.sql.ResultSet接口</strong>，可以在<strong>创建数据库交互对象时(createStatement(int RSType, int RSConcurrency);)指定ResultSet对象类型和ResultSet的并发性</strong><br><img src="/images/je37.png" alt=""></p>
+<p><strong>浏览结果集：</strong>结果集对象实质是一个<strong>行列表</strong>，因此可以通过<strong>移动光标</strong>遍历结果集，移动光标方法如下</p>
+<ul>
+<li>beforeFirst()光标移动到第一行之前</li>
+<li>afterLast()光标移动到最后一行之后</li>
+<li>boolean first()光标移动到第一行</li>
+<li>last()光标移动到最后一行</li>
+<li>boolean absolute(int row)光标移动到row行</li>
+<li>boolean relative(int row)光标在当前位置向前(row<0)向后(row>0)移row行</0)向后(row></li>
+<li>boolean previous()光标移动到上一行 第一行时返回false</li>
+<li>boolean next()光标移动到下一行 最后一行时返回false</li>
+<li>int getRow()返回当前行数</li>
+<li>moveToInsertRow()光标移动到插入行</li>
+<li>moveToCurrentRow()光标移回原先行数</li>
+</ul>
+<p><strong>查看结果集：</strong><br>通过<strong>列名称/列索引</strong>：<strong>getType(String columnName)/getType(int columnIndex)</strong>获取当前行数据</p>
+<p><strong>更新结果集：</strong><br>通过<strong>列名称/列索引</strong>：<strong>updateType(String columnName, Type newValue)/updateType(int columnIndex,Type newValue)</strong>更新当前行数据</p>
+<p><strong>通过更新结果集数据更新数据库：</strong><br><img src="/images/je38.png" alt=""></p>
+<h3 id="JDBC数据类型"><a href="#JDBC数据类型" class="headerlink" title="JDBC数据类型"></a>JDBC数据类型</h3><p>JDBC驱动程序将Java数据类型与SQL数据类型提供一一对应的映射<br><img src="/images/je39.png" alt=""><br><strong>NULL值处理：</strong>在查询结果集时<strong>若数据出现NULL值</strong>，需要使用<strong>ResultSet对象的wasNull()方法来将SQL的NULL值处理成java的数据类型</strong>，值得注意的是，<strong>ResultSet.wasNull()方法需要在getXXX()方法后使用</strong></p>
+<h3 id="JDBC事务"><a href="#JDBC事务" class="headerlink" title="JDBC事务"></a>JDBC事务</h3><ol>
+<li><strong>启动手动事务支持：</strong>Connection.setAutoCommit(false);</li>
+<li><strong>提交事务：</strong>Connection.commit();</li>
+<li><strong>回滚事务：</strong>Connection.rollback();</li>
+<li><strong>回滚点：</strong>Savepoint savepoint=Connection.setSavepoint(“Savepoint1”);<strong>rollback(savepoint)仅保存回滚点前的更改</strong></li>
+<li><strong>完整事务框架：</strong><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">   conn = DriverManager.getConnection(DB_URL,USER,PASS);</span><br><span class="line">   <span class="comment">//启动手动事务支持</span></span><br><span class="line">   conn.setAutoCommit(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//数据库交互代码</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">//提交事务</span></span><br><span class="line">   conn.commit();</span><br><span class="line">&#125;<span class="keyword">catch</span>(SQLException se)&#123;</span><br><span class="line">   <span class="comment">//若出现错误 回滚事务</span></span><br><span class="line">   conn.rollback();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="JDBC异常"><a href="#JDBC异常" class="headerlink" title="JDBC异常"></a>JDBC异常</h3><p>对于JDBC，最常处理的的异常是<strong>java.sql.SQLException</strong>，<strong>驱动程序/数据库交互</strong>都会发生SQLException异常，我们可以使用<strong>try-catch-finally</strong>捕获SQLException异常对象进行处理，一般采用<strong>SQLException.printStackTrace();打印错误信息</strong>，以下有SQLException对象用于<strong>检索异常信息的方法</strong><br><img src="/images/je310.png" alt=""></p>
+<h3 id="JDBC批量处理"><a href="#JDBC批量处理" class="headerlink" title="JDBC批量处理"></a>JDBC批量处理</h3><ol>
+<li><strong>确认数据库是否支持批量处理：</strong>DatabaseMetaData dbmd=Connection.getMetaData();dbmd.supportsBatchUpdates();返回boolean确定数据库是否支持批量更新操作</li>
+<li><strong>取消自动提交：</strong>Connection.setAutoCommit(false);</li>
+<li><strong>添加多条SQL语句到Statement对象中：</strong>Statement.addBatch(SQL);</li>
+<li><strong>执行SQL语句：</strong>int[] count = Statement.executeBatch();会返回整数数组表示相应更新语句的更新计数</li>
+<li><strong>提交事务更改：</strong>Connection.commit();</li>
+<li><strong>清除所有添加的批量语句：</strong>Statement.clearBatch();</li>
+</ol>
+<h3 id="SQL转义"><a href="#SQL转义" class="headerlink" title="SQL转义"></a>SQL转义</h3><p>通过转义序列，使得JDBC驱动可以<strong>以目标数据库的格式</strong>存储相应数据</p>
+<ol>
+<li><strong>日期：</strong>{d ‘yyyy-mm-dd’}</li>
+<li><strong>时间：</strong>{t ‘hh:mm:ss’}</li>
+<li><strong>日期+时间：</strong>{ts ‘yyyy-mm-dd hh:mm:ss’}</li>
+<li><strong>DBMS中的标量函数：</strong>如SQL函数length获取字符串长度{fn length(‘Hello World’)}</li>
+<li><strong>外部连接：</strong>{oj outer-join}</li>
+</ol>
+<h3 id="JDBC流数据"><a href="#JDBC流数据" class="headerlink" title="JDBC流数据"></a>JDBC流数据</h3><p>JDBC中PreparedStatement对象可以使用<strong>输入流和输出流</strong>处理数据，例如针对<strong>CLOB/BLOB</strong>数据等大值数据可以通过转换成<strong>ASCII/UNICODE/二进制等流形势</strong>存储和读取数据</p>
+<ul>
+<li><strong>setAsciiStream(int 参数占位符，FileInputStream 文件流，int 文件长度)：</strong>将文件流转换成ASCII值</li>
+<li><strong>setCharacterStream(int 参数占位符，FileInputStream 文件流，int 文件长度)：</strong>将文件流转换成Character值</li>
+<li><strong>setBinaryStream(int 参数占位符，FileInputStream 文件流，int 文件长度)：</strong>将文件流转换成Binary值</li>
+<li>相对应的<strong>ResultSet.getXXXStream(int columnIndex)</strong>将对应值转换成<strong>输入流InputStream</strong></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/06/14/qkl1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            区块链学习(一)基础概念
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/06/12/javaee2/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">JavaEE学习(二)Java高级特性</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/23/javahigh3-Array/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（三）ArrayList" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/23/javahigh3-Array/" class="title">Java深入学习-Java集合框架（三）ArrayList</a></p>
+                            <p class="item-date"><time datetime="2018-08-23T06:07:29.000Z" itemprop="datePublished">2018-08-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/jvm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/jvm/" class="title">Java虚拟机学习笔记</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh2-AbstractCollection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（二）AbstractCollection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh2-AbstractCollection/" class="title">Java深入学习-Java集合框架（二）AbstractCollection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh1-Collection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh1.jpg)" alt="Java深入学习-Java集合框架（一）Collection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh1-Collection/" class="title">Java深入学习-Java集合框架（一）Collection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/java-Q&A-1/" class="title">Java面试Q&amp;A(一)携程</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">89</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JBDC/">JBDC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-DL/">Java-DL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaEE/">JavaEE</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/">JavaSE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java面试/">Java面试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Q-A/">Q&A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMvc/">SpringMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.11px;">C++</a> <a href="/tags/Collection/" style="font-size: 13.33px;">Collection</a> <a href="/tags/GithubPages/" style="font-size: 11.11px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.11px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JBDC/" style="font-size: 10px;">JBDC</a> <a href="/tags/Java-DL/" style="font-size: 13.33px;">Java-DL</a> <a href="/tags/JavaEE/" style="font-size: 18.89px;">JavaEE</a> <a href="/tags/JavaSE/" style="font-size: 11.11px;">JavaSE</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Java面试/" style="font-size: 10px;">Java面试</a> <a href="/tags/Linux/" style="font-size: 11.11px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.11px;">Python</a> <a href="/tags/Q-A/" style="font-size: 10px;">Q&A</a> <a href="/tags/React/" style="font-size: 11.11px;">React</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.11px;">Scrapy爬虫</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 14.44px;">SpringCloud</a> <a href="/tags/SpringMvc/" style="font-size: 10px;">SpringMvc</a> <a href="/tags/WEB安全/" style="font-size: 14.44px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 13.33px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 16.67px;">python</a> <a href="/tags/swoole/" style="font-size: 17.78px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.11px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 16.67px;">剑指Offer</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 14.44px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 15.56px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 14.44px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.22px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 16.67px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.11px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/06/14/javaee3/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

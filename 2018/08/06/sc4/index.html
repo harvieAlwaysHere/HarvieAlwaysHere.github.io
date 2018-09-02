@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>SpringCloud学习(四)容错保护 | Harvie Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaEE,SpringCloud" />
+    
+    <meta name="description" content="SpringCloud 容错保护  Hystrix 容错保护微服务架构的系统之间通过服务注册与订阅的方式相互依赖，由于服务在不同进程运行且采用远程调用的方式，可能因为网络、服务自身故障延迟造成请求任务堆积导致服务瘫痪 微服务架构中若一个服务出现故障，很容易因为依赖关系引发故障蔓延，最终导致整个系统故障，因此产生了断路器等一系列的服务保护机制 若某个服务单元发生故障，经过断路器的故障监控，会向消费服">
+<meta name="keywords" content="JavaEE,SpringCloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud学习(四)容错保护">
+<meta property="og:url" content="https://harviealwayshere.github.io/2018/08/06/sc4/index.html">
+<meta property="og:site_name" content="Harvie Blog">
+<meta property="og:description" content="SpringCloud 容错保护  Hystrix 容错保护微服务架构的系统之间通过服务注册与订阅的方式相互依赖，由于服务在不同进程运行且采用远程调用的方式，可能因为网络、服务自身故障延迟造成请求任务堆积导致服务瘫痪 微服务架构中若一个服务出现故障，很容易因为依赖关系引发故障蔓延，最终导致整个系统故障，因此产生了断路器等一系列的服务保护机制 若某个服务单元发生故障，经过断路器的故障监控，会向消费服">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://harviealwayshere.github.io/images/sc.png">
+<meta property="og:updated_time" content="2018-09-02T01:50:55.949Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringCloud学习(四)容错保护">
+<meta name="twitter:description" content="SpringCloud 容错保护  Hystrix 容错保护微服务架构的系统之间通过服务注册与订阅的方式相互依赖，由于服务在不同进程运行且采用远程调用的方式，可能因为网络、服务自身故障延迟造成请求任务堆积导致服务瘫痪 微服务架构中若一个服务出现故障，很容易因为依赖关系引发故障蔓延，最终导致整个系统故障，因此产生了断路器等一系列的服务保护机制 若某个服务单元发生故障，经过断路器的故障监控，会向消费服">
+<meta name="twitter:image" content="https://harviealwayshere.github.io/images/sc.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7e541fcb9e4a4f1848c6b2345451b88d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Fright For Better Day</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/ItEassy">IT文章</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Life">生活</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/categories/Music">音乐歌单</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://github.com/harvieAlwaysHere">GitHub</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ItEassy/">ItEassy</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-sc4" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        SpringCloud学习(四)容错保护
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/08/06/sc4/" class="article-date">
+            <time datetime="2018-08-06T10:07:29.000Z" itemprop="datePublished">2018-08-06</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaEE/">JavaEE</a>, <a class="tag-link" href="/tags/SpringCloud/">SpringCloud</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="SpringCloud-容错保护"><a href="#SpringCloud-容错保护" class="headerlink" title="SpringCloud 容错保护"></a>SpringCloud 容错保护</h1><p><img src="/images/sc.png" alt=""></p>
+<ol>
+<li><h3 id="Hystrix"><a href="#Hystrix" class="headerlink" title="Hystrix"></a>Hystrix</h3><ol>
+<li><h4 id="容错保护"><a href="#容错保护" class="headerlink" title="容错保护"></a>容错保护</h4><p>微服务架构的系统之间通过<strong>服务注册与订阅</strong>的方式相互依赖，由于服务在不同进程运行且采用远程调用的方式，可能因为<strong>网络、服务自身故障延迟</strong>造成请求<strong>任务堆积</strong>导致服务瘫痪</p>
+<p>微服务架构中若一个服务出现故障，很容易因为依赖关系引发故障蔓延，最终导致整个系统故障，因此产生了<strong>断路器</strong>等一系列的服务保护机制</p>
+<p>若某个服务单元发生故障，经过断路器的故障监控，会向消费服务方返回一个<strong>错误响应</strong>，而不是长时间的等待</p>
+<p>Spring Cloud Hystrix实现了<strong>断路器、线程隔离</strong>等服务保护功能，对延迟和故障提供了强大的容错能力，具体功能有<strong>服务降级、服务熔断、线程/信号隔离、请求缓存、请求合并、服务监控等</strong></p>
+</li>
+<li><h4 id="断路器（服务降级）"><a href="#断路器（服务降级）" class="headerlink" title="断路器（服务降级）"></a>断路器（服务降级）</h4><p>消费服务方(调用服务者)通过断路器实现<strong>服务降级</strong>回调功能，实际使用中我们会为大多数在执行过程中<strong>可能会失败的Hystrix命令</strong>实现服务降级逻辑，但有些情况可以<strong>不去实现服务降级</strong>，如</p>
+<ul>
+<li><strong>写操作：</strong>Hystrix命令用来调用服务执行写操作时，通常返回类型为void或者空的Observable，实现服务降级的意义不大，通常写操作失败时我们<strong>通知调用者</strong>即可</li>
+<li><strong>批处理/离线计算：</strong>Hystrix命令用来执行一些批处理操作生成文件或者进行一些离线计算失败时，只需要<strong>将错误传播给调用者</strong>，如生成文件失败/计算失败参数有误等，让<strong>调用者稍后重试</strong></li>
+</ul>
+<p>接下来我们引入断路器来实现一般Hystrix命令的服务降级操作</p>
+<ol>
+<li><p><strong>引入hystrix依赖</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--hystrix容错保护模块--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-hystrix<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.5.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>开启断路器：</strong>在Spring Boot启动类中添加注解</p>
+<ul>
+<li><strong>@EnableCircuitBreaker</strong>：开启断路器功能</li>
+<li><strong>@SpringCloudApplication</strong>：相当于 @SpringBootApplication+@EnableDiscoveryClient+@EnableCircuitBreaker，开启Spring Boot、服务治理、断路器功能</li>
+</ul>
+</li>
+<li><p><strong>添加服务降级方法</strong>：通过在消费服务的方法上添加注解@HystrixCommand配置若<strong>服务不可用或者超时</strong>执行<strong>服务降级方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"getHystrixDemoError"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getHystrixDemo</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    ResponseEntity&lt;String&gt; response=restTemplate.getForEntity(<span class="string">"http://TEST-SERVICE/hystrixDemo?name="</span>+name,String.class);</span><br><span class="line">    <span class="keyword">return</span> response.getBody();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//需要与原方法统一参数类型、个数 否则会造成异常fallback method wasn't found:</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getHystrixDemoError</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"error"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>配置Hystrix调用超时时间：</strong>调用服务时响应时间超过超时时间自动调用服务降级方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Hystrix</span><br><span class="line"># 默认服务降级时间</span><br><span class="line">hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=1000</span><br><span class="line"># 设置某个方法的降级时间</span><br><span class="line">hystrix.command.getHystrixDemo.execution.isolation.thread.timeoutInMilliseconds=1000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>服务提供者增加随机相应时间：</strong>用于测试服务降级功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//让线程等待一会 触发消费服务的断路器 测试服务降级功能</span></span><br><span class="line"><span class="keyword">int</span> sleepTime=<span class="keyword">new</span> Random().nextInt(<span class="number">3000</span>);</span><br><span class="line">log.info(<span class="string">"SleepTime is "</span>+sleepTime);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Thread.sleep(sleepTime);</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>调用服务：</strong>可以发现服务响应时间超过1000ms时会出发断路器调用服务降级方法，返回error字符串，响应时间小于1000ms时可以返回正确相应内容</p>
+</li>
+</ol>
+</li>
+<li><h4 id="请求命令Command（封装服务调用请求）"><a href="#请求命令Command（封装服务调用请求）" class="headerlink" title="请求命令Command（封装服务调用请求）"></a>请求命令Command（封装服务调用请求）</h4><p>Hystrix使用请求命令<strong>HystrixCommand 或者HystrixObservableCommand</strong> 来封装具体的依赖<strong>服务调用</strong>逻辑</p>
+<p>这里主要采取<strong>注解</strong>方式实现封装服务调用，较为优雅，还可以通过<strong>继承</strong>方式实现封装</p>
+<ul>
+<li><p><strong>HystrixCommand：</strong>封装一个<strong>返回单个操作结果</strong>的服务调用，有两种执行方式</p>
+<ul>
+<li><p><strong>同步执行</strong>：在调用服务的方法上加上@HystrixCommand注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"getHystrixDemoError"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getHystrixDemo</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    ResponseEntity&lt;String&gt; response=restTemplate.getForEntity(<span class="string">"http://TEST-SERVICE/hystrixDemo?name="</span>+name,String.class);</span><br><span class="line">    <span class="keyword">return</span> response.getBody();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>异步执行</strong>：在调用服务的方法上加上@HystrixCommand注解，返回一个AsynResult<object\>对象，并<strong>在AsynResult对象内重写invoke方法</strong>，调用封装的服务得到一个<strong>Future&lt;&gt;类型的对象</strong>，可用其<strong>get()方法得到执行结果</strong></object\></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"getHystrixDemoError"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Future&lt;String&gt; <span class="title">getHystrixDemoAsync</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AsyncResult&lt;String&gt;()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">invoke</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> restTemplate.getForEntity(<span class="string">"http://TEST-SERVICE/hystrixDemo?name="</span>+name,String.class).getBody();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>HystrixObservableCommand：</strong>封装一个<strong>返回多个操作结果</strong>的服务调用</p>
+<ul>
+<li><p><strong>HotObservable：</strong>返回Hot Observable，<strong>命令立即执行</strong>，使用@HystrixCommand注解，通过将注解中的<strong>ObservableExecutionMode属性设置为EAGER</strong>表示这是一个同步执行的服务调用，返回Observable&lt;&gt;对象，可使用<strong>Iterator</strong>将其内容遍历输出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//EAGER表示同步执行</span></span><br><span class="line"><span class="meta">@HystrixCommand</span>(observableExecutionMode = ObservableExecutionMode.EAGER,fallbackMethod = <span class="string">"getHystrixDemoErrorObservable"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Observable&lt;User&gt; <span class="title">getHystrixDemoObservable</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Observable.create(<span class="keyword">new</span> Observable.OnSubscribe&lt;User&gt;()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Subscriber&lt;? <span class="keyword">super</span> User&gt; observer)</span></span>&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(!observer.isUnsubscribed())&#123;</span><br><span class="line">                    User user=restTemplate.getForObject(<span class="string">"http://TEST-SERVICE/hystrixDemo?name="</span>+name,User.class);</span><br><span class="line">                    observer.onNext(user);</span><br><span class="line">                    observer.onCompleted();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">                observer.onError(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Observable使用方式</span></span><br><span class="line">Iterator&lt;User&gt; iterator=consumerService.getHystrixDemoObservable(name).toBlocking().getIterator();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>ColdObservable：</strong>返回Cold Observable，<strong>命令不会立即执行</strong>，只有当所有订阅者都订阅后才会执行，定义方法和使用方法与Hot Observable基本相同，仅仅将<strong>@HystrixCommand注解的ObservableExecutionMode属性设置为LAZY</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand</span>(observableExecutionMode = ObservableExecutionMode.LAZY,fallbackMethod = <span class="string">"getHystrixDemoErrorObservable"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>HystrixCommand封装的服务调用方法中，若出现除了HystrixBadRequestException的异常，一律视作HystrixCommand命令执行失败，<strong>不抛出异常而是触发服务降级处理</strong>，而我们对于是什么异常造成服务降级往往很感兴趣，因此可以在服务降级方法中使用<strong>Throwable参数将造成服务命令失败的异常信息传递给服务降级的方法</strong>，从而进行相应处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在服务降级的方法中增加Throwable参数</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Observable&lt;User&gt; <span class="title">getHystrixDemoErrorObservable</span><span class="params">(String name,Throwable e)</span></span>&#123;</span><br><span class="line">    <span class="comment">//使用Throwable参数可将高级服务造成服务降级的异常传递下来 使用log打印出或者在返回的数据/对象属性中存储相应的信息提示调用者</span></span><br><span class="line">    log.error(<span class="string">"getHystrixDemoObservableAsync command fail "</span>+e.toString());</span><br><span class="line">    <span class="keyword">return</span> Observable.just(User.setErrorMsg(e.toString));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="请求缓存"><a href="#请求缓存" class="headerlink" title="请求缓存"></a>请求缓存</h4><p>微服务的依赖服务调用相比于进程内调用会引起一部分性能损失，HTTP相比于其他高性能通信协议在速度上没有任何优势，在分布式、高并发环境下，对于<strong>数据库这样的外部资源进行读写操作</strong>存在性能瓶颈，微服务怎么解决这样的问题呢？</p>
+<p>Hystrix提供了类似<strong>数据访问的缓存保护的功能</strong>对请求进行缓存，我们可以开启和使用请求缓存来优化系统，达到高并发时<strong>减轻请求线程消耗、降低请求相应时间</strong>等效果</p>
+<ul>
+<li><strong>开启请求缓存：</strong>对服务调用方法使用<strong>@CacheResult注解</strong></li>
+<li><strong>设置缓存Key：</strong>在服务调用方法的参数前加上<strong>@CacheKey</strong>，对于对象参数缓存标识可以使用<strong>@CacheKey(“缓存标识”)</strong>标识对象的内部属性</li>
+<li><strong>缓存清理：</strong>如果查询服务调用方法开启了请求缓存，其余会<strong>影响到查询服务调用数据的方法</strong>(如对数据进行修改、更新、增加)需要<strong>主动使查询服务调用方法的缓存失效</strong>，保证其缓存的数据的有效性，可以使用<strong>@CacheRemove(commandKey=”查询服务方法名”)</strong>清除失效的缓存</li>
+</ul>
+<p>我们尝试着测试一下缓存功能，具体思路是注册TEST-SERVICE功能是返回一个随机数，ConsumerService调用TEST-SERVICE服务，ConsumerController调用ConsumerService将结果输出</p>
+<ol>
+<li><p><strong>第一种情况：</strong>ConsumerService缓存服务，ConsumerController调用<strong>一次</strong>ConsumerService将结果输出，我们通过多次调用ConsumerController观察服务调用结果是否缓存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TEST-SERVICE返回随机数</span></span><br><span class="line">Integer randNum=<span class="keyword">new</span> Random().nextInt(<span class="number">3000</span>);</span><br><span class="line"><span class="keyword">return</span> randNum.toString();</span><br><span class="line"></span><br><span class="line"><span class="comment">//ConsumerService调用服务且缓存</span></span><br><span class="line"><span class="meta">@CacheResult</span></span><br><span class="line"><span class="meta">@HystrixCommand</span>(commandKey=<span class="string">"cacheDemoKey"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">cacheDemo</span><span class="params">(@CacheKey String name)</span></span>&#123;</span><br><span class="line">    log.info(<span class="string">"cacheDemo!!!!"</span>);</span><br><span class="line">    <span class="comment">//调用TEST-SERVICE的cacheDemo接口得到随机数</span></span><br><span class="line">    <span class="keyword">return</span> restTemplate.getForEntity(<span class="string">"http://TEST-SERVICE/cacheDemo?name="</span>+name,String.class).getBody();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ConsumerController调用ConsumerService</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/getCacheDemo"</span>,method = RequestMethod.GET)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getCacheDemo</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    @RequestParam(<span class="string">"name"</span>)</span> String name</span></span><br><span class="line"><span class="function">    )</span>&#123;</span><br><span class="line">    	<span class="comment">//初始化上下文环境 否则缓存会报错</span></span><br><span class="line">        HystrixRequestContext context = HystrixRequestContext.initializeContext();</span><br><span class="line">        String response=consumerService.cacheDemo(name);</span><br><span class="line">        context.close();</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"response: "</span>+response;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="根据运行结果可以看出，缓存并不成功，可能由于每次调用ConsumerController均用的是新的上下文环境，即每次执行ConsumerController均是在不同的进程，不能跨进程缓存"><a href="#根据运行结果可以看出，缓存并不成功，可能由于每次调用ConsumerController均用的是新的上下文环境，即每次执行ConsumerController均是在不同的进程，不能跨进程缓存" class="headerlink" title="根据运行结果可以看出，缓存并不成功，可能由于每次调用ConsumerController均用的是新的上下文环境，即每次执行ConsumerController均是在不同的进程，不能跨进程缓存"></a>根据运行结果可以看出，缓存并不成功，可能由于每次调用ConsumerController均用的是新的上下文环境，即每次执行ConsumerController均是在不同的进程，不能跨进程缓存</h5></li>
+<li><p><strong>第二种情况：</strong>ConsumerService缓存服务，ConsumerController调用<strong>多次</strong>ConsumerService将结果输出，我们调用<strong>一次</strong>ConsumerController观察服务调用结果是否缓存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//修改ConsumerController多次调用ConsumerService</span></span><br><span class="line">HystrixRequestContext context = HystrixRequestContext.initializeContext();</span><br><span class="line">String response1=consumerService.cacheDemo(name);</span><br><span class="line">String response2=consumerService.cacheDemo(name);</span><br><span class="line">context.close();</span><br><span class="line"><span class="keyword">return</span> <span class="string">"response1: "</span>+response1+<span class="string">"\n response2: "</span>+response2;</span><br></pre></td></tr></table></figure>
+<h5 id="结果如下，缓存成功，只有在同一进程，同一上下文下才能进行请求缓存"><a href="#结果如下，缓存成功，只有在同一进程，同一上下文下才能进行请求缓存" class="headerlink" title="结果如下，缓存成功，只有在同一进程，同一上下文下才能进行请求缓存"></a>结果如下，缓存成功，只有在同一进程，同一上下文下才能进行请求缓存</h5><p><img src="/images/sc40.png" alt=""></p>
+</li>
+<li><p><strong>第三种情况：</strong>测试缓存清除功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CacheResult</span></span><br><span class="line"><span class="meta">@HystrixCommand</span>(commandKey=<span class="string">"cacheDemoKey"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">cacheDemo</span><span class="params">(@CacheKey String name)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> restTemplate.getForEntity(<span class="string">"http://TEST-SERVICE/cacheDemo?name="</span>+name,String.class).getBody();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在ConsumerService中增加缓存清除功能</span></span><br><span class="line"><span class="comment">//CacheRemove的commandKey与缓存服务的HystrixCommand的commandKey一致</span></span><br><span class="line"><span class="meta">@CacheRemove</span>(commandKey = <span class="string">"cacheDemoKey"</span>)  </span><br><span class="line"><span class="meta">@HystrixCommand</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeCacheKey</span><span class="params">(@CacheKey String name)</span></span>&#123;<span class="comment">//CacheKey与缓存服务的参数一致</span></span><br><span class="line">    log.info(<span class="string">"removeCache!!!!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ConsumerController在两次请求中增加清除缓存的调用</span></span><br><span class="line">HystrixRequestContext context = HystrixRequestContext.initializeContext();</span><br><span class="line">String response1=consumerService.cacheDemo(name);</span><br><span class="line">consumerService.removeCacheKey(name);</span><br><span class="line">String response2=consumerService.cacheDemo(name);</span><br><span class="line">context.close();</span><br><span class="line"><span class="keyword">return</span> <span class="string">"response1: "</span>+response1+<span class="string">"\n response2: "</span>+response2;</span><br></pre></td></tr></table></figure>
+<h5 id="结果如下，成功清除缓存，清除缓存的函数要点有两点，需要指定commandKey与请求缓存的-HystrixCommand的commandKey属性一致，需要入参中包含与请求缓存的-CacheKey一致的参数"><a href="#结果如下，成功清除缓存，清除缓存的函数要点有两点，需要指定commandKey与请求缓存的-HystrixCommand的commandKey属性一致，需要入参中包含与请求缓存的-CacheKey一致的参数" class="headerlink" title="结果如下，成功清除缓存，清除缓存的函数要点有两点，需要指定commandKey与请求缓存的@HystrixCommand的commandKey属性一致，需要入参中包含与请求缓存的@CacheKey一致的参数"></a>结果如下，成功清除缓存，清除缓存的函数要点有两点，需要指定commandKey与请求缓存的@HystrixCommand的commandKey属性一致，需要入参中包含与请求缓存的@CacheKey一致的参数</h5><p><img src="/images/sc41.png" alt=""></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+        </div>
+        <footer class="article-footer">
+            
+    <div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_qzone">QQ空间</a>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_tqq">腾讯微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+    <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<style>
+    .jiathis_style div:first-child:not(.jiadiv_01) {
+        width: auto !important;
+        border: none !important;
+    }
+    .jiathis_style .jiadiv_01 {
+        margin: 10px 0;
+        border-radius: 4px;
+        border: #e1e1e1 solid 1px;
+    }
+    .jiathis_style .jiadiv_01 div:first-child {
+        display: none;
+    }
+    .jiathis_style .jiadiv_02 {
+        padding: 7px 0 !important;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle {
+        width: 85px;
+        border: none;
+        height: auto;
+        margin: 3px 10px;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:hover {
+        border: none;
+    }
+    .jiathis_style .jiadiv_02 .jiatitle:nth-child(even) {
+        margin-left: 0;
+    }
+    .jiathis_style .jtico:hover {
+        opacity: 1;
+    }
+    .jiathis_style .ckepopBottom,
+    .jiathis_style .centerBottom {
+        width: auto !important;
+        padding: 5px;
+        background: #f7f7f7;
+    }
+</style>
+
+
+
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:707014137@qq.com" target="_blank">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/harvieAlwaysHere" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/08/06/sc5/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            SpringCloud学习(五)API网关
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/08/06/sc3/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">SpringCloud学习(三)负载均衡</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/23/javahigh3-Array/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（三）ArrayList" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/23/javahigh3-Array/" class="title">Java深入学习-Java集合框架（三）ArrayList</a></p>
+                            <p class="item-date"><time datetime="2018-08-23T06:07:29.000Z" itemprop="datePublished">2018-08-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/jvm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jvm1.png)" alt="Java虚拟机学习笔记" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/jvm/" class="title">Java虚拟机学习笔记</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh2-AbstractCollection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh2.gif)" alt="Java深入学习-Java集合框架（二）AbstractCollection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh2-AbstractCollection/" class="title">Java深入学习-Java集合框架（二）AbstractCollection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/javahigh1-Collection/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/jh1.jpg)" alt="Java深入学习-Java集合框架（一）Collection" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/javahigh1-Collection/" class="title">Java深入学习-Java集合框架（一）Collection</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/java-Q&A-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/Q&amp;A.jpg)" alt="Java面试Q&amp;A(一)携程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/ItEassy/">ItEassy</a></p>
+                            <p class="item-title"><a href="/2018/08/13/java-Q&A-1/" class="title">Java面试Q&amp;A(一)携程</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T06:07:29.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ItEassy/">ItEassy</a><span class="category-list-count">89</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Music/">Music</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">5</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GithubPages/">GithubPages</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JADE/">JADE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JBDC/">JBDC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-DL/">Java-DL</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaEE/">JavaEE</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/">JavaSE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java面试/">Java面试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plan/">Plan</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Q-A/">Q&A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scrapy爬虫/">Scrapy爬虫</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringCloud/">SpringCloud</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringMvc/">SpringMvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB安全/">WEB安全</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/music/">music</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php项目/">php项目</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swoole/">swoole</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码质量/">代码质量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式智能软件/">分布式智能软件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指Offer/">剑指Offer</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单元测试/">单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/后台开发/">后台开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符/">字符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/校园课程/">校园课程</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深度学习/">深度学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/粤语/">粤语</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统测试/">系统测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解题思路/">解题思路</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/课程/">课程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集成测试/">集成测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/静态测试/">静态测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试总结/">面试总结</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑盒测试/">黑盒测试</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/C/" style="font-size: 11.11px;">C++</a> <a href="/tags/Collection/" style="font-size: 13.33px;">Collection</a> <a href="/tags/GithubPages/" style="font-size: 11.11px;">GithubPages</a> <a href="/tags/Hexo/" style="font-size: 11.11px;">Hexo</a> <a href="/tags/JADE/" style="font-size: 10px;">JADE</a> <a href="/tags/JBDC/" style="font-size: 10px;">JBDC</a> <a href="/tags/Java-DL/" style="font-size: 13.33px;">Java-DL</a> <a href="/tags/JavaEE/" style="font-size: 18.89px;">JavaEE</a> <a href="/tags/JavaSE/" style="font-size: 11.11px;">JavaSE</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Java面试/" style="font-size: 10px;">Java面试</a> <a href="/tags/Linux/" style="font-size: 11.11px;">Linux</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/Plan/" style="font-size: 10px;">Plan</a> <a href="/tags/Python/" style="font-size: 11.11px;">Python</a> <a href="/tags/Q-A/" style="font-size: 10px;">Q&A</a> <a href="/tags/React/" style="font-size: 11.11px;">React</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Scrapy爬虫/" style="font-size: 11.11px;">Scrapy爬虫</a> <a href="/tags/Spring/" style="font-size: 11.11px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 14.44px;">SpringCloud</a> <a href="/tags/SpringMvc/" style="font-size: 10px;">SpringMvc</a> <a href="/tags/WEB安全/" style="font-size: 14.44px;">WEB安全</a> <a href="/tags/Web前端/" style="font-size: 13.33px;">Web前端</a> <a href="/tags/music/" style="font-size: 10px;">music</a> <a href="/tags/php项目/" style="font-size: 20px;">php项目</a> <a href="/tags/python/" style="font-size: 16.67px;">python</a> <a href="/tags/swoole/" style="font-size: 17.78px;">swoole</a> <a href="/tags/代码质量/" style="font-size: 10px;">代码质量</a> <a href="/tags/分布式智能软件/" style="font-size: 11.11px;">分布式智能软件</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/剑指Offer/" style="font-size: 16.67px;">剑指Offer</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/单元测试/" style="font-size: 10px;">单元测试</a> <a href="/tags/后台开发/" style="font-size: 10px;">后台开发</a> <a href="/tags/字符/" style="font-size: 10px;">字符</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/安卓开发/" style="font-size: 14.44px;">安卓开发</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 15.56px;">机器学习</a> <a href="/tags/校园课程/" style="font-size: 14.44px;">校园课程</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/粤语/" style="font-size: 10px;">粤语</a> <a href="/tags/系统测试/" style="font-size: 10px;">系统测试</a> <a href="/tags/解题思路/" style="font-size: 12.22px;">解题思路</a> <a href="/tags/课程/" style="font-size: 10px;">课程</a> <a href="/tags/软件测试/" style="font-size: 16.67px;">软件测试</a> <a href="/tags/集成测试/" style="font-size: 10px;">集成测试</a> <a href="/tags/静态测试/" style="font-size: 10px;">静态测试</a> <a href="/tags/面试总结/" style="font-size: 10px;">面试总结</a> <a href="/tags/黑盒测试/" style="font-size: 11.11px;">黑盒测试</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Harvie Yao</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'https://harviealwayshere.github.io/2018/08/06/sc4/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
